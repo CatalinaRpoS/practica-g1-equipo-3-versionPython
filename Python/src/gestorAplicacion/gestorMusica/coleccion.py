@@ -1,3 +1,10 @@
+''' Módulo musica.py
+    Autores: Carolina Álvarez Murillo, Miller Johan Chica Acero,
+             Tomás Rodríguez Taborda, Jerónimo Ledesma Patiño,
+             Catalina Restrepo Salgado
+    Este módulo contiene la clase Coleccion
+'''
+
 class Coleccion:
     
     coleccionesExistentes=[]
@@ -31,4 +38,11 @@ class Coleccion:
     
     def agregarLista(self,lista):
         self._listas.append(lista)
-        return ""
+        return "Se ha agregado la lista "+lista.getNombre()+" a la Colección con éxito"
+
+    def eliminarLista(self,lista):
+        posicion=self._listas.index(lista)
+        self._listas.pop(posicion)
+        return "Se ha eliminado la lista "+lista.getNombre()+" de la Colección con éxito"
+    
+    
