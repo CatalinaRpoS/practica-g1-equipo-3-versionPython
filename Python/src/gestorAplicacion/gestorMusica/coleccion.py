@@ -40,17 +40,17 @@ class Coleccion:
     
     def agregarLista(self,lista):
         self.__listas.append(lista)
-        return "Se ha agregado la lista "+lista.getNombre()+" a la Colección con éxito"
+        return "Se ha agregado la lista "+lista.getNombre(self)+" a la Colección con éxito"
 
     def eliminarLista(self,lista):
         posicion=self.__listas.index(lista)
         self.__listas.pop(posicion)
-        return "Se ha eliminado la lista "+lista.getNombre()+" de la Colección con éxito"
+        return "Se ha eliminado la lista "+lista.getNombre(self)+" de la Colección con éxito"
     
     def cancionesUsuarios(self):
         cancionesUsuario=[]
         for lista in self.__listas:
-            for cancion in lista.getLista():
+            for cancion in lista.getLista(self):
                 if cancion not in cancionesUsuario:
                     cancionesUsuario.append(cancion)
         
@@ -59,7 +59,7 @@ class Coleccion:
     def __str__(self):
         des=""
         for lista in self.__listas:
-            des+=lista.infoLista()+"\n"
+            des+=lista.infoLista(self)+"\n"
         
         return des
     
