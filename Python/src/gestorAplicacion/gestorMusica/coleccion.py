@@ -9,11 +9,11 @@ class Coleccion:
     
     coleccionesExistentes=[]
 
-    def __init__(self, usuario, listas, cancionesRecomendadas,colaborativas):
+    def __init__(self, usuario, listas=[], cancionesRecomendadas=[],colaborativas=[]):
         self._usuario=usuario
-        self._listas=[]
-        self._cancionesRecomendadas=[]
-        self._colaborativas=[]
+        self._listas=listas
+        self._cancionesRecomendadas=cancionesRecomendadas
+        self._colaborativas=colaborativas
         Coleccion.coleccionesExistentes.append(self)
     
     def getUsuario(self):
