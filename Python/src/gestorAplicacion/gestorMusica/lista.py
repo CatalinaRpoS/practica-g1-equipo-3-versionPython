@@ -1,4 +1,8 @@
 import gestorMusica.musica
+import gestorMusica.cancion as cn
+import gestorAplicacion.gestorPersonas.persona
+import gestorAplicacion.gestorPersonas.usuario
+import gestorAplicacion.gestorPersonas.artista
 
 
 class Lista(gestorMusica.musica.Musica):
@@ -43,7 +47,7 @@ class Lista(gestorMusica.musica.Musica):
 
         return self.usuario #Usuario
 
-    def setUsuario(self, Usuario_usuario)
+    def setUsuario(self, Usuario_usuario):
 
         self.usuario = Usuario_usuario
 
@@ -81,7 +85,7 @@ class Lista(gestorMusica.musica.Musica):
     
     def infoLista(self):
 
-        des = 0
+        des = ""
 
         if len(self._lista) > 0:
 
@@ -96,7 +100,65 @@ class Lista(gestorMusica.musica.Musica):
             return "La lista: " + self._nombre + " está vacía\n"
 
 
-    # MAÑANA ACABO XD
+    def infoColaborativa(self):
+
+        des = ""
+
+        if len(self._listaColaborativa) > 0:
+
+            for cancion in self._listaColaborativa:
+                des += cancion.descripcion() + "\n"
+            
+            return "Lista: " + self._nombre + "\n" + "\n" + "Canciones: " + "\n" + des
+        
+        else:
+            return "Lista: " + self._nombre + " está vacía"
+        
+    def aumentarReproducciones(self):
+        
+        self._reproducciones += 1
+
+        for cancion in self._lista:
+            cancion.aumentarReproducciones()
+    
+    def colaborativa(self, list_Usuario):
+
+        for usuario in list_Usuario:
+
+            usuario.getColeccion().agregarLista(self, usuario)
+        
+        return "Lista colaborativa creada"
+    
+    def getDescripcion(self):
+
+        return self._descripcion #str
+    
+    def setDescripcion(self, str_descripcion):
+
+        self._descripcion = str_descripcion
+    
+    def listaPorGenero(self, Genero_genero):
+
+        lista = []
+
+        for cancion in cn.Cancion.getCancionDisponibles():
+
+            if cancion.getGenero() == Genero_genero:
+
+                lista.append(cancion)
+        return lista
+    
+    def totalPorGenero(self, Genero_genero):
+
+        total = 0
+
+        for cancion in self.getLista():
+
+            if cancion.getGenero() == Genero_genero:
+
+                total += 1 
+
+        return total
 
 
     
