@@ -1,7 +1,7 @@
 from gestorAplicacion.gestorMusica.coleccion import Coleccion
 from gestorAplicacion.gestorMusica.meGusta import meGusta
 from gestorAplicacion.gestorMusica.genero import Genero
-
+import random
 ''' Módulo Usuario.py
     Autores: Carolina Álvarez Murillo, Miller Johan Chica Acero,
              Tomás Rodríguez Taborda, Jerónimo Ledesma Patiño,
@@ -222,3 +222,9 @@ class Usuario:
                     mayor=NO_ESPECIFICADO
                     genero=Genero.NO_ESPECIFICADO
         return genero
+
+    def encontrarAmigo(self,posiblesAmigos=[]):
+        if len(posiblesAmigos) > 0:
+            return random.choice(posiblesAmigos)
+        else:
+            return None
