@@ -10,12 +10,12 @@ import pickle
 import pathlib
 import os
 
-# from gestorAplicacion.gestorMusica.cancion import Cancion
+from gestorAplicacion.gestorMusica.cancion import Cancion
 from gestorAplicacion.gestorMusica.coleccion import Coleccion
-# from gestorAplicacion.gestorMusica.lista import Lista
-# from gestorAplicacion.gestorMusica.megusta import MeGusta
-# from gestorAplicacion.gestorPersonas.artista import Artista
-# from gestorAplicacion.gestorPersonas.usuario import Usuario
+from gestorAplicacion.gestorMusica.lista import Lista
+from gestorAplicacion.gestorMusica.meGusta import meGusta
+from gestorAplicacion.gestorPersonas.artista import Artista
+from gestorAplicacion.gestorPersonas.usuario import Usuario
 
 class Deserializador:
 
@@ -36,9 +36,9 @@ class Deserializador:
         return lista
 
     def deserializarDatos():
-        # Usuario.setUsuariosExistentes(Deserializador.deserializar(Usuario.getUsuariosExistentes(), "Usuarios"))
-		# Artista.setArtistasDisponibles(Deserializador.deserializar(Artista.getArtistasDisponibles(), "Artistas"))
-		# Cancion.setCancionesDisponibles(Deserializador.deserializar(Cancion.getCancionesDisponibles(), "Canciones"))
+        Usuario.setUsuariosExistentes(Deserializador.deserializar(Usuario.getUsuariosExistentes(), "Usuarios"))
+        Artista.setArtistasDisponibles(Deserializador.deserializar(Artista.getArtistasDisponibles(), "Artistas"))
+        Cancion.setCancionesDisponibles(Deserializador.deserializar(Cancion.getCancionesDisponibles(), "Canciones"))
         Coleccion.setColeccionesExistentes(Deserializador.deserializar(Coleccion.getColeccionesExistentes(), "Colecciones"))
-		# Lista.setListasExistentes(Deserializador.deserializar(Lista.getListasExistentes(), "Listas"))
-		# MeGusta.setFavoritosExistentes(Deserializador.deserializar(MeGusta.getFavoritosExistentes(), "MeGusta")) 
+        Lista.setListasExistentes(Deserializador.deserializar(Lista.getListasExistentes(), "Listas"))
+        meGusta.setFavoritosExistentes(Deserializador.deserializar(meGusta.getFavoritosExistentes(), "MeGusta")) 

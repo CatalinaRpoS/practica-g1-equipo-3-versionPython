@@ -10,12 +10,12 @@ import pickle
 import pathlib
 import os
 
-# from gestorAplicacion.gestorMusica.cancion import Cancion
+from gestorAplicacion.gestorMusica.cancion import Cancion
 from gestorAplicacion.gestorMusica.coleccion import Coleccion
-# from gestorAplicacion.gestorMusica.lista import Lista
-# from gestorAplicacion.gestorMusica.megusta import MeGusta
-# from gestorAplicacion.gestorPersonas.artista import Artista
-# from gestorAplicacion.gestorPersonas.usuario import Usuario
+from gestorAplicacion.gestorMusica.lista import Lista
+from gestorAplicacion.gestorMusica.meGusta import meGusta
+from gestorAplicacion.gestorPersonas.artista import Artista
+from gestorAplicacion.gestorPersonas.usuario import Usuario
 
 class Serializador:
 
@@ -31,9 +31,9 @@ class Serializador:
             print("¡Ocurrió un error!")
 
     def serializarDatos():
-        # Serializador.serializar(Usuario.getUsuariosExistentes(), "Usuarios")
-		# Serializador.serializar(Artista.getArtistasDisponibles(), "Artistas")
-		# Serializador.serializar(Cancion.getCancionesDisponibles(), "Canciones")
+        Serializador.serializar(Usuario.getUsuariosExistentes(), "Usuarios")
+        Serializador.serializar(Artista.getArtistasDisponibles(), "Artistas")
+        Serializador.serializar(Cancion.getCancionesDisponibles(), "Canciones")
         Serializador.serializar(Coleccion.getColeccionesExistentes(), "Colecciones")
-		# Serializador.serializar(Lista.getListasExistentes(), "Listas")
-		# Serializador.serializar(MeGusta.getFavoritosExistentes(), "MeGusta")
+        Serializador.serializar(Lista.getListasExistentes(), "Listas")
+        Serializador.serializar(meGusta.getFavoritosExistentes(), "MeGusta")

@@ -1,5 +1,6 @@
+from gestorMusica.musica import Musica
+
 class Cancion(Musica):
-    #Duda como poner atributo de serializacion
     __cancionesDisponibles = []
     
     def __init__(self, nombre, artista, genero, duracion, ano):
@@ -38,7 +39,7 @@ class Cancion(Musica):
         self.__ano = ano
     
     @classmethod
-    def getCancionDisponibles(cls):
+    def getCancionesDisponibles(cls):
         return cls.__cancionesDisponibles
     
     @classmethod

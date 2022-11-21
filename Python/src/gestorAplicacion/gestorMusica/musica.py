@@ -10,20 +10,20 @@
 class Musica: 
 
     def __init__(self, nombre):
-        self._nombre = nombre
-        self._reproducciones = 0
+        self.__nombre = nombre
+        self.__reproducciones = 0
     
     def getNombre(self):
-        return self._nombre
+        return self.__nombre
 
     def setNombre(self, nombre):
-        self._nombre = nombre
+        self.__nombre = nombre
     
     def getReproducciones(self):
-        return self._reproducciones
+        return self.__reproducciones
     
     def setReproducciones(self, reproducciones):
-        self._reproducciones = reproducciones
+        self.__reproducciones = reproducciones
 
     # Este método van a sobreescribirlo las clases que hereden de Música
     def aumentarReproducciones(self):

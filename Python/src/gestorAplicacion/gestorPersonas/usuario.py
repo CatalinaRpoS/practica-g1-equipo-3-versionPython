@@ -1,3 +1,7 @@
+from gestorAplicacion.gestorMusica.coleccion import Coleccion
+from gestorAplicacion.gestorMusica.meGusta import meGusta
+from gestorAplicacion.gestorMusica.genero import Genero
+
 ''' Módulo Usuario.py
     Autores: Carolina Álvarez Murillo, Miller Johan Chica Acero,
              Tomás Rodríguez Taborda, Jerónimo Ledesma Patiño,
@@ -6,59 +10,60 @@
 '''
 
 class Usuario:
-    usuariosExistentes=[]
-    def __init__(self,nombre,genFavorito=Genero.NO_ESPECIFICADO):
-        self.__nombre=nombre
-        self.__genFavorito=genFavorito
-        self.__coleccion=new Coleccion(self)
-        self.__favoritos=new MeGusta(self)
-        self.__tiempoEscuchado=0
-        usuariosExistentes.append(self)
+    __usuariosExistentes = []
+
+    def __init__(self,nombre, genFavorito = Genero.NO_ESPECIFICADO):
+        self.__nombre = nombre
+        self.__genFavorito = genFavorito
+        self.__coleccion = Coleccion(self)
+        self.__favoritos = meGusta(self)
+        self.__tiempoEscuchado = 0
+        Usuario.__usuariosExistentes.append(self)
     
     def reproducir(self,cancion):
         cancion.aumentarReproducciones()
         self.__tiempoEscuchado += cancion.getDuracion()
-        return cancion.toString();
+        return cancion
 
-    def agregarMeGusta(self,Cancion cancion):
-        return favoritos.agregarCancion(cancion)
+    def agregarMeGusta(self, cancion):
+        return self.__favoritos.agregarCancion(cancion)
 
-    def eliminarMeGusta(self, Cancion cancion):
-        return favoritos.eliminarCancion(cancion)
+    def eliminarMeGusta(self, cancion):
+        return self.__favoritos.eliminarCancion(cancion)
 
-    def reproducir(self,Lista lista):
+    def reproducir(self, lista):
         lista.aumentarReproducciones()
         self.__tiempoEscuchado += lista.duracionLista()
-        return lista.toString()
+        return lista
 
-    def toString(self):
+    def __str__(self):
         return "Soy " + self.__nombre
 
-    def topArtista():
-    	contadorRepro=0
-        listaMasRepro=[]
-        verificador=False
-        for lista in coleccion.getListas():
-            if lista.getReproducciones()>contadorRepro:
-                listaMasRepro=lista.getLista()
-                contadorRepro=lista.getReproducciones()
-                verificador=True
+    def topArtista(self):
+        contadorRepro = 0
+        listaMasRepro = []
+        verificador = False
+        for lista in self.__coleccion.getListas():
+            if lista.getReproducciones() > contadorRepro:
+                listaMasRepro = lista.getLista()
+                contadorRepro = lista.getReproducciones()
+                verificador = True
         if verificador:
-            reproPorArtista={}
-    		artista=None
-    		cont=0
-    		for cancion in listaMasRepro:
+            reproPorArtista = {}
+            artista = None
+            cont = 0
+            for cancion in listaMasRepro:
                 if cancion.getArtista() in reproPorArtista:
-                    newValue=reproPorArtista[cancion.getArtista]+1
-    				reproPorArtista[cancion.getArtista()]=newValue
-    			else:
-    				reproPorArtista[cancion.getArtista()]=1
-    			if reproPorArtista[cancion.getArtista()]>cont:
-					artista=cancion.getArtista();
-					cont=reproPorArtista[cancion.getArtista()]
-    		return artista
+                    newValue=reproPorArtista[cancion.getArtista] + 1
+                    reproPorArtista[cancion.getArtista()] = newValue
+                else:
+                    reproPorArtista[cancion.getArtista()] = 1
+                if reproPorArtista[cancion.getArtista()] > cont:
+                    artista = cancion.getArtista()
+                    cont = reproPorArtista[cancion.getArtista()]
+            return artista
         else:
-    		return None
+            return None
     
     def setTiempoEscuchado(self,tiempoEscuchado):
         self.__tiempoEscuchado=tiempoEscuchado
@@ -66,8 +71,8 @@ class Usuario:
     def getTiempoEscuchado(self):
         return self.__tiempoEscuchado
 
-    def setColeccion(coleccion):
-        self.__coleccion = coleccion;
+    def setColeccion(self, coleccion):
+        self.__coleccion = coleccion
 
     def getColeccion(self):
         return self.__coleccion
@@ -78,13 +83,13 @@ class Usuario:
     def getNombre(self):
         return self.__nombre
         
-    def setNombre(self,String nombre):
+    def setNombre(self, nombre):
         self.__nombre = nombre
     
     def getGenFavorito(self):
         return self.__genFavorito
     
-    def setGenFavorito(self, Genero genFavorito):
+    def setGenFavorito(self, genFavorito):
         self.__genFavorito = genFavorito
 
     @classmethod
@@ -92,7 +97,7 @@ class Usuario:
         return cls.usuariosExistentes
 
     @classmethod
-    def setUsuariosExistentes(cls,usuariosExistentes):
+    def setUsuariosExistentes(cls, usuariosExistentes):
         cls.usuariosExistentes = usuariosExistentes
 	
     @classmethod

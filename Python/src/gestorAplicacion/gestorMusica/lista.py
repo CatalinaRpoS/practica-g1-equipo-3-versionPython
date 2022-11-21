@@ -1,168 +1,117 @@
-import gestorMusica.musica
-import gestorMusica.cancion as cn
-import gestorAplicacion.gestorPersonas.persona
-import gestorAplicacion.gestorPersonas.usuario
-import gestorAplicacion.gestorPersonas.artista
+from gestorMusica.musica import Musica
+from gestorMusica.cancion import Cancion
 
+''' Módulo lista.py
+    Autores: Carolina Álvarez Murillo, Miller Johan Chica Acero,
+             Tomás Rodríguez Taborda, Jerónimo Ledesma Patiño,
+             Catalina Restrepo Salgado
+    Este módulo contiene la clase Lista, que hereda de la clase Música
+'''
 
-class Lista(gestorMusica.musica.Musica):
+class Lista(Musica):
 
     _listasExistentes = [] #List[Lista]
 
     def __init__(self, str_nombre, Usuario_usuario = None, str_descripcion = "", list_lista = [], list_usuarios = [], set_listaColaborativa = {}):
-
         super().__init__(str_nombre)
         self.usuario = Usuario_usuario
-        self._descripcion = str_descripcion
-        self._lista = list_lista
+        self.__descripcion = str_descripcion
+        self.__lista = list_lista
         self.usuarios = list_usuarios
-        self._listaColaborativa = set_listaColaborativa
-        Lista._listasExistentes.append(self)
+        self.__listaColaborativa = set_listaColaborativa
+        Lista.__listasExistentes.append(self)
     
     def duracionLista(self):
-
         duracion = 0
-        for i in self._lista:
+        for i in self.__lista:
             duracion += i.getDuracion()
-        
         return duracion
 
     def getLista(self):
-
-        return self._lista #list
+        return self.__lista #list
     
     def setLista(self, list_lista):
-
-        self._lista = list_lista
+        self.__lista = list_lista
 
     def getListaColaborativa(self):
-
-        return self._listaColaborativa #list
+        return self.__listaColaborativa #list
 
     def setListaColaborativa(self, list_listaColaborativa):
-
-        self._listaColaborativa = list_listaColaborativa
+        self.__listaColaborativa = list_listaColaborativa
 
     def getUsuario(self):
-
         return self.usuario #Usuario
 
     def setUsuario(self, Usuario_usuario):
-
         self.usuario = Usuario_usuario
 
     def getListasExistentes():
-
         return Lista._listasExistentes #list
     
     def setListasExistentes(list_listasExistentes):
-
-        Lista._listasExistentes = list_listasExistentes
+        Lista.__listasExistentes = list_listasExistentes
     
     def getUsuarios(self):
-
         return self.usuarios #list
     
     def setUsuarios(self, list_usuarios):
-
         self.usuarios = list_usuarios
     
     def agregarCancion(self, Cancion_cancion):
-
-        self._lista.append(Cancion_cancion)
-
-        return "Se ha agregado la canción " + Cancion_cancion.getNombre() + " a la lista " + self.nombre + " con exito"
+        self.__lista.append(Cancion_cancion)
+        return "Se ha agregado la canción " + Cancion_cancion.getNombre() + " a la lista " + self.getNombre() + " con exito"
     
     def eliminarCancion(self, Cancion_cancion):
-
-        self._lista.remove(Cancion_cancion)
-
-        return "Se ha eliminado la canción " + Cancion_cancion.getNombre() + " de la lista " + self.nombre + " con exito"
+        self.__lista.remove(Cancion_cancion)
+        return "Se ha eliminado la canción " + Cancion_cancion.getNombre() + " de la lista " + self.getNombre() + " con exito"
     
     def toString(self):
-
-        return "Se está reproduciendo la lista: " + self._nombre
+        return "Se está reproduciendo la lista: " + self.getNombre()
     
     def infoLista(self):
-
         des = ""
-
-        if len(self._lista) > 0:
-
-            for i in self._lista:
-
+        if len(self.__lista) > 0:
+            for i in self.__lista:
                 des += i.descripcion() + "\n"
-            
-            return "Lista: " + self._nombre + "\n" + "\n" + "Canciones: " + "\n" + des
-        
-        else:
-            
+            return "Lista: " + self.getNombre() + "\n" + "\n" + "Canciones: " + "\n" + des
+        else:  
             return "La lista: " + self._nombre + " está vacía\n"
 
-
     def infoColaborativa(self):
-
         des = ""
-
-        if len(self._listaColaborativa) > 0:
-
-            for cancion in self._listaColaborativa:
+        if len(self.__listaColaborativa) > 0:
+            for cancion in self.__listaColaborativa:
                 des += cancion.descripcion() + "\n"
-            
-            return "Lista: " + self._nombre + "\n" + "\n" + "Canciones: " + "\n" + des
-        
+            return "Lista: " + self.getNombre() + "\n" + "\n" + "Canciones: " + "\n" + des
         else:
-            return "Lista: " + self._nombre + " está vacía"
+            return "Lista: " + self.getNombre() + " está vacía"
         
     def aumentarReproducciones(self):
-        
-        self._reproducciones += 1
-
-        for cancion in self._lista:
+        self.__reproducciones += 1
+        for cancion in self.__lista:
             cancion.aumentarReproducciones()
     
     def colaborativa(self, list_Usuario):
-
         for usuario in list_Usuario:
-
             usuario.getColeccion().agregarLista(self, usuario)
-        
         return "Lista colaborativa creada"
     
     def getDescripcion(self):
-
-        return self._descripcion #str
+        return self.__descripcion #str
     
     def setDescripcion(self, str_descripcion):
-
-        self._descripcion = str_descripcion
+        self.__descripcion = str_descripcion
     
     def listaPorGenero(self, Genero_genero):
-
         lista = []
-
-        for cancion in cn.Cancion.getCancionDisponibles():
-
+        for cancion in Cancion.getCancionDisponibles():
             if cancion.getGenero() == Genero_genero:
-
                 lista.append(cancion)
         return lista
     
     def totalPorGenero(self, Genero_genero):
-
         total = 0
-
         for cancion in self.getLista():
-
             if cancion.getGenero() == Genero_genero:
-
                 total += 1 
-
         return total
-
-
-    
-
-
-
-

@@ -1,5 +1,5 @@
 from genero import Genero
-from lista import Lista
+
 ''' Módulo musica.py
     Autores: Carolina Álvarez Murillo, Miller Johan Chica Acero,
              Tomás Rodríguez Taborda, Jerónimo Ledesma Patiño,
@@ -14,7 +14,7 @@ class Coleccion:
     def __init__(self, usuario, listas=[], cancionesRecomendadas=[],colaborativas=[]):
         self.__usuario=usuario
         self.__listas=[]
-        self.__cancionesRecomendadas=[]
+        self.__cancionesRecomendadas = []
         self.__colaborativas=[]
         Coleccion.coleccionesExistentes.append(self)
     
@@ -131,12 +131,3 @@ class Coleccion:
                 return "La coincidencia en sus géneros es muy baja"
         else:
             return "La Lista Colaborativa está vacía"
-
-
-                    
-                    
-                    
-
-
-    
-

@@ -1,3 +1,5 @@
+from gestorMusica.lista import Lista
+
 class meGusta(Lista):
     
     __favoritosExistentes = []
@@ -33,19 +35,16 @@ class meGusta(Lista):
     def totalPorGenero(self, genero):
         total = 0
         for cancion in meGusta.getFavoritos(self):
-            if(Cancion.getGenero() == genero):
+            if(cancion.getGenero() == genero):
                 total += 1
-        
         return total
     
     def __str__(self):
         des = ""
-        lista = usuario.getFavoritos(self).getFavoritos(self)
+        lista = self.__usuario.getFavoritos(self).getFavoritos(self)
         if(len(lista) > 0):
             for cancion in lista:
                 des += cancion.descripcion() + "\n"
-            
             return "Tus Canciones Favoritas:" + "\n" + "\n" + "Canciones: " + "\n" + des
-        
         else:
             return "No tienes canciones favoritas"
