@@ -86,7 +86,7 @@ class FrameDerecha(tk.Frame):
 
     # Se usa para mostrar la hoja de vida que sigue, aumentando el atributo next_hv
     def proximo(self, _):
-        if self._next_cf < 2:
+        if self._next_cf < 4:
             self._next_cf = self._next_cf + 1
         else:
             self._next_cf = 0
@@ -98,7 +98,7 @@ class FrameDerecha(tk.Frame):
 
 
     def cargarCFImagen(self, cf_num, numero):
-        path = os.path.join(pathlib.Path(__file__).parent.parent.parent.absolute(),'src\\contenidoGrafico\CF{0}{1}.jpeg'.format(cf_num, numero))
+        path = os.path.join(pathlib.Path(__file__).parent.parent.parent.absolute(),'src\\contenidoGrafico\CF{0}{1}.png'.format(cf_num, numero))
         foto = tk.PhotoImage(file = path)
         self._labels[numero].configure(image = foto)
         self._labels[numero].image = foto
