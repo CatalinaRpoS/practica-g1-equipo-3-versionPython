@@ -1,4 +1,4 @@
-from gestorMusica.musica import Musica
+from gestorAplicacion.gestorMusica.musica import Musica
 
 class Cancion(Musica):
     __cancionesDisponibles = []
@@ -10,6 +10,8 @@ class Cancion(Musica):
         self.__duracion = duracion
         self.__ano = ano
         Cancion.__cancionesDisponibles.append(self)
+        # Para agregar la canción al portafolio del artista
+        artista.agregarCancion(self)
         
     #falta simular el this    
     #falta inicializador estatico

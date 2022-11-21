@@ -1,5 +1,5 @@
 from gestorAplicacion.gestorMusica.genero import Genero
-from gestorPersonas.usuario import Usuario
+from gestorAplicacion.gestorPersonas.usuario import Usuario
 from gestorAplicacion.gestorMusica.cancion import Cancion
 
 ''' Módulo artista.py
@@ -53,8 +53,7 @@ class Artista(): #ACTUALIZAR CON PERSONA Y SERIALIZABLE
         return "La canción " + cancion.getNombre() + "fue eliminada exitosamente"
 
     def __str__(self):
-        return self.__nombre + " es un artista con " + len(self.__canciones) + " canciones publicadas en Spotifree pertenecientes \
-            al género " + self.__genero
+        return self.__nombre + " es un artista con " + str(len(self.__canciones)) + " canciones publicadas en Spotifree pertenecientes al género " + self.__genero.value
     
     @classmethod
     def getArtistasDisponibles(cls):

@@ -1,5 +1,5 @@
-from gestorMusica.musica import Musica
-from gestorMusica.cancion import Cancion
+from gestorAplicacion.gestorMusica.musica import Musica
+from gestorAplicacion.gestorMusica.cancion import Cancion
 
 ''' Módulo lista.py
     Autores: Carolina Álvarez Murillo, Miller Johan Chica Acero,
@@ -10,7 +10,7 @@ from gestorMusica.cancion import Cancion
 
 class Lista(Musica):
 
-    _listasExistentes = [] #List[Lista]
+    __listasExistentes = [] #List[Lista]
 
     def __init__(self, str_nombre, Usuario_usuario = None, str_descripcion = "", list_lista = [], list_usuarios = [], set_listaColaborativa = {}):
         super().__init__(str_nombre)
@@ -44,12 +44,14 @@ class Lista(Musica):
 
     def setUsuario(self, Usuario_usuario):
         self.usuario = Usuario_usuario
-
-    def getListasExistentes():
-        return Lista._listasExistentes #list
     
-    def setListasExistentes(list_listasExistentes):
-        Lista.__listasExistentes = list_listasExistentes
+    @classmethod
+    def getListasExistentes(cls):
+        return cls.__listasExistentes #list
+    
+    @classmethod
+    def setListasExistentes(cls, list_listasExistentes):
+        cls.__listasExistentes = list_listasExistentes
     
     def getUsuarios(self):
         return self.usuarios #list

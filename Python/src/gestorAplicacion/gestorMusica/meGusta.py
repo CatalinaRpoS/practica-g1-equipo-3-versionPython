@@ -1,4 +1,4 @@
-from gestorMusica.lista import Lista
+from gestorAplicacion.gestorMusica.lista import Lista
 
 class meGusta(Lista):
     
@@ -6,10 +6,9 @@ class meGusta(Lista):
     
     #falta inicializador estatico
     
-    def __init__(self, favoritos, usuario):
+    def __init__(self, usuario):
         super().__init__("Tus Me Gusta", usuario, "Tus canciones favoritos")
-        self.__favoritos = list(favoritos)
-        self.__usuario = usuario
+        self.__favoritos = []
         meGusta.__favoritosExistentes.append(self)
         
     def agregarCancion(self, cancion):
@@ -25,12 +24,14 @@ class meGusta(Lista):
     
     def setFavoritos(self, favoritos):
         self.__favoritos = favoritos
-        
-    def getFavoritosExistentes(self):
-        return self.__favoritosExistentes
     
-    def setFavoritosExistentes(self, favoritosExistentes):
-        self.__favoritosExistentes = favoritosExistentes
+    @classmethod
+    def getFavoritosExistentes(cls):
+        return cls.__favoritosExistentes
+    
+    @classmethod
+    def setFavoritosExistentes(cls, favoritosExistentes):
+        cls.__favoritosExistentes = favoritosExistentes
         
     def totalPorGenero(self, genero):
         total = 0

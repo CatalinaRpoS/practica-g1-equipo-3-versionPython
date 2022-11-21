@@ -2,6 +2,7 @@ from gestorAplicacion.gestorMusica.coleccion import Coleccion
 from gestorAplicacion.gestorMusica.meGusta import meGusta
 from gestorAplicacion.gestorMusica.genero import Genero
 import random
+
 ''' Módulo Usuario.py
     Autores: Carolina Álvarez Murillo, Miller Johan Chica Acero,
              Tomás Rodríguez Taborda, Jerónimo Ledesma Patiño,
@@ -94,11 +95,11 @@ class Usuario:
 
     @classmethod
     def getUsuariosExistentes(cls):
-        return cls.usuariosExistentes
+        return cls.__usuariosExistentes
 
     @classmethod
     def setUsuariosExistentes(cls, usuariosExistentes):
-        cls.usuariosExistentes = usuariosExistentes
+        cls.__usuariosExistentes = usuariosExistentes
 	
     @classmethod
     def genFavoritoSpotyfree(cls):

@@ -1,16 +1,17 @@
 from gestorAplicacion.gestorMusica.cancion import Cancion
 from gestorAplicacion.gestorMusica.coleccion import Coleccion
 from gestorAplicacion.gestorMusica.lista import Lista
-from gestorAplicacion.gestorMusica.meGusta import MeGusta
+from gestorAplicacion.gestorMusica.meGusta import meGusta
 from gestorAplicacion.gestorMusica.genero import Genero
 from gestorAplicacion.gestorPersonas.persona import Persona
 from gestorAplicacion.gestorPersonas.usuario import Usuario
 from gestorAplicacion.gestorPersonas.artista import Artista
-from baseDatos import serializador
-from baseDatos import deserializador
+from baseDatos.serializador import Serializador
+from baseDatos.deserializador import Deserializador
 
 if __name__=="__main__":
-    a1=Artista("Juanes",Genero.ROCK)
+
+    ''' a1=Artista("Juanes",Genero.ROCK)
     a2=Artista("BTS",Genero.KPOP)
     a3=Artista("Ferxxo",Genero.REGGAETON)
 
@@ -22,8 +23,15 @@ if __name__=="__main__":
 
     c1=Cancion("Dynamite",a2,Genero.KPOP,300,2020)
     c2=Cancion("Camisa negra",a1,Genero.ROCK,200,2015)
-    c3=Cancion("Ferxxo 100",a3,Genero.REGGAETON,360,2019)
+    c3=Cancion("Ferxxo 100",a3,Genero.REGGAETON,360,2019) '''
 
-    print(Cancion.getCancionesDisponibles())
-    print(Artista.getArtistasDisponibles())
-    print(Usuario.getUsuariosExistentes())
+    Deserializador.deserializarDatos()
+
+    for cancion in Cancion.getCancionesDisponibles():
+        print(cancion)
+    for artista in Artista.getArtistasDisponibles():
+        print(artista)
+    for usuario in Usuario.getUsuariosExistentes():
+        print(usuario)
+    
+    # Serializador.serializarDatos()

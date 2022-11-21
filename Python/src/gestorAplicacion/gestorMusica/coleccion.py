@@ -1,4 +1,4 @@
-from genero import Genero
+from gestorAplicacion.gestorMusica.genero import Genero
 
 ''' Módulo musica.py
     Autores: Carolina Álvarez Murillo, Miller Johan Chica Acero,
@@ -11,12 +11,12 @@ class Coleccion:
     
     __coleccionesExistentes=[]
 
-    def __init__(self, usuario, listas=[], cancionesRecomendadas=[],colaborativas=[]):
+    def __init__(self, usuario, listas=[], cancionesRecomendadas=[], colaborativas=[]):
         self.__usuario=usuario
         self.__listas=[]
         self.__cancionesRecomendadas = []
         self.__colaborativas=[]
-        Coleccion.coleccionesExistentes.append(self)
+        Coleccion.__coleccionesExistentes.append(self)
     
     def getUsuario(self):
         return self.__usuario
