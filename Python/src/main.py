@@ -8,6 +8,12 @@ from gestorAplicacion.gestorPersonas.usuario import Usuario
 from gestorAplicacion.gestorPersonas.artista import Artista
 from baseDatos.serializador import Serializador
 from baseDatos.deserializador import Deserializador
+from interfazGrafica.inicio import Inicio
+
+def main():
+    mi_app = Inicio()
+    mi_app.mainloop()
+    return 0
 
 if __name__=="__main__":
 
@@ -26,12 +32,6 @@ if __name__=="__main__":
     c3=Cancion("Ferxxo 100",a3,Genero.REGGAETON,360,2019) '''
 
     Deserializador.deserializarDatos()
-
-    for cancion in Cancion.getCancionesDisponibles():
-        print(cancion)
-    for artista in Artista.getArtistasDisponibles():
-        print(artista)
-    for usuario in Usuario.getUsuariosExistentes():
-        print(usuario)
+    main()
     
     # Serializador.serializarDatos()
