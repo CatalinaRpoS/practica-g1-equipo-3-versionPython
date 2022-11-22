@@ -11,8 +11,8 @@ from baseDatos.deserializador import Deserializador
 from interfazGrafica.inicio import Inicio
 
 def main():
-    mi_app = Inicio()
-    mi_app.mainloop()
+    aplicacion = Inicio()
+    aplicacion.mainloop()
     return 0
 
 if __name__=="__main__":

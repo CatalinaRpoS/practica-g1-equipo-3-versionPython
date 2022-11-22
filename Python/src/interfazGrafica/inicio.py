@@ -61,61 +61,61 @@ class FrameIzquierda(tk.Frame):
         self.__p3.grid(row = 0, column = 0, pady = (10,10))
 
 class FrameDerecha(tk.Frame):
-    _posicion_imagen = [(0, 0), (0, 1), (1, 0), (1, 1)]
+    __posicion_imagen = [(0, 0), (0, 1), (1, 0), (1, 1)]
 
     def __init__(self, ventana):
         super().__init__(ventana)
         
-        self._p5 = tk.Frame(self)
-        self._p6 = tk.Frame(self)
+        self.__p5 = tk.Frame(self)
+        self.__p6 = tk.Frame(self)
 
-        self._text = None
-        self._next_cf = 0
-        self._fotos = [None, None, None, None]
-        self._labels = []
+        self.__text = None
+        self.__next_cf = 0
+        self.__fotos = [None, None, None, None]
+        self.__labels = []
 
 
         self.cargarCFTexto(0)
         
         for i in range(0, 4):
-            label = tk.Label(self._p6, width = 320, height = 240)
-            (r, c) = FrameDerecha._posicion_imagen[i]
-            label.grid(row=r, column=c)
-            self._labels.append(label)
+            label = tk.Label(self.__p6, width = 320, height = 240)
+            (r, c) = FrameDerecha.__posicion_imagen[i]
+            label.grid(row = r, column = c)
+            self.__labels.append(label)
             # Se cargan las primeras imagenes
             self.cargarCFImagen(0, i)
 
 
-        self._p5.grid()
-        self._p6.grid()
+        self.__p5.grid()
+        self.__p6.grid()
 
     # Se usa para mostrar la hoja de vida que sigue, aumentando el atributo next_hv
     def proximo(self, _):
-        if self._next_cf < 4:
-            self._next_cf = self._next_cf + 1
+        if self.__next_cf < 4:
+            self.__next_cf = self.__next_cf + 1
         else:
-            self._next_cf = 0
+            self.__next_cf = 0
 
         self._fotos = [None, None, None, None]
-        self.cargarCFTexto(self._next_cf)
+        self.cargarCFTexto(self.__next_cf)
         for i in range(0, 4):
-            self.cargarCFImagen(self._next_cf, i)
+            self.cargarCFImagen(self.__next_cf, i)
 
 
     def cargarCFImagen(self, cf_num, numero):
         path = os.path.join(pathlib.Path(__file__).parent.parent.parent.absolute(),'src\\contenidoGrafico\CF{0}{1}.png'.format(cf_num, numero))
         foto = tk.PhotoImage(file = path)
-        self._labels[numero].configure(image = foto)
-        self._labels[numero].image = foto
+        self.__labels[numero].configure(image = foto)
+        self.__labels[numero].image = foto
 
     # Carga el texto para la hoja de vida respecto al numero asignado
 
     def cargarCFTexto(self, numero):
-        self._text = tk.Text(self._p5, height = 10, font = ("Verdana",10), width = 80)
-        self._text.grid(row = 1, column = 0)
-        self._text.bind('<Button-1>', self.proximo)
+        self.__text = tk.Text(self.__p5, height = 10, font = ("Verdana",10), width = 80)
+        self.__text.grid(row = 1, column = 0)
+        self.__text.bind('<Button-1>', self.proximo)
 
         path = os.path.join(pathlib.Path(__file__).parent.parent.parent.absolute(),'src\\contenidoGrafico\CF{0}4.txt'.format(numero))
 
         with open(path, "r+") as cf_text:
-            self._text.insert(tk.INSERT, cf_text.read())
+            self.__text.insert(tk.INSERT, cf_text.read())
