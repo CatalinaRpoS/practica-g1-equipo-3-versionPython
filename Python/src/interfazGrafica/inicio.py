@@ -36,7 +36,8 @@ class Inicio(tk.Tk):
         self.__frameDerecha.grid(row = 0, column = 1, padx = (10,10))
 
     def descripcion(self):
-        self.__frameIzquierda.__descripcion.pack(pady=(10,0))
+        print("Hola")
+        self.__frameIzquierda.descripcion.pack(pady=(10,0))
         self.geometry("1420x840")
 
         
@@ -56,8 +57,9 @@ class FrameIzquierda(tk.Frame):
         self.__saludo.pack()
 
         # Descripción del sistema
-        descripcion = "Spotifree es un gestor de música del que se puede hacer uso ingresando como usuario. \nCada usuario tiene una colección en la que puede administrar sus listas de reproducción, agregando y eliminando canciones."
-        self.__descripcion = tk.Label(self.__p3, text = descripcion, width = 80, justify = "left", font=("Verdana", 8))
+        descripcion = f"Spotifree es un gestor de música del que se puede hacer uso ingresando como usuario. \nCada usuario tiene una colección en la que puede administrar sus listas de reproducción, agregando y eliminando canciones."
+        self.descripcion = tk.Label(self.__p3, text = descripcion, width = 80, justify = "left", font=("Verdana", 8))
+        
         self.__p3.grid(row = 0, column = 0, pady = (10,10))
 
 class FrameDerecha(tk.Frame):
