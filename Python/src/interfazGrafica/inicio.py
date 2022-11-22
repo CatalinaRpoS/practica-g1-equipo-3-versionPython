@@ -15,12 +15,16 @@ class Inicio(tk.Tk):
         self.option_add("*tearOff",  False)
 
         # Para que la ventana se ajuste al tamaño de la pantalla y esté centrada
-        ancho = self.winfo_screenwidth()
-        alto = self.winfo_screenheight()
-        ancho_total = round(ancho/2 - ancho/2)
-        alto_total = round(alto/2 - alto/2)
-
-        self.geometry(str(ancho)+"x"+str(alto)+"+"+str(ancho_total)+"+"+str(alto_total))
+        ancho_total = self.winfo_screenwidth()
+        alto_total = self.winfo_screenheight()
+        ancho_ventana = 1100
+        alto_ventana = 840
+        
+        # Aplicamos la siguiente formula para calcular donde debería posicionarse
+        ancho = round(ancho_total/2 - ancho_ventana/2)
+        alto = round(alto_total/2 - alto_ventana/2)
+        
+        self.geometry(str(ancho_ventana )+"x"+str(alto_ventana)+"+"+str(ancho)+"+"+str(alto))
         
         # Creación de la barra de menú
         self.__menu = tk.Menu(self)
