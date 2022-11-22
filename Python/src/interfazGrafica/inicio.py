@@ -13,18 +13,9 @@ class Inicio(tk.Tk):
 
         # Para eliminar las líneas punteadas de la barra de menú
         self.option_add("*tearOff",  False)
+        #Para crear la pantalla de tamaño completo
+        self.attributes('-fullscreen', True) 
 
-        # Para que la ventana se ajuste al tamaño de la pantalla y esté centrada
-        ancho_total = self.winfo_screenwidth()
-        alto_total = self.winfo_screenheight()
-        ancho_ventana = 1100
-        alto_ventana = 840
-        
-        # Aplicamos la siguiente formula para calcular donde debería posicionarse
-        ancho = round(ancho_total/2 - ancho_ventana/2)
-        alto = round(alto_total/2 - alto_ventana/2)
-        
-        self.geometry(str(ancho_ventana )+"x"+str(alto_ventana)+"+"+str(ancho)+"+"+str(alto))
         
         # Creación de la barra de menú
         self.__menu = tk.Menu(self)
@@ -61,8 +52,8 @@ class FrameIzquierda(tk.Frame):
         self.__saludo.pack()
 
         # Descripción del sistema
-        descripcion = f"Spotifree es un gestor de música del que se puede hacer uso ingresando como usuario. \nCada usuario tiene una colección en la que puede administrar sus listas de reproducción, agregando y eliminando canciones."
-        self.descripcion = tk.Label(self.__p3, text = descripcion, width = 80, justify = "left", font=("Verdana", 8))
+        descripcion = f"Spotifree es un gestor de música del que se puede hacer uso ingresando como usuario. \nCada usuario tiene una colección en la que puede administrar sus listas de reproducción, \nagregando y eliminando canciones."
+        self.descripcion = tk.Label(self.__p3, text = descripcion, width = 85, justify = "left", font=("Verdana", 8))
         
         self.__p3.grid(row = 0, column = 0, pady = (10,10))
 
