@@ -15,17 +15,21 @@ class Inicio(tk.Tk):
         self.option_add("*tearOff",  False)
 
         # Para que la ventana se ajuste al tamaño de la pantalla y esté centrada
-        ancho = self.winfo_screenwidth()
-        alto = self.winfo_screenheight()
-        ancho_total = round(ancho/2 - ancho/2)
-        alto_total = round(alto/2 - alto/2)
-
-        self.geometry(str(ancho)+"x"+str(alto)+"+"+str(ancho_total)+"+"+str(alto_total))
+        ancho_total = self.winfo_screenwidth()
+        alto_total = self.winfo_screenheight()
+        ancho_ventana = 1100
+        alto_ventana = 840
+        
+        # Aplicamos la siguiente formula para calcular donde debería posicionarse
+        ancho = round(ancho_total/2 - ancho_ventana/2)
+        alto = round(alto_total/2 - alto_ventana/2)
+        
+        self.geometry(str(ancho_ventana )+"x"+str(alto_ventana)+"+"+str(ancho)+"+"+str(alto))
         
         # Creación de la barra de menú
         self.__menu = tk.Menu(self)
         menu_inicio =tk.Menu(self.__menu)
-        menu_inicio.add_command(label = "Descripcion", command = lambda: print("Descripción"))
+        menu_inicio.add_command(label = "Descripcion", command = lambda: self.descripcion())
         menu_inicio.add_command(label = "Salir", command = lambda: self.destroy())
         self.__menu.add_cascade(label = "Inicio", menu = menu_inicio)
         self.config(menu = self.__menu)
@@ -35,6 +39,12 @@ class Inicio(tk.Tk):
         self.__frameIzquierda.grid(row = 0, column = 0, padx = (10,10))
         self.__frameDerecha.grid(row = 0, column = 1, padx = (10,10))
 
+    def descripcion(self):
+        print("Hola")
+        self.__frameIzquierda.descripcion.pack(pady=(10,0))
+        self.geometry("1420x840")
+
+        
 class FrameIzquierda(tk.Frame):
 
     def __init__(self, ventana):
@@ -44,15 +54,16 @@ class FrameIzquierda(tk.Frame):
         self.__p4_1 = tk.Frame(self)
         self.__p4_2 = tk.Frame(self)
 
+
         # Saludo de bienvenida
         saludo = "¡Bienvenido a Spotifree!"
         self.__saludo = tk.Label(self.__p3, text = saludo, font = ("Segoe Print", 20), fg = "#2C34FA")
         self.__saludo.pack()
 
         # Descripción del sistema
-        descripcion = "Spotifree es un gestor de música del que se puede hacer uso ingresando como usuario. \nCada usuario tiene una colección en la que puede administrar sus listas de reproducción, agregando y eliminando canciones."
-        self.__descripcion = tk.Label(self.__p3, text = descripcion, width = 100, justify = "left", font=("Verdana", 8))
-        self.__descripcion.pack()
+        descripcion = f"Spotifree es un gestor de música del que se puede hacer uso ingresando como usuario. \nCada usuario tiene una colección en la que puede administrar sus listas de reproducción, agregando y eliminando canciones."
+        self.descripcion = tk.Label(self.__p3, text = descripcion, width = 80, justify = "left", font=("Verdana", 8))
+        
         self.__p3.grid(row = 0, column = 0, pady = (10,10))
 
 class FrameDerecha(tk.Frame):
