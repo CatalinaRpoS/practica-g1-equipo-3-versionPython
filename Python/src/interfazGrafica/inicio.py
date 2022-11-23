@@ -28,6 +28,12 @@ class Inicio(tk.Tk):
         self.__menu.add_cascade(label = "Inicio", menu = menu_inicio)
         self.config(menu = self.__menu)
      
+        saludo = "¡Bienvenido a Spotifree!"
+        self.__saludo = tk.Label(self, text = saludo, font = ("Segoe Print", 20), fg = "#2C34FA")
+        self.__saludo.grid(row=0,column=0)
+
+        frameDerecha = FrameDerecha(self)
+        frameDerecha.grid(row = 0,column=1)
 
     def descripcion(self):
 
@@ -91,9 +97,9 @@ class FrameDerecha(tk.Frame):
         
         for i in range(0, 4):
             label = tk.Label(self._p6, width = round(self.ancho_total/4), height = round(self.alto_total/3))
-            (r, c) = FrameDerecha._posicion_imagen[i]
+            (r, c) = FrameDerecha.__posicion_imagen[i]
             label.grid(row=r, column=c)
-            self._labels.append(label)
+            self.__labels.append(label)
             # Se cargan las primeras imagenes
             self.cargarCFImagen(0, i)
 
@@ -122,9 +128,9 @@ class FrameDerecha(tk.Frame):
     # Carga el texto para la hoja de vida respecto al numero asignado
 
     def cargarCFTexto(self, numero):
-        self._text = tk.Text(self._p5, height = 10, font = ("Verdana",10), width = 80, border= False)
-        self._text.grid(row = 1, column = 0)
-        self._text.bind('<Button-1>', self.proximo)
+        self.__text = tk.Text(self._p5, height = 10, font = ("Verdana",10), width = 80, border= False)
+        self.__text.grid(row = 1, column = 0)
+        self.__text.bind('<Button-1>', self.proximo)
 
         path = os.path.join(pathlib.Path(__file__).parent.parent.parent.absolute(),'src\\contenidoGrafico\CF{0}4.txt'.format(numero))
 
