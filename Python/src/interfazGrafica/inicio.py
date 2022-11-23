@@ -70,7 +70,7 @@ class FrameIzquierda(tk.Frame):
 
 
 class FrameDerecha(tk.Frame):
-    _posicion_imagen = [(0, 0), (0, 1), (1, 0), (1, 1)]
+    __posicion_imagen = [(0, 0), (0, 1), (1, 0), (1, 1)]
 
     def __init__(self, ventana):
 
@@ -82,10 +82,10 @@ class FrameDerecha(tk.Frame):
         self._p5 = tk.Frame(self,width=round(self.ancho_total/2), height=self.alto_total)
         self._p6 = tk.Frame(self,width=round(self.ancho_total/2), height=self.alto_total)
 
-        self._text = None
-        self._next_cf = 0
-        self._fotos = [None, None, None, None]
-        self._labels = []
+        self.__text = None
+        self.__next_cf = 0
+        self.__fotos = [None, None, None, None]
+        self.__labels = []
 
         self.cargarCFTexto(0)
         
@@ -102,22 +102,22 @@ class FrameDerecha(tk.Frame):
 
     # Se usa para mostrar la hoja de vida que sigue, aumentando el atributo next_hv
     def proximo(self, _):
-        if self._next_cf < 4:
-            self._next_cf = self._next_cf + 1
+        if self.__next_cf < 4:
+            self.__next_cf = self.__next_cf + 1
         else:
-            self._next_cf = 0
+            self.__next_cf = 0
 
         self._fotos = [None, None, None, None]
-        self.cargarCFTexto(self._next_cf)
+        self.cargarCFTexto(self.__next_cf)
         for i in range(0, 4):
-            self.cargarCFImagen(self._next_cf, i)
+            self.cargarCFImagen(self.__next_cf, i)
 
 
     def cargarCFImagen(self, cf_num, numero):
         path = os.path.join(pathlib.Path(__file__).parent.parent.parent.absolute(),'src\\contenidoGrafico\CF{0}{1}.png'.format(cf_num, numero))
         foto = tk.PhotoImage(file = path)
-        self._labels[numero].configure(image = foto)
-        self._labels[numero].image = foto
+        self.__labels[numero].configure(image = foto)
+        self.__labels[numero].image = foto
 
     # Carga el texto para la hoja de vida respecto al numero asignado
 
@@ -129,4 +129,4 @@ class FrameDerecha(tk.Frame):
         path = os.path.join(pathlib.Path(__file__).parent.parent.parent.absolute(),'src\\contenidoGrafico\CF{0}4.txt'.format(numero))
 
         with open(path, "r+") as cf_text:
-            self._text.insert(tk.INSERT, cf_text.read())
+            self.__text.insert(tk.INSERT, cf_text.read())
