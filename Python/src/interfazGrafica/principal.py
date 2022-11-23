@@ -1,4 +1,5 @@
 import tkinter as tk
+from baseDatos.serializador import Serializador
 
 class Principal(tk.Tk):
 
@@ -17,20 +18,21 @@ class Principal(tk.Tk):
 
         # MENUUUUUUUUUUS :D
 
-        self.__menubar = tk.Menu(self)
-        self.config(menu= self.__menubar)
+        menubar = tk.Menu(self)
+        
+        menuArchivo = tk.Menu(menubar, tearoff = 0)
+        menubar.add_cascade(label = "Archivo", menu = menuArchivo)
+        menuProceso = tk.Menu(menubar, tearoff = 0)
+        menubar.add_cascade(label= "Procesos y Consultas", menu = menuProceso)
+        menuAyuda = tk.Menu(menubar, tearoff= 0)
+        menubar.add_cascade(label= "Ayuda", menu = menuAyuda)
 
-        menuArchivo = tk.Menu(self.__menubar, tearoff= 0)
-        self.__menubar.add_cascade(label= "Archivo", menu= menuArchivo)
-        menuProceso = tk.Menu(self.__menubar, tearoff= 0)
-        self.__menubar.add_cascade(label= "Procesos y Consultas", menu= menuProceso)
-        menuAyuda = tk.Menu(self.__menubar, tearoff= 0)
-        self.__menubar.add_cascade(label= "Ayuda", menu= menuAyuda)
+        self.config(menu = menubar)
 
         # COMANDOOOOOOOOOOOOS OwO
 
         menuArchivo.add_command(label= "Aplicacion")
-        menuArchivo.add_command(label= "Salir")
+        menuArchivo.add_command(label= "Salir", command = self.abrirVentanaInicio)
 
         menuProceso.add_command(label = "Crear usuario")
         menuProceso.add_command(label = "Crear artista")
@@ -40,14 +42,9 @@ class Principal(tk.Tk):
         menuProceso.add_command(label = "Acceder")
 
         menuAyuda.add_command(label = "Acerca de")
-        
-
-
-
-        
-
-
-principal = Principal()
-principal.mainloop()
-
-        
+    
+    def abrirVentanaInicio(self):
+        from interfazGrafica.inicio import Inicio
+        Serializador.serializarDatos()
+        self.destroy()
+        Inicio()
