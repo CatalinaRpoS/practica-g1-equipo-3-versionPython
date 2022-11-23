@@ -6,8 +6,8 @@ class Principal(tk.Tk):
     def __init__(self):
 
         super().__init__()
-        self.title = "Spotifree"
-        self.resizable(0, 0)
+        self.title("Spotifree")
+        self.resizable(False, False)
         
         ancho_total = self.winfo_screenwidth()
         alto_total = self.winfo_screenheight()
@@ -21,27 +21,27 @@ class Principal(tk.Tk):
         menubar = tk.Menu(self)
         
         menuArchivo = tk.Menu(menubar, tearoff = 0)
-        menubar.add_cascade(label = "Archivo", menu = menuArchivo)
-        menuProceso = tk.Menu(menubar, tearoff = 0)
-        menubar.add_cascade(label= "Procesos y Consultas", menu = menuProceso)
-        menuAyuda = tk.Menu(menubar, tearoff= 0)
-        menubar.add_cascade(label= "Ayuda", menu = menuAyuda)
+        menubar.add_cascade(label="Archivo", menu=menuArchivo)
+        menuProceso = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="Procesos y Consultas", menu=menuProceso)
+        menuAyuda = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="Ayuda", menu=menuAyuda)
 
         self.config(menu = menubar)
 
         # COMANDOOOOOOOOOOOOS OwO
 
-        menuArchivo.add_command(label= "Aplicacion")
-        menuArchivo.add_command(label= "Salir", command = self.abrirVentanaInicio)
+        menuArchivo.add_command(label="Aplicacion")
+        menuArchivo.add_command(label="Salir", command=self.abrirVentanaInicio)
 
-        menuProceso.add_command(label = "Crear usuario")
-        menuProceso.add_command(label = "Crear artista")
-        menuProceso.add_command(label = "Mostrar usuario")
-        menuProceso.add_command(label = "Mostrar artista")
-        menuProceso.add_command(label = "Mostrar cancion")
-        menuProceso.add_command(label = "Acceder")
+        menuProceso.add_command(label="Crear usuario")
+        menuProceso.add_command(label="Crear artista")
+        menuProceso.add_command(label="Mostrar usuario")
+        menuProceso.add_command(label="Mostrar artista")
+        menuProceso.add_command(label="Mostrar cancion")
+        menuProceso.add_command(label="Acceder")
 
-        menuAyuda.add_command(label = "Acerca de")
+        menuAyuda.add_command(label="Acerca de")
 
         #FRAAAAAAAAAAAME
         self.__frames = []
@@ -54,10 +54,6 @@ class Principal(tk.Tk):
 
         frame.pack_forget() #La cosa esa no funciona >:v
 
-        
-        
-
-    
     def abrirVentanaInicio(self):
         from interfazGrafica.inicio import Inicio
         Serializador.serializarDatos()
