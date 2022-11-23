@@ -40,14 +40,17 @@ class Principal(tk.Tk):
         menuProceso.add_command(label = "Acceder")
 
         menuAyuda.add_command(label = "Acerca de")
+
+        #FRAAAAAAAAAAAME
+        self.__frames = []
+    
+    def añadirFrame(self, frame: tk.Frame):
+
+        self.__frames.append(frame)
+
+    def cambiarFrame(self, frame):
+
+        frame.pack_forget() #La cosa esa no funciona >:v
+
         
-
-
-
-        
-
-
-principal = Principal()
-principal.mainloop()
-
         
