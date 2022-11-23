@@ -17,7 +17,7 @@ class Inicio(tk.Tk):
         ancho_total = self.winfo_screenwidth()
         alto_total = self.winfo_screenheight()
 
-        self.geometry(str(ancho_total )+"x"+str(alto_total))
+        self.geometry(str(ancho_total)+"x"+str(alto_total))
 
         
         # Creación de la barra de menú
@@ -34,9 +34,13 @@ class Inicio(tk.Tk):
         self.__frameDerecha.grid(row = 0, column = 1, padx = (10,10))
 
     def descripcion(self):
+
+        ancho_total = self.winfo_screenwidth()
+        alto_total = self.winfo_screenheight()
+
         print("Hola")
         self.__frameIzquierda.descripcion.pack(pady=(10,0))
-        self.geometry("1420x840")
+        self.geometry(str(ancho_total/2)+"x"+str(alto_total))
 
         
 class FrameIzquierda(tk.Frame):
