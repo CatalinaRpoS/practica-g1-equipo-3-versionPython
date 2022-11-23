@@ -1,6 +1,7 @@
 import tkinter as tk
 import pathlib
 import os
+from interfazGrafica.principal import principal
 
 class Inicio(tk.Tk):
 
