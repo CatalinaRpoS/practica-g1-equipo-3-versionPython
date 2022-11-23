@@ -6,11 +6,11 @@ from gestorAplicacion.gestorMusica.genero import Genero
 from gestorAplicacion.gestorPersonas.persona import Persona
 from gestorAplicacion.gestorPersonas.usuario import Usuario
 from gestorAplicacion.gestorPersonas.artista import Artista
-from baseDatos.serializador import Serializador
 from baseDatos.deserializador import Deserializador
 from interfazGrafica.inicio import Inicio
 
 def main():
+    Deserializador.deserializarDatos()
     aplicacion = Inicio()
     aplicacion.mainloop()
     return 0
