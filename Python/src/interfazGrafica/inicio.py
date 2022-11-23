@@ -1,7 +1,7 @@
 import tkinter as tk
 import pathlib
 import os
-from interfazGrafica.principal import principal
+from interfazGrafica.principal import Principal
 
 class Inicio(tk.Tk):
 
@@ -61,7 +61,7 @@ class FrameIzquierda(tk.Frame):
         self.alto_total = self.winfo_screenheight()
 
         self.__p3 = tk.Frame(self, width=round(self.ancho_total/2)-10)
-
+        self.__p42 = tk.Frame(self, width=round(self.ancho_total/2)-10)
         # Saludo de bienvenida
         saludo = "¡Bienvenido a Spotifree!"
         self.__saludo = tk.Label(self.__p3, text = saludo, font = ("Segoe Print", 20), fg = "#2C34FA")
@@ -70,11 +70,18 @@ class FrameIzquierda(tk.Frame):
         # Descripción del sistema
         descripcion = f"Spotifree es un gestor de música del que se puede hacer uso ingresando como usuario. \nCada usuario tiene una colección en la que puede administrar sus listas de reproducción, \nagregando y eliminando canciones."
         self.descripcion = tk.Label(self.__p3, text = descripcion, width = 90, justify = "left", font=("Verdana", 8))
-        self.descripcion.grid(row=1,column=0)
+        #self.descripcion.grid(row=1,column=0)
+
+        self._boton = tk.Button(self.__p42, text = "Acceder a la aplicacion", font = ("Verdana", 16), fg = "white", bg = "#2C34FA", command = self.abrirVentanaPrincipal())
+        self._boton.pack()
 
         self.__p3.grid(row = 0, column = 0)
+        self.__p42.grid(row = 2, column = 0, pady=(10,10))
+        
     
-
+    def abrirVentanaPrincipal(self):
+        self.ventana.destroy()
+        Principal()
 
 class FrameDerecha(tk.Frame):
     __posicion_imagen = [(0, 0), (0, 1), (1, 0), (1, 1)]
