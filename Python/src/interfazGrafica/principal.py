@@ -50,9 +50,12 @@ class Principal(tk.Tk):
 
         self.__frames.append(frame)
 
-    def cambiarFrame(self, frame):
-
-        frame.pack_forget() #La cosa esa no funciona >:v
+    def cambiarFrame(self, frameUtilizado: tk.Frame):
+        
+        for frame in self.__frames:
+            frame.pack_forget()
+        
+        frameUtilizado.pack(expand=True, pady = (10,10))
 
     def abrirVentanaInicio(self):
         from interfazGrafica.inicio import Inicio

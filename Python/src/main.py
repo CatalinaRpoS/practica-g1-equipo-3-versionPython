@@ -8,6 +8,7 @@ from gestorAplicacion.gestorPersonas.usuario import Usuario
 from gestorAplicacion.gestorPersonas.artista import Artista
 from baseDatos.deserializador import Deserializador
 from interfazGrafica.inicio import Inicio
+from interfazGrafica.mostarlista import MostrarLista
 
 def main():
     Deserializador.deserializarDatos()
