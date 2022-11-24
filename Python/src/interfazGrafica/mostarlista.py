@@ -14,7 +14,7 @@ class MostrarLista(tk.Frame):
 
         parent= tk.Label(self)
         parent.pack()
-        # INSTRUCCIONCITAS :3
+        # Instrucciones
 
         label1 = tk.Label(parent, text = "Mostrar Lista", font = ("Segoe Print", 25), fg = "#2C34FA")
         label1.grid(row=0, column= 0, pady = 10)
@@ -27,7 +27,7 @@ Selecciona REPRODUCIR para escuchar tu lista"""
         label2 = tk.Label(parent, text= texto, justify = "center", font = ("Verdana", 10))
         label2.grid(row=1, column=0, pady = 10)
         
-        #BOTONCITOS nwn
+        #Botones
 
         buttonParent = tk.Label(parent)
         buttonParent.grid(row=2, column= 0, pady = 10)
@@ -44,7 +44,7 @@ Selecciona REPRODUCIR para escuchar tu lista"""
         button4 = tk.Button(buttonParent, text = "REPRODUCIR", font = ("Verdana", 16), fg = "white", bg = "#2C34FA", width= 12)
         button4.pack(side=tk.LEFT, padx= 5)
 
-        #OUTPUT
+        #Output
 
         output = tk.Text(parent, border= False, width= 100)
         output.grid(row = 3, column= 0, pady = 10)

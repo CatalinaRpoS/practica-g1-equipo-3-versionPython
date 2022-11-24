@@ -1,5 +1,6 @@
 import tkinter as tk
 from baseDatos.serializador import Serializador
+from tkinter import messagebox
 
 class Principal(tk.Tk):
 
@@ -16,7 +17,7 @@ class Principal(tk.Tk):
 
         self.geometry(str(ancho_total )+"x"+str(alto_total)+"+"+"0"+"+"+"0")
 
-        # MENUUUUUUUUUUS :D
+        # Menu
 
         menubar = tk.Menu(self)
         
@@ -29,9 +30,9 @@ class Principal(tk.Tk):
 
         self.config(menu = menubar)
 
-        # COMANDOOOOOOOOOOOOS OwO
+        # Comandos
 
-        menuArchivo.add_command(label="Aplicacion")
+        menuArchivo.add_command(label="Aplicacion",command=self.informacionApp)
         menuArchivo.add_command(label="Salir", command=self.abrirVentanaInicio)
 
         menuProceso.add_command(label="Crear usuario")
@@ -43,10 +44,14 @@ class Principal(tk.Tk):
 
         menuAyuda.add_command(label="Acerca de")
 
-        #FRAAAAAAAAAAAME
+        #Frame
         self.__frames = []
-    
-    def añadirFrame(self, frame: tk.Frame):
+        
+    def informacionApp(self):
+        messagebox.showinfo("Spotifree","Spotifree es un gestor de musica. Donde el usuario podra agregar a sus artistas favoritas y sus canciones, a la misma que puede crear listas con canciones disponibles en la aplicacion. Aparte podra disfrutar de 5 funciones unicas para descubrir nuevas experiencias.")
+
+
+    def agregarFrame(self, frame: tk.Frame):
 
         self.__frames.append(frame)
 
