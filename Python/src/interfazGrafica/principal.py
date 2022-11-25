@@ -1,6 +1,5 @@
 import tkinter as tk
 from baseDatos.serializador import Serializador
-from tkinter import messagebox
 
 class Principal(tk.Tk):
 
@@ -42,14 +41,44 @@ class Principal(tk.Tk):
         menuProceso.add_command(label="Mostrar cancion")
         menuProceso.add_command(label="Acceder")
 
-        menuAyuda.add_command(label="Acerca de")
+        menuAyuda.add_command(label="Acerca de",command=self.integrantes)
 
         #Frame
         self.__frames = []
         
     def informacionApp(self):
-        messagebox.showinfo("Spotifree","Spotifree es un gestor de musica. Donde el usuario podra agregar a sus artistas favoritas y sus canciones, a la misma que puede crear listas con canciones disponibles en la aplicacion. Aparte podra disfrutar de 5 funciones unicas para descubrir nuevas experiencias.")
+        ventanaDialogo=tk.Toplevel(self)
+        window_height = 220
+        window_width = 800
 
+        screen_width = ventanaDialogo.winfo_screenwidth()
+        screen_height = ventanaDialogo.winfo_screenheight()
+
+        x= int((screen_width/2) - (window_width/2))
+        y= int((screen_height/2) - (window_height/2))
+
+        ventanaDialogo.geometry("{}x{}+{}+{}".format(window_width, window_height, x, y))
+        ventanaDialogo.title("Spotifree")
+        txt="Spotifree es un gestor de musica.\nDonde el usuario podra agregar a sus artistas favoritas y sus canciones,\na la misma que puede crear listas con canciones disponibles en la aplicacion.\nAparte podra disfrutar de 5 funciones unicas para descubrir nuevas experiencias."
+        info=tk.Label(ventanaDialogo,text=txt,justify = "center",font=("Verdana", 12))
+        info.pack(fill=tk.Y, expand=True)
+
+    def integrantes(self):
+        ventanaIntegrantes=tk.Toplevel(self)
+        window_height = 220
+        window_width = 400
+
+        screen_width = ventanaIntegrantes.winfo_screenwidth()
+        screen_height = ventanaIntegrantes.winfo_screenheight()
+
+        x= int((screen_width/2) - (window_width/2))
+        y= int((screen_height/2) - (window_height/2))
+
+        ventanaIntegrantes.geometry("{}x{}+{}+{}".format(window_width, window_height, x, y))
+        ventanaIntegrantes.title("Spotifree")
+        txt="Autores:\n Miller Johan Chica Acero\nCatalina Restrepo Salgado\nCarolina Alvarez Murillo\nTomas Rodriguez Taborda\nJeronimo Ledesma Patiño"
+        info=tk.Label(ventanaIntegrantes,text=txt,justify = "center",font=("Verdana", 12))
+        info.pack(fill=tk.Y, expand=True)
 
     def agregarFrame(self, frame: tk.Frame):
 
