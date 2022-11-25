@@ -9,7 +9,7 @@ class Principal2(tk.Tk):
     def __init__(self, usuario):
         super().__init__()
         self.usuario=usuario
-        self.title("Biblioteca de {}".format(self.usuario.getNombre()))
+        self.title("Coleccion de {}".format(self.usuario.getNombre()))
         self.option_add('*tearOff', False)
         self.resizable(False, False)
 
