@@ -34,20 +34,20 @@ class Principal(tk.Tk):
             texto.pack(fill=tk.X, expand=True, padx=(10,10))
        
        def informacionAplicacion():
-            ventanaDialogo = tk.Tk()
-            window_height = 220
-            window_width = 800
+          ventanaDialogo = tk.Tk()
+          window_height = 220
+          window_width = 800
             
-            screen_width = ventanaDialogo.winfo_screenwidth()
-            screen_height = ventanaDialogo.winfo_screenheight()
-            x = int((screen_width/2) - (window_width/2))
-            y = int((screen_height/2) - (window_height/2))
+          screen_width = ventanaDialogo.winfo_screenwidth()
+          screen_height = ventanaDialogo.winfo_screenheight()
+          x = int((screen_width/2) - (window_width/2))
+          y = int((screen_height/2) - (window_height/2))
             
-            ventanaDialogo.geometry("{}x{}+{}+{}".format(window_width, window_height, x, y))
-            ventanaDialogo.title("Spotifree")
-            txt = "Spotifree es un gestor de musica.\nDonde el usuario podra agregar a sus artistas favoritas y sus canciones,\na la misma que puede crear listas con canciones disponibles en la aplicacion.\nAparte podra disfrutar de 5 funciones unicas para descubrir nuevas experiencias."
-            info = tk.Label(ventanaDialogo, text=txt, justify="center", font=("Verdana", 12))
-            info.pack(fill=tk.Y, expand=True)
+          ventanaDialogo.geometry("{}x{}+{}+{}".format(window_width, window_height, x, y))
+          ventanaDialogo.title("Spotifree")
+          txt = "Spotifree es un gestor de musica.\nDonde el usuario podra agregar a sus artistas favoritas y sus canciones,\na la misma que puede crear listas con canciones disponibles en la aplicacion.\nAparte podra disfrutar de 5 funciones unicas para descubrir nuevas experiencias."
+          info = tk.Label(ventanaDialogo, text=txt, justify="center", font=("Verdana", 12))
+          info.pack(fill=tk.Y, expand=True)
 
        def autores():
             ventanaIntegrantes = tk.Tk()
@@ -108,8 +108,9 @@ class Principal(tk.Tk):
               resultado="El usuario no existe"
               mostrarSalida(resultado,outputBiblioteca)
           else:
+               from interfazGrafica.principal2 import Principal2
                self.destroy()
-               # Aquí va la ventana del usuario
+               Principal2(usuario)
                              
        #FieldFrame para abrir biblioteca
        frameBiblioteca= tk.Frame(self)
