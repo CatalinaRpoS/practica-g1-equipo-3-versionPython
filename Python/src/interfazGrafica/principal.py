@@ -3,6 +3,10 @@ from baseDatos.serializador import Serializador
 
 class Principal(tk.Tk):
 
+    #Frame
+    frames = []
+        
+
     def __init__(self):
 
         super().__init__()
@@ -43,8 +47,6 @@ class Principal(tk.Tk):
 
         menuAyuda.add_command(label="Acerca de",command=self.integrantes)
 
-        #Frame
-        self.__frames = []
         
     def informacionApp(self):
         ventanaDialogo=tk.Toplevel(self)
@@ -79,14 +81,10 @@ class Principal(tk.Tk):
         txt="Autores:\n Miller Johan Chica Acero\nCatalina Restrepo Salgado\nCarolina Alvarez Murillo\nTomas Rodriguez Taborda\nJeronimo Ledesma Patiño"
         info=tk.Label(ventanaIntegrantes,text=txt,justify = "center",font=("Verdana", 12))
         info.pack(fill=tk.Y, expand=True)
-
-    def agregarFrame(self, frame: tk.Frame):
-
-        self.__frames.append(frame)
-
-    def cambiarFrame(self, frameUtilizado: tk.Frame):
+    
+    def cambiarFrame(frameUtilizado):
         
-        for frame in self.__frames:
+        for frame in Principal.frames:
             frame.pack_forget()
         
         frameUtilizado.pack(expand=True, pady = (10,10))
