@@ -1,6 +1,6 @@
 from tkinter import *
 
-class Fieldframe(Frame):
+class FieldFrame(Frame):
 
     # Constructor
     # tituloCriterios: Titulo para la columna "Criterio" 
@@ -11,14 +11,14 @@ class Fieldframe(Frame):
     
     def __init__(self, ventana, tituloCriterios = "", criterios = None, tituloValores = "", valores = None, habilitado = None):
         super().__init__(ventana)
-        self.__tituloCriterios = tituloCriterios
-        self.__criterios = criterios
-        self.__tituloValores = tituloValores
-        self.__valores = valores
-        self.__habilitado = habilitado
+        self._tituloCriterios = tituloCriterios
+        self._criterios = criterios
+        self._tituloValores = tituloValores
+        self._valores = valores
+        self._habilitado = habilitado
 
         # Lista de elementos
-        self.__elementos = []
+        self._elementos = []
 
         # Crear y colocar titulo de los criterios
         labelTituloCriterios = Label(self, text = tituloCriterios, font= ("Verdana", 14))
@@ -47,14 +47,14 @@ class Fieldframe(Frame):
                 entryValor.configure(state = DISABLED)
             
             # Añadir a la lista de elementos
-            self.__elementos.append(entryValor)
+            self._elementos.append(entryValor)
 
     # GetValue
     # criterio: El criterio cuyo valor se quiere obtener
 
     def getValue(self, criterio):
-        indice = self.__criterios.index(criterio)
-        return self.__elementos[indice].get()
+        indice = self._criterios.index(criterio)
+        return self._elementos[indice].get()
 
     def crearBotones(self, comando1):
         aceptar = Button(self, text="Aceptar", font = ("Verdana", 12), fg = "white", bg = "#007bff", command=comando1).grid(pady = 50, column = 0, row = len(self._criterios)+1)
