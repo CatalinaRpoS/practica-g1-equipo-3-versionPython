@@ -1,5 +1,6 @@
 import tkinter as tk
 from baseDatos.serializador import Serializador
+from interfazGrafica.fieldframe import Fieldframe
 
 class Principal(tk.Tk):
 
@@ -78,10 +79,10 @@ class Principal(tk.Tk):
 
         ventanaIntegrantes.geometry("{}x{}+{}+{}".format(window_width, window_height, x, y))
         ventanaIntegrantes.title("Spotifree")
-        txt="Autores:\n Miller Johan Chica Acero\nCatalina Restrepo Salgado\nCarolina Alvarez Murillo\nTomas Rodriguez Taborda\nJeronimo Ledesma Patiño"
+        txt="Autores:\nMiller Johan Chica Acero\nCatalina Restrepo Salgado\nCarolina Alvarez Murillo\nTomas Rodriguez Taborda\nJeronimo Ledesma Patiño"
         info=tk.Label(ventanaIntegrantes,text=txt,justify = "center",font=("Verdana", 12))
         info.pack(fill=tk.Y, expand=True)
-    
+
     def cambiarFrame(frameUtilizado):
         
         for frame in Principal.frames:
@@ -94,3 +95,9 @@ class Principal(tk.Tk):
         Serializador.serializarDatos()
         self.destroy()
         Inicio()
+
+    #FieldFrame para imiciar sesion de Usuario
+    frameUsuario= tk.Frame(self)
+    nombreElimArtista = tk.Label(frameUsuario, text="", font=("Verdana", 16), fg = "#31a919")
+    descElimArtista = tk.Label(frameUsuario,text="Por favor ingrese el nombre del artista",font=("Verdana", 12))
+    FieldElimArtista = Fieldframe(frameUsuario, None, ["Artista"], None, None, None)

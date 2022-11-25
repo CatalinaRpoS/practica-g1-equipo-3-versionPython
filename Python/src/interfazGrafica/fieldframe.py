@@ -11,14 +11,14 @@ class Fieldframe(Frame):
     
     def __init__(self, ventana, tituloCriterios = "", criterios = None, tituloValores = "", valores = None, habilitado = None):
         super().__init__(ventana)
-        self._tituloCriterios = tituloCriterios
-        self._criterios = criterios
-        self._tituloValores = tituloValores
-        self._valores = valores
-        self._habilitado = habilitado
+        self.__tituloCriterios = tituloCriterios
+        self.__criterios = criterios
+        self.__tituloValores = tituloValores
+        self.__valores = valores
+        self.__habilitado = habilitado
 
         # Lista de elementos
-        self._elementos = []
+        self.__elementos = []
 
         # Crear y colocar titulo de los criterios
         labelTituloCriterios = Label(self, text = tituloCriterios, font= ("Verdana", 14))
@@ -47,14 +47,14 @@ class Fieldframe(Frame):
                 entryValor.configure(state = DISABLED)
             
             # Añadir a la lista de elementos
-            self._elementos.append(entryValor)
+            self.__elementos.append(entryValor)
 
     # GetValue
     # criterio: El criterio cuyo valor se quiere obtener
 
     def getValue(self, criterio):
-        indice = self._criterios.index(criterio)
-        return self._elementos[indice].get()
+        indice = self.__criterios.index(criterio)
+        return self.__elementos[indice].get()
 
     def crearBotones(self, comando1):
         aceptar = Button(self, text="Aceptar", font = ("Verdana", 12), fg = "white", bg = "#007bff", command=comando1).grid(pady = 50, column = 0, row = len(self._criterios)+1)
