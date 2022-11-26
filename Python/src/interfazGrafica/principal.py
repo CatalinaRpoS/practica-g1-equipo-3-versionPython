@@ -3,6 +3,8 @@ from tkinter import messagebox
 from baseDatos.serializador import Serializador
 from interfazGrafica.fieldframe import FieldFrame
 from gestorAplicacion.gestorPersonas.usuario import Usuario
+from gestorAplicacion.gestorPersonas.artista import Artista
+from gestorAplicacion.gestorMusica.cancion import Cancion
 
 class Principal(tk.Tk):
     
@@ -85,8 +87,8 @@ class Principal(tk.Tk):
           menuProceso.add_command(label="Crear Usuario")
           menuProceso.add_command(label="Crear Artista")
           menuProceso.add_command(label="Mostrar Usuarios", command=lambda:cambiarFrame(frameMostrarUsuarios))
-          menuProceso.add_command(label="Mostrar Artistas")
-          menuProceso.add_command(label="Mostrar Canciones")
+          menuProceso.add_command(label="Mostrar Artistas", command=lambda:cambiarFrame(frameMostrarArtistas))
+          menuProceso.add_command(label="Mostrar Canciones", command=lambda:cambiarFrame(frameMostrarCanciones))
           menuProceso.add_command(label="Acceder como Usuario", command=lambda:cambiarFrame(frameUsuario))
       
           menuArchivo.add_command(label="Aplicación", command= lambda: informacionAplicacion())
@@ -110,7 +112,7 @@ class Principal(tk.Tk):
 
           cambiarFrame(frameInicial)
 
-          #Funcion para acceder como usuario
+          # Funcion para acceder como usuario
           def accederUsuario():
                nombre = fieldUsuario.getValue("Nombre")
                usuario = None
@@ -131,7 +133,7 @@ class Principal(tk.Tk):
           fieldUsuario = FieldFrame(frameUsuario, None, ["Nombre"], None, None, None)
           fieldUsuario.crearBotones(accederUsuario)
 
-          salidaUsuario= tk.Text(frameUsuario, height=50, font=("Verdana", 10))
+          salidaUsuario = tk.Text(frameUsuario, height=50, font=("Verdana", 10))
           Principal.frames.append(salidaUsuario)
 
           nombreUsuario.pack()
@@ -148,7 +150,7 @@ class Principal(tk.Tk):
                     texto_usuarios += f"{persona}\n\n"
                if texto_usuarios == "":
                     messagebox.showinfo("Aviso", "¡Nadie se ha registrado aún!")
-               mostrarSalida(texto_usuarios, outputVerUsuarios)
+               mostrarSalida(texto_usuarios, salidaVerUsuarios)
 
           # Frame para mostrar usuarios
 
@@ -157,12 +159,63 @@ class Principal(tk.Tk):
           descMostrarUsuarios = tk.Label(frameMostrarUsuarios, text="Puede que no observes todos los usuarios a la misma vez \nMueve el cursor del mouse para conocer a más personas", font=("Verdana", 12))
           mostrarUsuarios = tk.Button(frameMostrarUsuarios, text="Mostrar usuarios", font=("Verdana", 12), fg="white", bg="#2C34FA", command=mostrarUsuarios)
           
-          outputVerUsuarios= tk.Text(frameMostrarUsuarios, font=("Verdana", 10))
-          Principal.frames.append(frameMostrarUsuarios)
+          salidaVerUsuarios= tk.Text(frameMostrarUsuarios, font=("Verdana", 10))
+          Principal.frames.append(salidaVerUsuarios)
           
           nombreMostrarUsuarios.pack()
           descMostrarUsuarios.pack()
           mostrarUsuarios.pack(pady=(10,10))
           Principal.frames.append(frameMostrarUsuarios)
 
+          # Función para mostrar artistas
+          def mostrarArtistas():
+               texto_artistas = ""
+               artistas = Artista.getArtistasDisponibles()
+               for persona in artistas:
+                    texto_artistas += f"{persona}\n\n"
+               if texto_artistas == "":
+                    messagebox.showinfo("Aviso", "¡Aún no tenemos artistas!")
+               mostrarSalida(texto_artistas, salidaVerArtistas)
+
+          # Frame para mostrar artistas
+
+          frameMostrarArtistas = tk.Frame(self)
+          nombreMostrarArtistas = tk.Label(frameMostrarArtistas, text="Artistas registrados en Spotifree", font=("Segoe Print", 20), fg="#2C34FA")
+          descMostrarArtistas = tk.Label(frameMostrarArtistas, text="Puede que no observes todos los artistas a la misma vez \nMueve el cursor del mouse para conocer a más artistas", font=("Verdana", 12))
+          mostrarArtistas = tk.Button(frameMostrarArtistas, text="Mostrar artistas", font=("Verdana", 12), fg="white", bg="#2C34FA", command=mostrarArtistas)
+          
+          salidaVerArtistas= tk.Text(frameMostrarArtistas, font=("Verdana", 10))
+          Principal.frames.append(salidaVerArtistas)
+          
+          nombreMostrarArtistas.pack()
+          descMostrarArtistas.pack()
+          mostrarArtistas.pack(pady=(10,10))
+          Principal.frames.append(frameMostrarArtistas)
+
+          # Función para mostrar canciones
+          def mostrarCanciones():
+               texto_canciones = ""
+               canciones = Cancion.getCancionesDisponibles()
+               for cancion in canciones:
+                    texto_canciones += f"{cancion.descripcion()}\n\n"
+               if texto_canciones == "":
+                    messagebox.showinfo("Aviso", "¡Todavía no tenemos canciones!")
+               mostrarSalida(texto_canciones, salidaVerCanciones)
+
+          # Frame para mostrar canciones
+
+          frameMostrarCanciones = tk.Frame(self)
+          nombreMostrarCanciones = tk.Label(frameMostrarCanciones, text="Canciones disponibles en Spotifree", font=("Segoe Print", 20), fg="#2C34FA")
+          descMostrarCanciones = tk.Label(frameMostrarCanciones, text="Puede que no observes todas las canciones a la misma vez \nMueve el cursor del mouse para conocer más música", font=("Verdana", 12))
+          mostrarCanciones = tk.Button(frameMostrarCanciones, text="Mostrar canciones", font=("Verdana", 12), fg="white", bg="#2C34FA", command=mostrarCanciones)
+          
+          salidaVerCanciones = tk.Text(frameMostrarCanciones, font=("Verdana", 10))
+          Principal.frames.append(salidaVerCanciones)
+          
+          nombreMostrarCanciones.pack()
+          descMostrarCanciones.pack()
+          mostrarCanciones.pack(pady=(10,10))
+          Principal.frames.append(frameMostrarCanciones)
+          
+          
           self.mainloop()

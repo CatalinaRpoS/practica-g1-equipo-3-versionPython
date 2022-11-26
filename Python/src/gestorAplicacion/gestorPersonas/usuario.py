@@ -38,7 +38,7 @@ class Usuario:
         return lista
 
     def __str__(self):
-        return "Soy " + self.__nombre
+        return "¡Hola! Mi nombre es " + self.__nombre
 
     def topArtista(self):
         contadorRepro = 0
