@@ -1,14 +1,5 @@
-from gestorAplicacion.gestorMusica.cancion import Cancion
-from gestorAplicacion.gestorMusica.coleccion import Coleccion
-from gestorAplicacion.gestorMusica.lista import Lista
-from gestorAplicacion.gestorMusica.meGusta import meGusta
-from gestorAplicacion.gestorMusica.genero import Genero
-from gestorAplicacion.gestorPersonas.persona import Persona
-from gestorAplicacion.gestorPersonas.usuario import Usuario
-from gestorAplicacion.gestorPersonas.artista import Artista
 from baseDatos.deserializador import Deserializador
 from interfazGrafica.inicio import Inicio
-from interfazGrafica.mostarlista import MostrarLista
 
 def main():
     Deserializador.deserializarDatos()

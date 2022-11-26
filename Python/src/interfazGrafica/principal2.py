@@ -9,7 +9,7 @@ class Principal2(tk.Tk):
     def __init__(self, usuario):
         super().__init__()
         self.usuario=usuario
-        self.title("Coleccion de {}".format(self.usuario.getNombre()))
+        self.title("Colección de {}".format(self.usuario.getNombre()))
         self.option_add('*tearOff', False)
         self.resizable(False, False)
 
@@ -37,18 +37,18 @@ class Principal2(tk.Tk):
         
     
         # Barra de menú
-        menuProceso.add_command(label="Mostrar listas")
-        menuProceso.add_command(label="Mostrar favoritos")
+        menuProceso.add_command(label="Mostrar Listas")
+        menuProceso.add_command(label="Mostrar Favoritos")
         menuProceso.add_command(label="Reproducir")
         menuProceso.add_command(label="Ranking")
         menuProceso.add_command(label="Agrupacion")
         menuProceso.add_command(label="Colaborativa")
         menuProceso.add_command(label="Resumen")
        
-        menuArchivo.add_command(label="Regresar ventana anterior",command=volver)
+        menuArchivo.add_command(label="Regresar a la Ventana Anterior",command=volver)
 
         menubar.add_cascade(label="Archivo",menu=menuArchivo)
-        menubar.add_cascade(label="Procesos y consultas", menu=menuProceso)
+        menubar.add_cascade(label="Procesos y Consultas", menu=menuProceso)
         self.config(menu=menubar)
 
         self.mainloop()

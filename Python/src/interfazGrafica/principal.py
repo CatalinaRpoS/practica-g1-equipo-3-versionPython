@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from baseDatos.serializador import Serializador
 from interfazGrafica.fieldframe import FieldFrame
 from gestorAplicacion.gestorPersonas.usuario import Usuario
@@ -81,51 +82,87 @@ class Principal(tk.Tk):
     
           menuAyuda.add_command(label="Acerca de", command=lambda: autores())
 
-          menuProceso.add_command(label="Crear usuario")
-          menuProceso.add_command(label="Crear artista")
-          menuProceso.add_command(label="Mostrar usuarios")
-          menuProceso.add_command(label="Mostrar artistas")
-          menuProceso.add_command(label="Mostrar canciones")
-          menuProceso.add_command(label="Acceder como usuario", command=lambda:cambiarFrame(frameBiblioteca))
+          menuProceso.add_command(label="Crear Usuario")
+          menuProceso.add_command(label="Crear Artista")
+          menuProceso.add_command(label="Mostrar Usuarios", command=lambda:cambiarFrame(frameMostrarUsuarios))
+          menuProceso.add_command(label="Mostrar Artistas")
+          menuProceso.add_command(label="Mostrar Canciones")
+          menuProceso.add_command(label="Acceder como Usuario", command=lambda:cambiarFrame(frameUsuario))
       
-          menuArchivo.add_command(label="Aplicacion", command= lambda: informacionAplicacion())
+          menuArchivo.add_command(label="Aplicación", command= lambda: informacionAplicacion())
        
           menuArchivo.add_command(label="Salir", command= lambda: volver())
 
           menubar.add_cascade(label="Archivo",menu=menuArchivo)
-          menubar.add_cascade(label="Procesos y consultas", menu=menuProceso)
+          menubar.add_cascade(label="Procesos y Consultas", menu=menuProceso)
           menubar.add_cascade(label="Ayuda", menu=menuAyuda)
           self.config(menu=menubar)
 
-          #Funcion para abrir biblioteca
-          def abrirBiblioteca():
-               username=FieldBiblioteca.getValue("Nombre")
-               usuario=None
-               for i in Usuario.getUsuariosExistentes():
-                    if i.getNombre()==username:
-                         usuario=i
-               if usuario==None:
-                    resultado="El usuario no existe"
-                    mostrarSalida(resultado,outputBiblioteca)
+          # Frame Inicial
+          frameInicial= tk.Frame(self)
+          descInicial = tk.Label(frameInicial, text="Aquí podemos poner una descripción de esta ventana", font=("Verdana", 12))
+       
+          Principal.frames.append(frameInicial)
+
+          descInicial.pack()
+
+          Principal.frames.append(frameInicial)
+
+          cambiarFrame(frameInicial)
+
+          #Funcion para acceder como usuario
+          def accederUsuario():
+               nombre = fieldUsuario.getValue("Nombre")
+               usuario = None
+               for persona in Usuario.getUsuariosExistentes():
+                    if persona.getNombre() == nombre:
+                         usuario = persona
+               if usuario == None:
+                    messagebox.showinfo("Aviso", "El usuario no existe")
                else:
                     from interfazGrafica.principal2 import Principal2
                     self.destroy()
                     Principal2(usuario)
-                             
-          #FieldFrame para abrir biblioteca
-          frameBiblioteca= tk.Frame(self)
-          nombreBiblioteca = tk.Label(frameBiblioteca, text="Abrir la biblioteca de un usuario", font=("Verdana", 16), fg = "#31a919")
-          descBiblioteca = tk.Label(frameBiblioteca,text="Por favor ingrese el nombre del usuario",font=("Verdana", 12))
-          FieldBiblioteca = FieldFrame(frameBiblioteca, None, ["Nombre"], None, None, None)
-          FieldBiblioteca.crearBotones(abrirBiblioteca)
 
-          outputBiblioteca= tk.Text(frameBiblioteca, height=100, font=("Verdana", 10))
-          Principal.frames.append(outputBiblioteca)
+          # Frame para acceder como usuario
+          frameUsuario= tk.Frame(self)
+          nombreUsuario = tk.Label(frameUsuario, text="Acceder como Usuario", font=("Segoe Print", 20), fg="#2C34FA")
+          descUsuario = tk.Label(frameUsuario,text="Por favor ingresa tu nombre de Usuario",font=("Verdana", 12))
+          fieldUsuario = FieldFrame(frameUsuario, None, ["Nombre"], None, None, None)
+          fieldUsuario.crearBotones(accederUsuario)
 
-          nombreBiblioteca.pack()
-          descBiblioteca.pack()
-          FieldBiblioteca.pack(pady=(10,10))
+          salidaUsuario= tk.Text(frameUsuario, height=50, font=("Verdana", 10))
+          Principal.frames.append(salidaUsuario)
 
-          Principal.frames.append(frameBiblioteca)
+          nombreUsuario.pack()
+          descUsuario.pack()
+          fieldUsuario.pack(pady=(10,10))
+
+          Principal.frames.append(frameUsuario)
+
+          # Función para mostrar usuarios
+          def mostrarUsuarios():
+               texto_usuarios = ""
+               usuarios = Usuario.getUsuariosExistentes()
+               for persona in usuarios:
+                    texto_usuarios += f"{persona}\n\n"
+               if texto_usuarios == "":
+                    messagebox.showinfo("Aviso", "¡Nadie se ha registrado aún!")
+               mostrarSalida(texto_usuarios, outputVerUsuarios)
+
+          # Frame para mostrar usuarios
+
+          frameMostrarUsuarios = tk.Frame(self)
+          nombreMostrarUsuarios = tk.Label(frameMostrarUsuarios, text="Usuarios registrados en Spotifree", font=("Segoe Print", 20), fg="#2C34FA")
+          descMostrarUsuarios = tk.Label(frameMostrarUsuarios, text="Puede que no observes todos los usuarios a la misma vez \nMueve el cursor del mouse para conocer a más personas", font=("Verdana", 12))
+          mostrarUsuarios = tk.Button(frameMostrarUsuarios, text="Mostrar usuarios", font=("Verdana", 12), fg="white", bg="#2C34FA", command=mostrarUsuarios)
+          
+          outputVerUsuarios= tk.Text(frameMostrarUsuarios, font=("Verdana", 10))
+          Principal.frames.append(frameMostrarUsuarios)
+          
+          nombreMostrarUsuarios.pack()
+          descMostrarUsuarios.pack()
+          mostrarUsuarios.pack(pady=(10,10))
+          Principal.frames.append(frameMostrarUsuarios)
 
           self.mainloop()
