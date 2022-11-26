@@ -3,13 +3,13 @@ from baseDatos.serializador import Serializador
 from interfazGrafica.fieldframe import FieldFrame
 from gestorAplicacion.gestorPersonas.usuario import Usuario
 
-class Principal2(tk.Tk):
+class Principal2():
     frames=[]
 
-    def __init__(self, usuario):
-        super().__init__()
-        self.usuario=usuario
-        self.title("Colección de {}".format(self.usuario.getNombre()))
+    def __init__(self, usuario, ventana_principal, ventana_anterior):
+        
+        self = tk.Toplevel(ventana_principal)
+        self.title("Colección de {}".format(usuario.getNombre()))
         self.option_add('*tearOff', False)
         self.resizable(False, False)
 
@@ -26,11 +26,11 @@ class Principal2(tk.Tk):
                frameUtilizado.place(relx=0.5, rely=0.5, anchor="c")
 
         def volver():
-            from interfazGrafica.inicio import Inicio
+            from interfazGrafica.principal import Principal
             Serializador.serializarDatos()
-            self.destroy()
-            Inicio()
-
+            self.withdraw()
+            Principal(ventana_principal)
+            
         menubar = tk.Menu(self)
         menuArchivo = tk.Menu(menubar)
         menuProceso = tk.Menu(menubar)

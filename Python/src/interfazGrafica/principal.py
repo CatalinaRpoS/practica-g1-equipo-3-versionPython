@@ -2,7 +2,7 @@ from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from PIL import ImageTk, Image
+# from PIL import ImageTk, Image
 from baseDatos.serializador import Serializador
 from interfazGrafica.fieldframe import FieldFrame
 from gestorAplicacion.gestorPersonas.usuario import Usuario
@@ -134,7 +134,7 @@ class Principal():
                else:
                     from interfazGrafica.principal2 import Principal2
                     self.withdraw()
-                    Principal2(usuario)
+                    Principal2(usuario, ventana, self)
 
           # Frame para acceder como usuario
           frameUsuario= tk.Frame(self)
@@ -194,7 +194,7 @@ class Principal():
           descMostrarArtistas = tk.Label(frameMostrarArtistas, text="Puede que no observes todos los artistas a la misma vez \nMueve el cursor del mouse para conocer a más artistas", font=("Verdana", 12))
           mostrarArtistas = tk.Button(frameMostrarArtistas, text="Mostrar artistas", font=("Verdana", 12), fg="white", bg="#2C34FA", command=mostrarArtistas)
           
-          salidaVerArtistas= tk.Text(frameMostrarArtistas, font=("Verdana", 10))
+          salidaVerArtistas= tk.Text(frameMostrarArtistas, width=90, font=("Verdana", 10))
           Principal.frames.append(salidaVerArtistas)
           
           nombreMostrarArtistas.pack()
