@@ -197,6 +197,7 @@ class Principal():
           salidaVerArtistas= tk.Text(frameMostrarArtistas, width=90, font=("Verdana", 10))
           Principal.frames.append(salidaVerArtistas)
           
+          
           nombreMostrarArtistas.pack()
           descMostrarArtistas.pack()
           mostrarArtistas.pack(pady=(10,10))
@@ -230,10 +231,14 @@ class Principal():
           #Funcion para crear Artista
           def crearArtista():
                nombre = fieldCrearArtista.getValue("Nombre")
-               genero = var
-               artista1 = Artista(nombre, genero)
-               print(artista1)
-               mostrarSalida("Artista creado con exito", outputArtista)
+               genero = self.comboArtista.get()
+               genArtista = None
+               for i in Genero:
+                    if genero == i.value:
+                         genArtista = i
+               Artista(nombre, genArtista)
+               messagebox.showinfo("Exito", "El artista fue creado correctamente")
+               return
           
           
           #FieldFrame para crear Artista
@@ -257,12 +262,11 @@ class Principal():
           #lab_img2.place(x = 1000, y = 50)
           
           
-          var = StringVar()
-          self.combo = ttk.Combobox(frameCrearArtista, state="readonly", values = ["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "Otro"], width=30, textvariable=var)
-          self.combo.place(x=710, y=170)
+          self.comboArtista = ttk.Combobox(frameCrearArtista, state="readonly", values=["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "No Especificado"], width=30)
+          self.comboArtista.place(x = 110, y = 150)
           
-          labelCombo = tk.Label(frameCrearArtista,text="Genero",font=("Verdana", 12))
-          labelCombo.place(x = 630, y = 170)
+          comboLabelArtista = tk.Label(frameCrearArtista,text="Genero",font=("Verdana", 12))
+          comboLabelArtista.place(x = 30, y = 150)
           
           fieldCrearArtista.crearBotones(crearArtista)
           
@@ -277,11 +281,15 @@ class Principal():
           
           #crear Usuario
           def crearUsuario():
-               nombre = fieldCrearArtista.getValue("Nombre")
-               genero = var
-               Usuario(nombre, genero)
-               mostrarSalida("Usuario creado con exito", outputUsuario)
-          
+               nombre = fieldCrearUsuario.getValue("Nombre")
+               genero = self.combo.get()
+               genUsuario = None
+               for i in Genero:
+                    if genero == i.value:
+                         genUsuario = i
+               Usuario(nombre, genUsuario)
+               messagebox.showinfo("Exito", "El usuario fue creado correctamente")
+               return
           
           #FieldFrame para crear Artista
           frameCrearUsuario = tk.Frame(self)
@@ -304,12 +312,11 @@ class Principal():
           #lab_img2.place(x = 1000, y = 50)"""
           
           
-          var = StringVar()
-          self.combo = ttk.Combobox(frameCrearUsuario, state="readonly", values = ["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "Otro"], width=30, textvariable=var)
-          self.combo.place(x=710, y=170)
+          self.combo = ttk.Combobox(frameCrearUsuario, state="readonly", values=["Rock", "Pop"], width=30)
+          self.combo.place(x = 110, y = 150)
           
-          labelCombo = tk.Label(frameCrearUsuario,text="Genero favorito",font=("Verdana", 12))
-          labelCombo.place(x = 570, y = 170)
+          comboLabel = tk.Label(frameCrearUsuario,text="Genero",font=("Verdana", 12))
+          comboLabel.place(x = 30, y = 150)
           
           fieldCrearUsuario.crearBotones(crearUsuario)
           
@@ -329,7 +336,7 @@ class Principal():
                nombre_artista = fieldCrearCancion.getValue("Artista")
                duracion = int(fieldCrearCancion.getValue("Duracion"))
                año = int(fieldCrearCancion.getValue("Año"))
-               genero = var
+               genero = self.comboCancion.get()
                gen = None
                for artista in Artista.getArtistasDisponibles():
                    if  nombre_artista == artista.getNombre():
@@ -364,12 +371,11 @@ class Principal():
           #lab_img2.place(x = 1000, y = 50)"""
           
           
-          var = StringVar()
-          self.combo = ttk.Combobox(frameCrearCancion, state="readonly", values = ["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "No Especificado"], width=30, textvariable=var)
-          self.combo.place(x=715, y=300)
+          self.comboCancion = ttk.Combobox(frameCrearCancion, state="readonly", values=["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "No Especificado"], width=30)
+          self.comboCancion.place(x = 120, y = 300)
           
-          labelCombo = tk.Label(frameCrearCancion,text="Genero",font=("Verdana", 12))
-          labelCombo.place(x = 620, y = 300)
+          comboLabelCancion = tk.Label(frameCrearCancion,text="Genero",font=("Verdana", 12))
+          comboLabelCancion.place(x = 30, y = 300)
           
           fieldCrearCancion.crearBotones(crearCancion)
           
