@@ -1,5 +1,8 @@
+from tkinter import *
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox
+from PIL import ImageTk, Image
 from baseDatos.serializador import Serializador
 from interfazGrafica.fieldframe import FieldFrame
 from gestorAplicacion.gestorPersonas.usuario import Usuario
@@ -84,12 +87,13 @@ class Principal(tk.Tk):
     
           menuAyuda.add_command(label="Acerca de", command=lambda: autores())
 
-          menuProceso.add_command(label="Crear Usuario")
-          menuProceso.add_command(label="Crear Artista")
-          menuProceso.add_command(label="Mostrar Usuarios", command=lambda:cambiarFrame(frameMostrarUsuarios))
-          menuProceso.add_command(label="Mostrar Artistas", command=lambda:cambiarFrame(frameMostrarArtistas))
-          menuProceso.add_command(label="Mostrar Canciones", command=lambda:cambiarFrame(frameMostrarCanciones))
-          menuProceso.add_command(label="Acceder como Usuario", command=lambda:cambiarFrame(frameUsuario))
+          menuProceso.add_command(label="Crear usuario", command=lambda: cambiarFrame(frameCrearUsuario))
+          menuProceso.add_command(label="Crear artista", command=lambda:cambiarFrame(frameCrearArtista))
+          menuProceso.add_command(label="Crear cancion", command=lambda:cambiarFrame(frameCrearCancion))
+          menuProceso.add_command(label="Mostrar usuarios", command=lambda:cambiarFrame(frameMostrarUsuarios))
+          menuProceso.add_command(label="Mostrar artistas", command=lambda:cambiarFrame(frameMostrarArtistas))
+          menuProceso.add_command(label="Mostrar canciones", command=lambda:cambiarFrame(frameMostrarCanciones))
+          menuProceso.add_command(label="Acceder como usuario", command=lambda:cambiarFrame(frameUsuario))
       
           menuArchivo.add_command(label="Aplicación", command= lambda: informacionAplicacion())
        
@@ -217,5 +221,150 @@ class Principal(tk.Tk):
           mostrarCanciones.pack(pady=(10,10))
           Principal.frames.append(frameMostrarCanciones)
           
+          #Funcion para crear Artista
+          def crearArtista():
+               nombre = fieldCrearArtista.getValue("Nombre")
+               genero = var
+               Artista(nombre, genero)
+               mostrarSalida("Artista creado con exito", outputArtista)
           
+          
+          #FieldFrame para crear Artista
+          frameCrearArtista = tk.Frame(self)
+          nombreCrearArtista = tk.Label(frameCrearArtista, text="Menu para crear el artista", font=("Verdana", 16), fg = "#31a919")
+          blankCrearArtista = tk.Label(frameCrearArtista,text="Por favor ingrese el nombre del artista",font=("Verdana", 12))
+          fieldCrearArtista = FieldFrame(frameCrearArtista, None, ["Nombre"], None, None, None)
+          
+          #image1 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\imagenArtista1.png")
+          #resized1 = image1.resize((200,200), Image.ANTIALIAS)
+          #new_pic1 = ImageTk.PhotoImage(resized1)
+          
+          #lab_img1 = Label(frameCrearArtista, image=new_pic1)
+          #lab_img1.place(x = 100, y = 50)
+          
+          #image2 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\Artista2.jpg")
+          #resized2 = image2.resize((200,200), Image.ANTIALIAS)
+          #new_pic2 = ImageTk.PhotoImage(resized2)
+          
+          #lab_img2 = Label(frameCrearArtista, image=new_pic2)
+          #lab_img2.place(x = 1000, y = 50)
+          
+          
+          var = StringVar()
+          self.combo = ttk.Combobox(frameCrearArtista, state="readonly", values = ["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "Otro"], width=30, textvariable=var)
+          self.combo.place(x=710, y=170)
+          
+          labelCombo = tk.Label(frameCrearArtista,text="Genero",font=("Verdana", 12))
+          labelCombo.place(x = 630, y = 170)
+          
+          fieldCrearArtista.crearBotones(crearArtista)
+          
+          outputArtista = tk.Text(frameCrearArtista, height=100, font=("Verdana", 10))
+          Principal.frames.append(outputArtista)
+          
+          nombreCrearArtista.pack()
+          blankCrearArtista.pack()
+          fieldCrearArtista.pack(pady=(10,10))
+          
+          Principal.frames.append(frameCrearArtista)
+          
+          #crear Usuario
+          def crearUsuario():
+               nombre = fieldCrearArtista.getValue("Nombre")
+               genero = var
+               Usuario(nombre, genero)
+               mostrarSalida("Usuario creado con exito", outputUsuario)
+          
+          
+          #FieldFrame para crear Artista
+          frameCrearUsuario = tk.Frame(self)
+          nombrecrearUsuario = tk.Label(frameCrearUsuario, text="Menu para crear el usuario", font=("Verdana", 16), fg = "#31a919")
+          blankCrearUsuario = tk.Label(frameCrearUsuario,text="Por favor ingrese el nombre del usuario",font=("Verdana", 12))
+          fieldCrearUsuario = FieldFrame(frameCrearUsuario, None, ["Nombre"], None, None, None)
+          
+          #image1 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\imagenArtista1.png")
+          #resized1 = image1.resize((200,200), Image.ANTIALIAS)
+          #new_pic1 = ImageTk.PhotoImage(resized1)
+          
+          #lab_img1 = Label(frameCrearArtista, image=new_pic1)
+          #lab_img1.place(x = 100, y = 50)
+          
+          #image2 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\Artista2.jpg")
+          #resized2 = image2.resize((200,200), Image.ANTIALIAS)
+          #new_pic2 = ImageTk.PhotoImage(resized2)
+          
+          #lab_img2 = Label(frameCrearArtista, image=new_pic2)
+          #lab_img2.place(x = 1000, y = 50)"""
+          
+          
+          var = StringVar()
+          self.combo = ttk.Combobox(frameCrearUsuario, state="readonly", values = ["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "Otro"], width=30, textvariable=var)
+          self.combo.place(x=710, y=170)
+          
+          labelCombo = tk.Label(frameCrearUsuario,text="Genero favorito",font=("Verdana", 12))
+          labelCombo.place(x = 570, y = 170)
+          
+          fieldCrearUsuario.crearBotones(crearUsuario)
+          
+          outputUsuario = tk.Text(frameCrearUsuario, height=100, font=("Verdana", 10))
+          Principal.frames.append(outputUsuario)
+          
+          nombrecrearUsuario.pack()
+          blankCrearUsuario.pack()
+          fieldCrearUsuario.pack(pady=(10,10))
+          
+          Principal.frames.append(frameCrearUsuario)
+          
+          #crear Cancion
+          
+          def crearCancion():
+               nombre = fieldCrearCancion.getValue("Nombre")
+               genero = var
+               Cancion(nombre, genero)
+               mostrarSalida("Cancion creada con exito", outputCancion)
+          
+          
+          #FieldFrame para crear Artista
+          frameCrearCancion = tk.Frame(self)
+          nombrecrearCancion = tk.Label(frameCrearCancion, text="Menu para crear la cancion", font=("Verdana", 16), fg = "#31a919")
+          blankCrearCancion = tk.Label(frameCrearCancion,text="Por favor ingrese el nombre de la cancion",font=("Verdana", 12))
+          fieldCrearCancion = FieldFrame(frameCrearCancion, None, ["Nombre", "Duracion", "Artista", "Año"], None, None, None)
+          
+          #image1 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\imagenArtista1.png")
+          #resized1 = image1.resize((200,200), Image.ANTIALIAS)
+          #new_pic1 = ImageTk.PhotoImage(resized1)
+          
+          #lab_img1 = Label(frameCrearArtista, image=new_pic1)
+          #lab_img1.place(x = 100, y = 50)
+          
+          #image2 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\Artista2.jpg")
+          #resized2 = image2.resize((200,200), Image.ANTIALIAS)
+          #new_pic2 = ImageTk.PhotoImage(resized2)
+          
+          #lab_img2 = Label(frameCrearArtista, image=new_pic2)
+          #lab_img2.place(x = 1000, y = 50)"""
+          
+          
+          var = StringVar()
+          self.combo = ttk.Combobox(frameCrearCancion, state="readonly", values = ["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "Otro"], width=30, textvariable=var)
+          self.combo.place(x=715, y=300)
+          
+          labelCombo = tk.Label(frameCrearCancion,text="Genero",font=("Verdana", 12))
+          labelCombo.place(x = 620, y = 300)
+          
+          fieldCrearCancion.crearBotones(crearCancion)
+          
+          outputCancion = tk.Text(frameCrearCancion, height=100, font=("Verdana", 10))
+          Principal.frames.append(outputCancion)
+          
+          nombrecrearCancion.pack()
+          blankCrearCancion.pack()
+          fieldCrearCancion.pack(pady=(10,10))
+          
+          Principal.frames.append(frameCrearCancion)
+
+               
+               
+               
+               
           self.mainloop()
