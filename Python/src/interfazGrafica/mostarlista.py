@@ -47,11 +47,4 @@ Selecciona REPRODUCIR para escuchar tu lista"""
         #Output
 
         output = tk.Text(parent, border= False, width= 100)
-        output.grid(row = 3, column= 0, pady = 10)
-
-root = tk.Tk()
-root.config(width= 1366, height= 768)
-
-mostrar = MostrarLista(root)
-root.mainloop()
-        
+        output.grid(row = 3, column= 0, pady = 10)     

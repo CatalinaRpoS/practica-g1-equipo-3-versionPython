@@ -37,7 +37,7 @@ class Principal2():
         
     
         # Barra de menú
-        menuProceso.add_command(label="Mostrar Listas")
+        menuProceso.add_command(label="Mostrar Listas", command= lambda: cambiarFrame(frameCrearUsuario))
         menuProceso.add_command(label="Mostrar Favoritos")
         menuProceso.add_command(label="Reproducir")
         menuProceso.add_command(label="Ranking")
@@ -50,5 +50,42 @@ class Principal2():
         menubar.add_cascade(label="Archivo",menu=menuArchivo)
         menubar.add_cascade(label="Procesos y Consultas", menu=menuProceso)
         self.config(menu=menubar)
+
+        #MostrarLista
+        #FieldFrame para crear Artista
+        
+        frameCrearUsuario = tk.Frame(self)
+        nombrecrearUsuario = tk.Label(frameCrearUsuario, text="Menu para crear el usuario", font=("Verdana", 16), fg = "#31a919")
+        blankCrearUsuario = tk.Label(frameCrearUsuario,text="Por favor ingrese el nombre del usuario",font=("Verdana", 12))
+        fieldCrearUsuario = FieldFrame(frameCrearUsuario, None, ["Nombre"], None, None, None)
+          
+          #image1 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\imagenArtista1.png")
+          #resized1 = image1.resize((200,200), Image.ANTIALIAS)
+          #new_pic1 = ImageTk.PhotoImage(resized1)
+          
+          #lab_img1 = Label(frameCrearArtista, image=new_pic1)
+          #lab_img1.place(x = 100, y = 50)
+          
+          #image2 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\Artista2.jpg")
+          #resized2 = image2.resize((200,200), Image.ANTIALIAS)
+          #new_pic2 = ImageTk.PhotoImage(resized2)
+          
+          #lab_img2 = Label(frameCrearArtista, image=new_pic2)
+          #lab_img2.place(x = 1000, y = 50)"""
+
+        comboLabel = tk.Label(frameCrearUsuario,text="Genero",font=("Verdana", 12))
+        comboLabel.place(x = 30, y = 150)
+
+        def crearUsuario (): pass
+        fieldCrearUsuario.crearBotones(crearUsuario)
+          
+        outputUsuario = tk.Text(frameCrearUsuario, height=100, font=("Verdana", 10))
+        Principal2.frames.append(outputUsuario)
+          
+        nombrecrearUsuario.pack()
+        blankCrearUsuario.pack()
+        fieldCrearUsuario.pack(pady=(10,10))
+          
+        Principal2.frames.append(frameCrearUsuario)    
 
         self.mainloop()
