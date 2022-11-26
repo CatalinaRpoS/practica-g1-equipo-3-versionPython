@@ -72,8 +72,8 @@ class FrameIzquierda(tk.Frame):
         self.__p42.grid(row=2, column=0, pady=(10, 10))
         
     def abrirVentanaPrincipal(self):
-        self.__ventana.destroy()
-        Principal()
+        self.__ventana.withdraw()
+        Principal(self.__ventana)
 
 class FrameDerecha(tk.Frame):
     __posicion_imagen = [(0, 0), (0, 1), (1, 0), (1, 1)]

@@ -21,15 +21,15 @@ class Principal2(tk.Tk):
     
         # Cambiar frame
         def cambiarFrame(frameUtilizado):
-            for frame in Principal2.frames:
-                frame.pack_forget()
-            frameUtilizado.pack(fill=tk.BOTH, expand=True, pady = (10,10))
+               for frame in Principal2.frames:
+                    frame.place_forget()
+               frameUtilizado.place(relx=0.5, rely=0.5, anchor="c")
 
         def volver():
-            from interfazGrafica.principal import Principal
+            from interfazGrafica.inicio import Inicio
             Serializador.serializarDatos()
             self.destroy()
-            Principal()
+            Inicio()
 
         menubar = tk.Menu(self)
         menuArchivo = tk.Menu(menubar)

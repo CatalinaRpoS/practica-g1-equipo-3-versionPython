@@ -8,15 +8,16 @@ from interfazGrafica.fieldframe import FieldFrame
 from gestorAplicacion.gestorPersonas.usuario import Usuario
 from gestorAplicacion.gestorPersonas.artista import Artista
 from gestorAplicacion.gestorMusica.cancion import Cancion
+from gestorAplicacion.gestorMusica.genero import Genero
 
-class Principal(tk.Tk):
+class Principal():
     
      # Frames
      frames = []
 
-     def __init__(self):
-
-          super().__init__()
+     def __init__(self, ventana):
+          
+          self = tk.Toplevel(ventana)
           self.title("Spotifree")
           self.option_add('*tearOff', False)
           self.resizable(False, False)
@@ -30,8 +31,8 @@ class Principal(tk.Tk):
           # Cambiar frame
           def cambiarFrame(frameUtilizado):
                for frame in Principal.frames:
-                    frame.pack_forget()
-               frameUtilizado.pack(fill=tk.BOTH, expand=True, pady = (10,10))
+                    frame.place_forget()
+               frameUtilizado.place(relx=0.5, rely=0.5, anchor="c")
 
           # Mostrar un output
           def mostrarSalida(string, texto):
@@ -73,10 +74,9 @@ class Principal(tk.Tk):
                info.pack(fill=tk.Y, expand=True)
 
           def volver():
-               from interfazGrafica.inicio import Inicio
                Serializador.serializarDatos()
-               self.destroy()
-               Inicio()
+               self.withdraw()
+               ventana.deiconify()
         
           menubar = tk.Menu(self)
           menuArchivo = tk.Menu(menubar)
@@ -106,15 +106,21 @@ class Principal(tk.Tk):
 
           # Frame Inicial
           frameInicial= tk.Frame(self)
-          descInicial = tk.Label(frameInicial, text="Aquí podemos poner una descripción de esta ventana", font=("Verdana", 12))
+          nombreInicial = tk.Label(frameInicial, text="¿Cómo usar Spotifree?", font=("Segoe Print", 20), fg="#2C34FA")
+          textoInicial = f"¡Bienvenido a la pantalla principal! Desde aquí puedes comenzar a explorar todas las\n" \
+                         f"funciones que hemos preparado para ti. Conoce a los artistas que se han registrado en\n" \
+                         f"Spotifree y dale un vistazo a todas las canciones que puedes disfrutar. Si gustas, puedes\n" \
+                         f"crear una cuenta y acceder a tu propia Colección, ¿qué esperas?" 
+          descInicial = tk.Label(frameInicial, text=textoInicial, font=("Verdana", 12))
        
           Principal.frames.append(frameInicial)
 
+          nombreInicial.pack()
           descInicial.pack()
 
           Principal.frames.append(frameInicial)
 
-          cambiarFrame(frameInicial)
+          frameInicial.place(relx=0.5, rely=0.5, anchor="c")
 
           # Funcion para acceder como usuario
           def accederUsuario():
@@ -127,7 +133,7 @@ class Principal(tk.Tk):
                     messagebox.showinfo("Aviso", "El usuario no existe")
                else:
                     from interfazGrafica.principal2 import Principal2
-                    self.destroy()
+                    self.withdraw()
                     Principal2(usuario)
 
           # Frame para acceder como usuario
@@ -225,7 +231,8 @@ class Principal(tk.Tk):
           def crearArtista():
                nombre = fieldCrearArtista.getValue("Nombre")
                genero = var
-               Artista(nombre, genero)
+               artista1 = Artista(nombre, genero)
+               print(artista1)
                mostrarSalida("Artista creado con exito", outputArtista)
           
           
@@ -318,11 +325,23 @@ class Principal(tk.Tk):
           #crear Cancion
           
           def crearCancion():
-               nombre = fieldCrearCancion.getValue("Nombre")
+               nombre_cancion = fieldCrearCancion.getValue("Nombre")
+               nombre_artista = fieldCrearCancion.getValue("Artista")
+               duracion = int(fieldCrearCancion.getValue("Duracion"))
+               año = int(fieldCrearCancion.getValue("Año"))
                genero = var
-               Cancion(nombre, genero)
-               mostrarSalida("Cancion creada con exito", outputCancion)
-          
+               gen = None
+               for artista in Artista.getArtistasDisponibles():
+                   if  nombre_artista == artista.getNombre():
+                         for i in Genero:
+                              if genero == i.value:
+                                   gen = i
+                         Cancion(nombre_cancion, artista, gen, duracion, año)
+                         messagebox.showinfo("Exito", "La cancion fue creado correctamente")
+                         return
+                         
+               messagebox.showinfo("Aviso", "El artista no existe")
+     
           
           #FieldFrame para crear Artista
           frameCrearCancion = tk.Frame(self)
@@ -346,7 +365,7 @@ class Principal(tk.Tk):
           
           
           var = StringVar()
-          self.combo = ttk.Combobox(frameCrearCancion, state="readonly", values = ["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "Otro"], width=30, textvariable=var)
+          self.combo = ttk.Combobox(frameCrearCancion, state="readonly", values = ["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "No Especificado"], width=30, textvariable=var)
           self.combo.place(x=715, y=300)
           
           labelCombo = tk.Label(frameCrearCancion,text="Genero",font=("Verdana", 12))
