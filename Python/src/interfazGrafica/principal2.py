@@ -85,7 +85,7 @@ class Principal2():
         #MostrarLista
 
         frameMostrarLista = tk.Frame(self)
-        nombreMostrarLista = tk.Label(frameMostrarLista, text="Menu para mostrar y editar listas", font=("Verdana", 14), fg = "#2C34FA", pady= 20)
+        nombreMostrarLista = tk.Label(frameMostrarLista, text="Menu para mostrar y editar listas", font=("Segoe Print", 20), fg = "#2C34FA", pady= 20)
 
         texto = """Selecciona MOSTRAR para ver las canciones de tu lista
 Selecciona AGREGAR para añadir una cancion a tu lista
@@ -101,9 +101,11 @@ Selecciona REPRODUCIR para escuchar tu lista"""
             Lista = [x for x in usuario.getColeccion().getListas() if x.getNombre() == nombreLista]
 
             if len(Lista)>0:
-                output.insert("end", Lista[0].infoLista() + "\n")
+                messagebox.showinfo("Aviso", Lista[0].infoLista())
+                # output.insert("end", Lista[0].infoLista() + "\n")
             else:
-                output.insert("end", "Ingrese un nombre de lista valido \n") 
+                messagebox.showinfo("Aviso", "¡Esta lista no existe!")
+                # output.insert("end", "Ingrese un nombre de lista valido \n") 
         
         def AgregarCancion():
 
@@ -185,32 +187,38 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                   if nCancion==cancion.getNombre():
                         c=cancion
               if c==None:
-                    messagebox.showinfo("Aviso", "Esa cancion no existe")
+                    messagebox.showinfo("Aviso", "Esta canción no existe")
               else:
-                    texto=usuario.agregarMeGusta(c)
-                    mostrarSalida(texto,salidaFavoritos)
+                messagebox.showinfo("Aviso", usuario.agregarMeGusta(c))
+                # texto=usuario.agregarMeGusta(c)
+                # mostrarSalida(texto,salidaFavoritos)
 
         def Eliminar():
-              nCancion=fieldFavoritos.getValue("Nombre Cancion")
-              canciones = Cancion.getCancionesDisponibles()
-              c=None
-              for cancion in canciones:
-                  if nCancion==cancion.getNombre():
-                        c=cancion
-              if c==None:
-                    messagebox.showinfo("Aviso", "Esa cancion no existe")
-              else:
-                    texto=usuario.eliminarMeGusta(c)
-                    mostrarSalida(texto,salidaFavoritos)
+            nCancion = fieldFavoritos.getValue("Nombre Cancion")
+            canciones = Cancion.getCancionesDisponibles()
+            c = None
+            for cancion in canciones:
+                if nCancion == cancion.getNombre():
+                    c = cancion
+            if c == None:
+                messagebox.showinfo("Aviso", "Esa cancion no existe")
+            else:
+                for cancion in usuario.getFavoritos().getFavoritos():
+                    if nCancion == cancion.getNombre():
+                        c = cancion
+                messagebox.showinfo("Aviso", usuario.eliminarMeGusta(c))
+                # texto = usuario.eliminarMeGusta(c)
+                mostrarSalida("", salidaFavoritos)
   
 
         def Reproducir():
-            favoritos = usuario.getFavoritos().getFavoritos()
-
-            if len(favoritos)>0:
-                mostrarSalida(usuario.reproducirLista(favoritos),salidaFavoritos)
+            favoritos = usuario.getFavoritos()
+            if len(favoritos.getFavoritos()) > 0:
+                usuario.reproducirLista(favoritos)
+                messagebox.showinfo("Aviso", "Se está reproduciendo tu lista de favoritos")
+                # mostrarSalida(usuario.reproducirLista(favoritos), salidaFavoritos)
             else:
-                messagebox.showinfo("Aviso", "No tiene canciones para reproducir")
+                messagebox.showinfo("Aviso", "No tienes canciones para reproducir")
        
         botonMostrar: tk.Button = fieldFavoritos.crearBotones(Mostrar, texto= "MOSTRAR", Column=0)
         botonAgregar: tk.Button = fieldFavoritos.crearBotones(Agregar, texto= "AGREGAR", Column=1)

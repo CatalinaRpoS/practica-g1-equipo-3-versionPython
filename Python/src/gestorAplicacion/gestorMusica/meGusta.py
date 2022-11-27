@@ -17,7 +17,7 @@ class meGusta(Lista):
     
     def eliminarCancion(self, cancion):
         self.__favoritos.remove(cancion)
-        return "Cancion eliminado con exito de tus Me Gusta"
+        return "Canción eliminada con éxito de tus Me Gusta"
     
     def getFavoritos(self):
         return self.__favoritos
@@ -44,7 +44,7 @@ class meGusta(Lista):
         des = ""
         if(len(self.__favoritos) > 0):
             for cancion in self.__favoritos:
-                des += cancion.descripcion() + "\n"
+                des += cancion.descripcion() + "\n\n"
             return "Tus Canciones Favoritas:" + "\n" + "\n" + "Canciones: " + "\n" + des
         else:
             return "No tienes canciones favoritas"

@@ -38,7 +38,7 @@ class Usuario:
 
     def reproducirLista(self, lista):
         self.__tiempoEscuchado += lista.duracionLista()
-        lista.super().aumentarReproducciones
+        lista.aumentarReproducciones()
         return lista.__str__()
 
     def __str__(self):
