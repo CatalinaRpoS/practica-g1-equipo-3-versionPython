@@ -1,7 +1,10 @@
 from gestorAplicacion.gestorMusica.coleccion import Coleccion
 from gestorAplicacion.gestorMusica.meGusta import meGusta
 from gestorAplicacion.gestorMusica.genero import Genero
+from gestorAplicacion.gestorMusica.musica import Musica
 from gestorAplicacion.gestorMusica.lista import Lista
+from gestorAplicacion.gestorMusica.cancion import Cancion
+
 import random
 
 ''' Módulo Usuario.py

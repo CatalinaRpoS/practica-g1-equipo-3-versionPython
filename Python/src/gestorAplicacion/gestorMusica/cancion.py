@@ -55,7 +55,8 @@ class Cancion(Musica):
         return "Título: " + self.getNombre() + "\nArtista: " + self.getArtista().getNombre()
     
     def aumentarReproduciones(self):
-        self.__reproducciones+=1
+        repNew=self.getReproducciones()+1
+        self.setReproducciones(repNew)
 
     @classmethod
     def topCancion(cls):
