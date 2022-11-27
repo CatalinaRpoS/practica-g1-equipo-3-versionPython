@@ -241,8 +241,9 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             if c==None:
                 messagebox.showinfo("Aviso", "Esa cancion no existe")
             else:
-                texto=usuario.reproducirCancion(c)
-                mostrarSalida(texto,salidaRepro)
+                messagebox.showinfo("Aviso", usuario.reproducirCancion(c))
+                # texto= usuario.reproducirCancion(c)
+                # mostrarSalida(texto,salidaRepro)
        
         repro = tk.Button(frameReproducir, text="Reproducir", font=("Verdana", 12), fg="white", bg="#2C34FA", command=reproducirCancion)
           

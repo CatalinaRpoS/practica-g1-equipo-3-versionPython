@@ -49,14 +49,13 @@ class Cancion(Musica):
         cls.__cancionesDisponibles = cancionesDisponibles
         
     def __str__(self):
-        return "Se esta reproduciendo la cancion " + self.getNombre()
+        return "Se esta reproduciendo la canción " + self.getNombre()
     
     def descripcion(self):
         return "Título: " + self.getNombre() + "\nArtista: " + self.getArtista().getNombre()
     
-    def aumentarReproduciones(self):
-        repNew=self.getReproducciones()+1
-        self.setReproducciones(repNew)
+    def aumentarReproducciones(self):
+        self.setReproducciones(self.getReproducciones() + 1)
 
     @classmethod
     def topCancion(cls):

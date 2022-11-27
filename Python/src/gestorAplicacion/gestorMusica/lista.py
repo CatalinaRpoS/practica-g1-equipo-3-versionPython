@@ -91,7 +91,7 @@ class Lista(Musica):
             return "Lista: " + self.getNombre() + " está vacía"
         
     def aumentarReproducciones(self):
-        self.__reproducciones = self.__reproducciones+1
+        self.setReproducciones(self.getReproducciones() + 1)
         for cancion in self.__lista:
             cancion.aumentarReproducciones()
     
