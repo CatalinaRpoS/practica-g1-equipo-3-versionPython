@@ -4,6 +4,7 @@ from gestorAplicacion.gestorMusica.genero import Genero
 from gestorAplicacion.gestorMusica.musica import Musica
 from gestorAplicacion.gestorMusica.lista import Lista
 from gestorAplicacion.gestorMusica.cancion import Cancion
+from gestorAplicacion.gestorPersonas.persona import Persona
 
 import random
 
@@ -14,7 +15,7 @@ import random
     Este módulo contiene la clase usuario
 '''
 
-class Usuario:
+class Usuario(Persona):
     __usuariosExistentes = []
 
     def __init__(self,nombre, genFavorito = Genero.NO_ESPECIFICADO):

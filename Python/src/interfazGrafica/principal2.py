@@ -54,7 +54,7 @@ class Principal2():
         menuProceso.add_command(label="Mostrar Listas", command= lambda: cambiarFrame(frameMostrarLista))
         menuProceso.add_command(label="Mostrar Favoritos", command=lambda: cambiarFrame(frameVerCanciones))
         menuProceso.add_command(label="Reproducir",command=lambda: cambiarFrame(frameReproducir))
-        menuProceso.add_command(label="Ranking")
+        menuProceso.add_command(label="Ranking",command=lambda: cambiarFrame(frameRanking))
         menuProceso.add_command(label="Agrupacion")
         menuProceso.add_command(label="Colaborativa")
         menuProceso.add_command(label="Resumen")
@@ -85,7 +85,7 @@ class Principal2():
         #MostrarLista
 
         frameMostrarLista = tk.Frame(self)
-        nombreMostrarLista = tk.Label(frameMostrarLista, text="Menu para mostrar y editar listas", font=("Segoe Print", 20), fg = "#2C34FA", pady= 20)
+        nombreMostrarLista = tk.Label(frameMostrarLista, text="Menu para mostrar y editar listas", font=("Verdana", 14), fg = "#2C34FA", pady= 20)
 
         texto = """Selecciona MOSTRAR para ver las canciones de tu lista
 Selecciona AGREGAR para añadir una cancion a tu lista
@@ -189,9 +189,8 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
               if c==None:
                     messagebox.showinfo("Aviso", "Esta canción no existe")
               else:
-                messagebox.showinfo("Aviso", usuario.agregarMeGusta(c))
-                # texto=usuario.agregarMeGusta(c)
-                mostrarSalida("", salidaFavoritos)
+                texto=usuario.agregarMeGusta(c)
+                mostrarSalida(texto, salidaFavoritos)
 
         def Eliminar():
             nCancion = fieldFavoritos.getValue("Nombre Cancion")
@@ -206,17 +205,14 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                 for cancion in usuario.getFavoritos().getFavoritos():
                     if nCancion == cancion.getNombre():
                         c = cancion
-                messagebox.showinfo("Aviso", usuario.eliminarMeGusta(c))
-                # texto = usuario.eliminarMeGusta(c)
-                mostrarSalida("", salidaFavoritos)
+                texto = usuario.eliminarMeGusta(c)
+                mostrarSalida(texto, salidaFavoritos)
   
 
         def Reproducir():
             favoritos = usuario.getFavoritos()
             if len(favoritos.getFavoritos()) > 0:
-                usuario.reproducirLista(favoritos)
-                messagebox.showinfo("Aviso", "Se está reproduciendo tu lista de favoritos")
-                # mostrarSalida(usuario.reproducirLista(favoritos), salidaFavoritos)
+                mostrarSalida("Tus favoritos se estan reproduciendo", salidaFavoritos)
             else:
                 messagebox.showinfo("Aviso", "No tienes canciones para reproducir")
        
@@ -224,11 +220,10 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
         botonAgregar: tk.Button = fieldFavoritos.crearBotones(Agregar, texto= "AGREGAR", Column=1)
         botonEliminar: tk.Button = fieldFavoritos.crearBotones(Eliminar, texto= "ELIMINAR", Column=2)
         botonReproducir: tk.Button = fieldFavoritos.crearBotones(Reproducir, texto= "REPRODUCIR", Column=3, Padx= 70)
-      
+        Principal2.frames.append(salidaFavoritos)
         nombreVC.pack()
         desVC.pack()
         fieldFavoritos.pack(pady=(10,10))
-        salidaFavoritos.pack()
 
         Principal2.frames.append(frameVerCanciones)    
         
@@ -249,20 +244,68 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             if c==None:
                 messagebox.showinfo("Aviso", "Esa cancion no existe")
             else:
-                messagebox.showinfo("Aviso", usuario.reproducirCancion(c))
-                # texto= usuario.reproducirCancion(c)
-                # mostrarSalida(texto,salidaRepro)
+                texto= usuario.reproducirCancion(c)
+                mostrarSalida(texto,salidaRepro)
        
         repro = tk.Button(frameReproducir, text="Reproducir", font=("Verdana", 12), fg="white", bg="#2C34FA", command=reproducirCancion)
           
         salidaRepro= tk.Text(frameReproducir,font=("Verdana", 10), border= False, width= 100)
-          
+        Principal2.frames.append(salidaRepro) 
+
         nombreR.pack()
         desR.pack()
         fieldRepro.pack(pady=(10,10))
         repro.pack()
-        salidaRepro.pack()
 
         Principal2.frames.append(frameReproducir) 
 
+        frameRanking = tk.Frame(self)
+        nombreRanking = tk.Label(frameRanking, text="Ranking BILLBOARD", font=("Verdana", 14), fg = "#2C34FA", pady= 20)
+
+        desRanking = tk.Label(frameRanking, text = "Selecciona Ver para visualizar el ranking", font=("Verdana", 10))
+        
+        def billboard():
+            artistaTop=usuario.topArtista()
+            if artistaTop==None:
+                imprimir="No tienes artista favorito\n"
+            else:
+                imprimir="Tu artista favorito es "+artistaTop.getNombre()+"\n"
+            
+            for artista in Artista.getArtistasDisponibles():
+                puntaje=0.0
+                if artista.getGenero().__eq__(Usuario.genFavoritoSpotyfree()):
+                    puntaje=artista.getReproducciones(artista)*Artista.FACTORREPRODUCCIONES+artista.getMeGusta(artista)*Artista.FACTORMEGUSTA+Usuario.BONIFICACION
+                    artista.setPuntaje(puntaje);
+                else:
+                    puntaje=artista.getReproducciones(artista)*Artista.FACTORREPRODUCCIONES+artista.getMeGusta(artista)*Artista.FACTORMEGUSTA
+                    artista.setPuntaje(puntaje)
+            if Cancion.topCancion()!=None:
+                aBoniCancion = Cancion.topCancion().getArtista()
+                oldPuntaje = aBoniCancion.getPuntaje()
+                aBoniCancion.setPuntaje(oldPuntaje+Usuario.BONIFICACION)
+            
+            imprimir=imprimir+"\nRANKING BILLBOARD 2022\n"
+            ListaArtista = Artista.ordenarPorPuntaje()
+            for a in range(len(ListaArtista)):
+                if a==0:
+                    artistaUno=ListaArtista[a].getNombre()
+                imprimir=imprimir+"#"+str(a+1)+ListaArtista[a].getNombre()+"\n"
+            if artistaTop!=None:
+                if artistaUno==artistaTop.getNombre():
+                    imprimir=imprimir+"\n"+"FELICITACIONES! Tu artista favorito es el numero uno"
+                else:
+                    imprimir=imprimir+"\n"+"A seguir esforzandose para que tu artista favoritos sea el numero uno"
+            mostrarSalida(imprimir,salidaRanking)
+       
+        ranking = tk.Button(frameRanking, text="Ver", font=("Verdana", 12), fg="white", bg="#2C34FA", command=billboard)
+          
+        salidaRanking= tk.Text(frameRanking,font=("Verdana", 10), border= False, width= 100)
+        Principal2.frames.append(salidaRanking) 
+
+        nombreRanking.pack()
+        desRanking.pack()
+        ranking.pack()
+
+        Principal2.frames.append(frameRanking) 
+        
         self.mainloop()

@@ -1,6 +1,7 @@
 from gestorAplicacion.gestorMusica.genero import Genero
 from gestorAplicacion.gestorPersonas.usuario import Usuario
 from gestorAplicacion.gestorMusica.cancion import Cancion
+from gestorAplicacion.gestorPersonas.persona import Persona
 
 ''' Módulo artista.py
     Autores: Carolina Álvarez Murillo, Miller Johan Chica Acero,
@@ -9,7 +10,7 @@ from gestorAplicacion.gestorMusica.cancion import Cancion
     Este módulo contiene la clase Artista
 '''
 
-class Artista(): #ACTUALIZAR CON PERSONA Y SERIALIZABLE
+class Artista(Persona): #ACTUALIZAR CON PERSONA Y SERIALIZABLE
 
     __artistasDisponibles = []
     
