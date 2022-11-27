@@ -54,6 +54,9 @@ class Cancion(Musica):
     def descripcion(self):
         return "Título: " + self.getNombre() + "\nArtista: " + self.getArtista().getNombre()
     
+    def aumentarReproduciones(self):
+        self.__reproducciones+=1
+
     @classmethod
     def topCancion(cls):
         masEscuchada = ""

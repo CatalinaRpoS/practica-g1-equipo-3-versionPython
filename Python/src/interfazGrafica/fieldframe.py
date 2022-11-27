@@ -21,21 +21,21 @@ class FieldFrame(Frame):
         self._elementos = []
 
         # Crear y colocar titulo de los criterios
-        labelTituloCriterios = Label(self, text = tituloCriterios, font= ("Verdana", 14))
+        labelTituloCriterios = Label(self, text = tituloCriterios, font=("Segoe Print", 10))
         labelTituloCriterios.grid(column=0, row=0, padx = (10,10), pady = (10,10))
 
         # Crear y colocar titulo de los valores
-        labelTituloValores = Label(self, text = tituloValores, font= ("Verdana", 14))
+        labelTituloValores = Label(self, text = tituloValores, font=("Segoe Print", 10))
         labelTituloValores.grid(column=1, row=0, padx = (10,10), pady = (10,10))
 
         # Crear cada uno de los criterios
         for  i in range(len(criterios)):
             # Crear y colocar nombre de cada criterio
-            labelCriterio = Label(self, text = criterios[i], font = ("Verdana", 12))
+            labelCriterio = Label(self, text = criterios[i], font=("Segoe Print", 10))
             labelCriterio.grid(column=0, row=i+1, padx = (10,10), pady = (10,10))
 
             # Crear y colocar entrada de cada criterio
-            entryValor = Entry(self, font = ("Verdana", 12))
+            entryValor = Entry(self, font=("Segoe Print", 10))
             entryValor.grid(column=1, row=i+1, padx = (10,10), pady = (10,10))
 
             # Colocar el valor inicial si lo hay
@@ -58,4 +58,4 @@ class FieldFrame(Frame):
 
     def crearBotones(self, comando1, texto = "Aceptar", Pady = 50, Column= 0, Padx = 0):
 
-        return Button(self, text=texto, font = ("Verdana", 12), fg = "white", bg = "#007bff", command=comando1).grid(padx = Padx, pady = Pady, column = Column, row = len(self._criterios)+1)
+        return Button(self, text=texto, font=("Segoe Print", 8), fg = "white", bg = "#2C34FA", command=comando1).grid(padx = Padx, pady = Pady, column = Column, row = len(self._criterios)+1)

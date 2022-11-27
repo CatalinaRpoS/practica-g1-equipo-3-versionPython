@@ -21,10 +21,10 @@ class Usuario:
         self.__tiempoEscuchado = 0
         Usuario.__usuariosExistentes.append(self)
     
-    def reproducir(self,cancion):
+    def reproducirCancion(self,cancion):
         cancion.aumentarReproducciones()
         self.__tiempoEscuchado += cancion.getDuracion()
-        return cancion
+        return cancion.__str__()
 
     def agregarMeGusta(self, cancion):
         return self.__favoritos.agregarCancion(cancion)
@@ -32,10 +32,10 @@ class Usuario:
     def eliminarMeGusta(self, cancion):
         return self.__favoritos.eliminarCancion(cancion)
 
-    def reproducir(self, lista):
+    def reproducirLista(self, lista):
         lista.aumentarReproducciones()
         self.__tiempoEscuchado += lista.duracionLista()
-        return lista
+        return lista.__str__()
 
     def __str__(self):
         return "¡Hola! Mi nombre es " + self.__nombre
@@ -75,7 +75,7 @@ class Usuario:
     def setColeccion(self, coleccion):
         self.__coleccion = coleccion
 
-    def getColeccion(self) -> Coleccion:
+    def getColeccion(self):
         return self.__coleccion
 
     def getFavoritos(self):

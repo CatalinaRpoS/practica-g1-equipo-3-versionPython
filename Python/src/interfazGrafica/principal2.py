@@ -10,12 +10,12 @@ from gestorAplicacion.gestorPersonas.artista import Artista
 from gestorAplicacion.gestorMusica.cancion import Cancion
 from gestorAplicacion.gestorMusica.genero import Genero
 from gestorAplicacion.gestorMusica.lista import Lista
-from gestorAplicacion.gestorMusica.meGusta import MeGusta
+from gestorAplicacion.gestorMusica.meGusta import meGusta
 
 class Principal2():
     frames=[]
     
-    def __init__(self, usuario: Usuario, ventana_principal, ventana_anterior):
+    def __init__(self, usuario, ventana_principal, ventana_anterior):
         
         self = tk.Toplevel(ventana_principal)
         self.title("Colección de {}".format(usuario.getNombre()))
@@ -67,11 +67,11 @@ class Principal2():
 
 # Frame Inicial
         frameInicial= tk.Frame(self)
-        nombreInicial = tk.Label(frameInicial, text="¿Cómo usar Spotifree?", font=("Segoe Print", 20), fg="#2C34FA")
-        textoInicial = f"¡Bienvenido a la pantalla principal! Desde aquí puedes comenzar a explorar todas las\n" \
-                         f"funciones que hemos preparado para ti. Conoce a los artistas que se han registrado en\n" \
-                         f"Spotifree y dale un vistazo a todas las canciones que puedes disfrutar. Si gustas, puedes\n" \
-                         f"crear una cuenta y acceder a tu propia Colección, ¿qué esperas?" 
+        nombreInicial = tk.Label(frameInicial, text="Sigue explorando", font=("Segoe Print", 20), fg="#2C34FA")
+        textoInicial = f"¡Bienvenido a tu coleccion! Desde aquí puedes visualizar tus listas y favoritoa\n" \
+                         f"Reproducirlas, agregar y eliminar canciones o incluso crear listas nuevas\n" \
+                         f"Ademas, contamos con unas funciones bastante novedosas\n" \
+                         f"Animate a probar todo lo que tenemos para ofrecerte, ¿qué esperas?" 
         descInicial = tk.Label(frameInicial, text=textoInicial, font=("Verdana", 12))
        
         Principal2.frames.append(frameInicial)
@@ -85,15 +85,15 @@ class Principal2():
         #MostrarLista
 
         frameMostrarLista = tk.Frame(self)
-        nombreMostrarLista = tk.Label(frameMostrarLista, text="Menu para mostrar y editar listas", font=("Verdana", 16), fg = "#31a919", pady= 20)
+        nombreMostrarLista = tk.Label(frameMostrarLista, text="Menu para mostrar y editar listas", font=("Segoe Print", 14), fg = "#31a919", pady= 20)
 
         texto = """Selecciona MOSTRAR para ver las canciones de tu lista
 Selecciona AGREGAR para añadir una cancion a tu lista
 Selecciona ELIMINAR para remover una cancion de tu lista
 Selecciona REPRODUCIR para escuchar tu lista"""
-        blankMostrarLista = tk.Label(frameMostrarLista, text = texto, font=("Verdana", 12))
+        blankMostrarLista = tk.Label(frameMostrarLista, text = texto, font=("Segoe Print", 10))
         fieldMostrarLista = FieldFrame(frameMostrarLista, None, ["Nombre Lista", "Nombre Cancion"], None, None, None)
-        output = tk.Text(frameMostrarLista, border= False, width= 100)
+        output = tk.Text(frameMostrarLista,font=("Segoe Print", 10), border= False, width= 100)
 
         def MostrarLista():
             
@@ -160,12 +160,25 @@ Selecciona REPRODUCIR para escuchar tu lista"""
 
         Principal2.frames.append(frameMostrarLista)    
         
-        def visualizar():
-              texto=usuario.getFavoritos().__str__()
-              mostrarSalida(texto,salidaFavoritos)
+        frameVerCanciones = tk.Frame(self)
+        nombreVC = tk.Label(frameVerCanciones, text="Menu para mostrar y editar favoritos", font=("Segoe Print", 14), fg="#2C34FA", pady= 20)
+        texto = """Selecciona MOSTRAR para ver las canciones de tus favoritos
+Selecciona AGREGAR para añadir una cancion a tus favoritos
+Selecciona ELIMINAR para remover una cancion de tus favoritos
+Selecciona REPRODUCIR para escuchar tus favoritos"""
+        desVC = tk.Label(frameVerCanciones, text = texto,font=("Segoe Print", 10))
+        fieldFavoritos = FieldFrame(frameVerCanciones, None, ["Nombre Cancion"], None, None, None)
+        salidaFavoritos = tk.Text(frameVerCanciones,font=("Segoe Print", 10), border= False, width= 100)
 
-        def agregar():
-              nCancion=fieldAE.getValue("Nombre cancion")
+        def Mostrar():
+            favoritos = usuario.getFavoritos().getFavoritos()
+            if len(favoritos)>0:
+               mostrarSalida(usuario.getFavoritos().__str__(),salidaFavoritos)
+            else:
+               messagebox.showinfo("Aviso", "No tiene canciones en favoritos")
+        
+        def Agregar():
+              nCancion=fieldFavoritos.getValue("Nombre Cancion")
               canciones = Cancion.getCancionesDisponibles()
               c=None
               for cancion in canciones:
@@ -177,8 +190,8 @@ Selecciona REPRODUCIR para escuchar tu lista"""
                     texto=usuario.agregarMeGusta(c)
                     mostrarSalida(texto,salidaFavoritos)
 
-        def eliminar():
-              nCancion=fieldAE.getValue("Nombre cancion")
+        def Eliminar():
+              nCancion=fieldFavoritos.getValue("Nombre Cancion")
               canciones = Cancion.getCancionesDisponibles()
               c=None
               for cancion in canciones:
@@ -189,27 +202,26 @@ Selecciona REPRODUCIR para escuchar tu lista"""
               else:
                     texto=usuario.eliminarMeGusta(c)
                     mostrarSalida(texto,salidaFavoritos)
+  
 
-        def reproducir():
-              usuario.reproducir(usuario.getFavoritos())
-              mostrarSalida(usuario.getFavoritos().__str__(), salidaFavoritos)
-        
-        frameVerCanciones= tk.Frame(self)
-        nombreVerCanciones = tk.Label(frameVerCanciones, text="Favoritos", font=("Segoe Print", 16), fg="#2C34FA")
-        descVerCanciones = tk.Label(frameVerCanciones,text="Selecciona MOSTRAR para visualizar las canciones que tienes en favoritos\nSelecciona AGREGAR para agregar una cancion a favoritos\nSelecciona ELIMINAR para eliminar una cancion a favoritos\nSelecciona REPRODUCIR para reproducir favoritos",font=("Verdana", 12))
-        fieldAE = FieldFrame(frameVerCanciones, None, ["Nombre cancion"], None, None, None)
-        salidaFavoritos= tk.Text(frameVerCanciones, width= 90,font=("Segoe Print", 10),border= False)
-        
-        botonM: tk.Button = fieldAE.crearBotones(visualizar, texto= "MOSTRAR", Column=0)
-        botonA: tk.Button = fieldAE.crearBotones(agregar, texto= "AGREGAR", Column=1)
-        botonE: tk.Button = fieldAE.crearBotones(eliminar, texto= "ELIMINAR", Column=2)
-        botonRepro: tk.Button = fieldAE.crearBotones(reproducir, texto= "REPRODUCIR", Column=3, Padx= 70)
-    
-        nombreVerCanciones.pack()
-        descVerCanciones.pack()
-        fieldAE.pack(pady=(10,10))
+        def Reproducir():
+            favoritos = usuario.getFavoritos().getFavoritos()
+
+            if len(favoritos)>0:
+                mostrarSalida(usuario.reproducirLista(favoritos),salidaFavoritos)
+            else:
+                messagebox.showinfo("Aviso", "No tiene canciones para reproducir")
+       
+        botonMostrar: tk.Button = fieldFavoritos.crearBotones(Mostrar, texto= "MOSTRAR", Column=0)
+        botonAgregar: tk.Button = fieldFavoritos.crearBotones(Agregar, texto= "AGREGAR", Column=1)
+        botonEliminar: tk.Button = fieldFavoritos.crearBotones(Eliminar, texto= "ELIMINAR", Column=2)
+        botonReproducir: tk.Button = fieldFavoritos.crearBotones(Reproducir, texto= "REPRODUCIR", Column=3, Padx= 70)
+      
+        nombreVC.pack()
+        desVC.pack()
+        fieldFavoritos.pack(pady=(10,10))
         salidaFavoritos.pack()
 
-        Principal2.frames.append(frameVerCanciones)
+        Principal2.frames.append(frameVerCanciones)    
 
         self.mainloop()

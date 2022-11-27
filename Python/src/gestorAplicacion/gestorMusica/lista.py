@@ -14,7 +14,7 @@ class Lista(Musica):
 
     def __init__(self, str_nombre, Usuario_usuario = None, str_descripcion = "", list_lista = [], list_usuarios = [], set_listaColaborativa = {}):
         super().__init__(str_nombre)
-        self.usuario = Usuario_usuario
+        self.__usuario = Usuario_usuario
         self.__descripcion = str_descripcion
         self.__lista = list_lista
         self.usuarios = list_usuarios
@@ -40,10 +40,10 @@ class Lista(Musica):
         self.__listaColaborativa = list_listaColaborativa
 
     def getUsuario(self):
-        return self.usuario #Usuario
+        return self.__usuario #Usuario
 
     def setUsuario(self, Usuario_usuario):
-        self.usuario = Usuario_usuario
+        self.__usuario = Usuario_usuario
     
     @classmethod
     def getListasExistentes(cls):
@@ -69,7 +69,7 @@ class Lista(Musica):
             self.__lista.remove(Cancion_cancion)
         return "Se ha eliminado la canción " + Cancion_cancion.getNombre() + " de la lista " + self.getNombre() + " con exito"      
     
-    def toString(self):
+    def __str__(self):
         return "Se está reproduciendo la lista: " + self.getNombre()
     
     def infoLista(self):
