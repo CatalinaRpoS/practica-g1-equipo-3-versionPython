@@ -1,6 +1,6 @@
 from gestorAplicacion.gestorMusica.lista import Lista
 
-class meGusta(Lista):
+class MeGusta(Lista):
     
     __favoritosExistentes = []
     
@@ -9,7 +9,7 @@ class meGusta(Lista):
     def __init__(self, usuario):
         super().__init__("Tus Me Gusta", usuario, "Tus canciones favoritos")
         self.__favoritos = []
-        meGusta.__favoritosExistentes.append(self)
+        MeGusta.__favoritosExistentes.append(self)
         
     def agregarCancion(self, cancion):
         self.__favoritos.append(cancion)
@@ -35,7 +35,7 @@ class meGusta(Lista):
         
     def totalPorGenero(self, genero):
         total = 0
-        for cancion in meGusta.getFavoritos(self):
+        for cancion in MeGusta.getFavoritos(self):
             if(cancion.getGenero() == genero):
                 total += 1
         return total
