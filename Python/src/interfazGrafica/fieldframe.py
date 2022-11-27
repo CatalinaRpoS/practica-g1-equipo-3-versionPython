@@ -9,7 +9,7 @@ class FieldFrame(Frame):
     # valores: Array con los valores iniciales. Si None, no hay valores iniciales 
     # habilitado: Array con los campos no-editables por el usuario. Si None, todos son editables 
     
-    def __init__(self, ventana, tituloCriterios = "", criterios = None, tituloValores = "", valores = None, habilitado = None):
+    def __init__(self, ventana, tituloCriterios = "", criterios = [], tituloValores = "", valores = None, habilitado = None):
         super().__init__(ventana)
         self._tituloCriterios = tituloCriterios
         self._criterios = criterios
@@ -56,5 +56,6 @@ class FieldFrame(Frame):
         indice = self._criterios.index(criterio)
         return self._elementos[indice].get()
 
-    def crearBotones(self, comando1):
-        aceptar = Button(self, text="Aceptar", font = ("Verdana", 12), fg = "white", bg = "#007bff", command=comando1).grid(pady = 50, column = 0, row = len(self._criterios)+1)
+    def crearBotones(self, comando1, texto = "Aceptar", Pady = 50, Column= 0, Padx = 0):
+
+        return Button(self, text=texto, font = ("Verdana", 12), fg = "white", bg = "#007bff", command=comando1).grid(padx = Padx, pady = Pady, column = Column, row = len(self._criterios)+1)

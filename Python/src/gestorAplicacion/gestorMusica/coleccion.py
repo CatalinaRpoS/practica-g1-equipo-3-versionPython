@@ -24,7 +24,7 @@ class Coleccion:
     def setUsuario(self,usuario):
         self.__usuario=usuario
 
-    def getListas(self):
+    def getListas(self) -> list:
         return self.__listas
     
     def setListas(self,listas):

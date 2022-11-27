@@ -75,7 +75,7 @@ class Usuario:
     def setColeccion(self, coleccion):
         self.__coleccion = coleccion
 
-    def getColeccion(self):
+    def getColeccion(self) -> Coleccion:
         return self.__coleccion
 
     def getFavoritos(self):

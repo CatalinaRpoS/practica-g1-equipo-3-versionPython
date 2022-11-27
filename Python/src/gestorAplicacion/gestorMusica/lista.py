@@ -64,8 +64,10 @@ class Lista(Musica):
         return "Se ha agregado la canción " + Cancion_cancion.getNombre() + " a la lista " + self.getNombre() + " con exito"
     
     def eliminarCancion(self, Cancion_cancion):
-        self.__lista.remove(Cancion_cancion)
-        return "Se ha eliminado la canción " + Cancion_cancion.getNombre() + " de la lista " + self.getNombre() + " con exito"
+
+        if Cancion_cancion in self.__lista:
+            self.__lista.remove(Cancion_cancion)
+        return "Se ha eliminado la canción " + Cancion_cancion.getNombre() + " de la lista " + self.getNombre() + " con exito"      
     
     def toString(self):
         return "Se está reproduciendo la lista: " + self.getNombre()
