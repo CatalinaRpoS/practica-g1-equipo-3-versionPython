@@ -53,7 +53,7 @@ class Principal2():
         # Barra de menú
         menuProceso.add_command(label="Mostrar Listas", command= lambda: cambiarFrame(frameMostrarLista))
         menuProceso.add_command(label="Mostrar Favoritos", command=lambda: cambiarFrame(frameVerCanciones))
-        menuProceso.add_command(label="Reproducir")
+        menuProceso.add_command(label="Reproducir",command=lambda: cambiarFrame(frameReproducir))
         menuProceso.add_command(label="Ranking")
         menuProceso.add_command(label="Agrupacion")
         menuProceso.add_command(label="Colaborativa")
@@ -67,7 +67,7 @@ class Principal2():
 
 # Frame Inicial
         frameInicial= tk.Frame(self)
-        nombreInicial = tk.Label(frameInicial, text="Sigue explorando", font=("Segoe Print", 20), fg="#2C34FA")
+        nombreInicial = tk.Label(frameInicial, text="Sigue explorando", font=("Verdana", 20), fg="#2C34FA")
         textoInicial = f"¡Bienvenido a tu coleccion! Desde aquí puedes visualizar tus listas y favoritoa\n" \
                          f"Reproducirlas, agregar y eliminar canciones o incluso crear listas nuevas\n" \
                          f"Ademas, contamos con unas funciones bastante novedosas\n" \
@@ -85,15 +85,15 @@ class Principal2():
         #MostrarLista
 
         frameMostrarLista = tk.Frame(self)
-        nombreMostrarLista = tk.Label(frameMostrarLista, text="Menu para mostrar y editar listas", font=("Segoe Print", 14), fg = "#31a919", pady= 20)
+        nombreMostrarLista = tk.Label(frameMostrarLista, text="Menu para mostrar y editar listas", font=("Verdana", 14), fg = "#2C34FA", pady= 20)
 
         texto = """Selecciona MOSTRAR para ver las canciones de tu lista
 Selecciona AGREGAR para añadir una cancion a tu lista
 Selecciona ELIMINAR para remover una cancion de tu lista
 Selecciona REPRODUCIR para escuchar tu lista"""
-        blankMostrarLista = tk.Label(frameMostrarLista, text = texto, font=("Segoe Print", 10))
+        blankMostrarLista = tk.Label(frameMostrarLista, text = texto, font=("Verdana", 10))
         fieldMostrarLista = FieldFrame(frameMostrarLista, None, ["Nombre Lista", "Nombre Cancion"], None, None, None)
-        output = tk.Text(frameMostrarLista,font=("Segoe Print", 10), border= False, width= 100)
+        output = tk.Text(frameMostrarLista,font=("Verdana", 10), border= False, width= 100)
 
         def MostrarLista():
             
@@ -161,14 +161,14 @@ Selecciona REPRODUCIR para escuchar tu lista"""
         Principal2.frames.append(frameMostrarLista)    
         
         frameVerCanciones = tk.Frame(self)
-        nombreVC = tk.Label(frameVerCanciones, text="Menu para mostrar y editar favoritos", font=("Segoe Print", 14), fg="#2C34FA", pady= 20)
+        nombreVC = tk.Label(frameVerCanciones, text="Menu para mostrar y editar favoritos", font=("Verdana", 14), fg="#2C34FA", pady= 20)
         texto = """Selecciona MOSTRAR para ver las canciones de tus favoritos
 Selecciona AGREGAR para añadir una cancion a tus favoritos
 Selecciona ELIMINAR para remover una cancion de tus favoritos
 Selecciona REPRODUCIR para escuchar tus favoritos"""
-        desVC = tk.Label(frameVerCanciones, text = texto,font=("Segoe Print", 10))
+        desVC = tk.Label(frameVerCanciones, text = texto,font=("Verdana", 10))
         fieldFavoritos = FieldFrame(frameVerCanciones, None, ["Nombre Cancion"], None, None, None)
-        salidaFavoritos = tk.Text(frameVerCanciones,font=("Segoe Print", 10), border= False, width= 100)
+        salidaFavoritos = tk.Text(frameVerCanciones,font=("Verdana", 10), border= False, width= 100)
 
         def Mostrar():
             favoritos = usuario.getFavoritos().getFavoritos()
@@ -223,5 +223,37 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
         salidaFavoritos.pack()
 
         Principal2.frames.append(frameVerCanciones)    
+        
+        frameReproducir = tk.Frame(self)
+        nombreR= tk.Label(frameReproducir, text="Reproducir cancion", font=("Verdana", 14), fg = "#2C34FA", pady= 20)
+
+        texto = "Selecciona REPRODUCIR para escuchar la cancion ingresada"
+        desR = tk.Label(frameReproducir, text = texto, font=("Verdana", 10))
+        fieldRepro = FieldFrame(frameReproducir, None, ["Nombre Cancion"], None, None, None)
+        
+        def reproducirCancion():
+            nCancion=fieldRepro.getValue("Nombre Cancion")
+            canciones = Cancion.getCancionesDisponibles()
+            c=None
+            for cancion in canciones:
+                if nCancion==cancion.getNombre():
+                    c=cancion
+            if c==None:
+                messagebox.showinfo("Aviso", "Esa cancion no existe")
+            else:
+                texto=usuario.reproducirCancion(c)
+                mostrarSalida(texto,salidaRepro)
+       
+        repro = tk.Button(frameReproducir, text="Reproducir", font=("Verdana", 12), fg="white", bg="#2C34FA", command=reproducirCancion)
+          
+        salidaRepro= tk.Text(frameReproducir,font=("Verdana", 10), border= False, width= 100)
+          
+        nombreR.pack()
+        desR.pack()
+        fieldRepro.pack(pady=(10,10))
+        repro.pack()
+        salidaRepro.pack()
+
+        Principal2.frames.append(frameReproducir) 
 
         self.mainloop()

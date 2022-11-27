@@ -1,6 +1,7 @@
 from gestorAplicacion.gestorMusica.coleccion import Coleccion
 from gestorAplicacion.gestorMusica.meGusta import meGusta
 from gestorAplicacion.gestorMusica.genero import Genero
+from gestorAplicacion.gestorMusica.lista import Lista
 import random
 
 ''' Módulo Usuario.py
@@ -33,8 +34,8 @@ class Usuario:
         return self.__favoritos.eliminarCancion(cancion)
 
     def reproducirLista(self, lista):
-        lista.aumentarReproducciones()
         self.__tiempoEscuchado += lista.duracionLista()
+        lista.super().aumentarReproducciones
         return lista.__str__()
 
     def __str__(self):

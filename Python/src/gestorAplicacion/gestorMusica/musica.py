@@ -24,11 +24,3 @@ class Musica:
     
     def setReproducciones(self, reproducciones):
         self.__reproducciones = reproducciones
-
-    # Este método van a sobreescribirlo las clases que hereden de Música
-    def aumentarReproducciones(self):
-        pass
-    
-    # Este método van a sobreescribirlo las clases que hereden de Música
-    def __str__(self):
-        pass

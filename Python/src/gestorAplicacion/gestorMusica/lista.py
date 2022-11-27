@@ -40,7 +40,7 @@ class Lista(Musica):
         self.__listaColaborativa = list_listaColaborativa
 
     def getUsuario(self):
-        return self.__usuario #Usuario
+        return self.__usuario 
 
     def setUsuario(self, Usuario_usuario):
         self.__usuario = Usuario_usuario
@@ -91,7 +91,7 @@ class Lista(Musica):
             return "Lista: " + self.getNombre() + " está vacía"
         
     def aumentarReproducciones(self):
-        self.__reproducciones += 1
+        self.__reproducciones = self.__reproducciones+1
         for cancion in self.__lista:
             cancion.aumentarReproducciones()
     

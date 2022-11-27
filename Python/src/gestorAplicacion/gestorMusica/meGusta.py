@@ -42,9 +42,8 @@ class meGusta(Lista):
     
     def __str__(self):
         des = ""
-        lista = super().getUsuario().getFavoritos().getFavoritos()
-        if(len(lista) > 0):
-            for cancion in lista:
+        if(len(self.__favoritos) > 0):
+            for cancion in self.__favoritos:
                 des += cancion.descripcion() + "\n"
             return "Tus Canciones Favoritas:" + "\n" + "\n" + "Canciones: " + "\n" + des
         else:
