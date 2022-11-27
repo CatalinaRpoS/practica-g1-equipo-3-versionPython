@@ -16,12 +16,13 @@ from gestorAplicacion.gestorMusica.meGusta import meGusta
 class Principal2():
     frames=[]
     
-    def __init__(self, usuario, ventana_principal, ventana_anterior):
+    def __init__(self, usuario: Usuario, ventana_principal, ventana_anterior):
         
         self = tk.Toplevel(ventana_principal)
         self.title("Colección de {}".format(usuario.getNombre()))
         self.option_add('*tearOff', False)
         self.resizable(False, False)
+        user = usuario
 
         ancho_total = self.winfo_screenwidth()
         alto_total = self.winfo_screenheight()
@@ -84,6 +85,7 @@ class Principal2():
             canciones = [cancion for cancion in Cancion.getCancionesDisponibles() if cancion.getNombre() in nombres]
     
             lista = Lista(fieldCrearLista.getValue("Nombre"), usuario, fieldCrearLista.getValue("Descripcion"),canciones)
+            usuario.getColeccion().agregarLista(lista)
 
             return "Se ha creado tu lista con exito"
         

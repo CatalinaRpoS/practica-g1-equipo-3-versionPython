@@ -40,7 +40,7 @@ class Coleccion:
     
     def agregarLista(self,lista):
         self.__listas.append(lista)
-        return "Se ha agregado la lista "+lista.getNombre(self)+" a la Colección con éxito"
+        return "Se ha agregado la lista "+lista.getNombre()+" a la Colección con éxito"
 
     def eliminarLista(self,lista):
         posicion=self.__listas.index(lista)
@@ -94,8 +94,8 @@ class Coleccion:
 
         return PuntosExtras
            
-    def agregarLista(self,lista,usuario):
-        usuario.getColeccion(self).agregarColaborativa(lista)
+    def agregarListaColaborativa(self,lista):
+        self.__usuario.getColeccion(self).agregarColaborativa(lista)
         return "Lista colaborativa creada"
 
     def agregarColaborativa(self,lista):
