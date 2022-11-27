@@ -1,6 +1,11 @@
 from gestorAplicacion.gestorMusica.coleccion import Coleccion
 from gestorAplicacion.gestorMusica.meGusta import meGusta
 from gestorAplicacion.gestorMusica.genero import Genero
+from gestorAplicacion.gestorMusica.musica import Musica
+from gestorAplicacion.gestorMusica.lista import Lista
+from gestorAplicacion.gestorMusica.cancion import Cancion
+from gestorAplicacion.gestorPersonas.persona import Persona
+
 import random
 
 ''' Módulo Usuario.py
@@ -10,7 +15,7 @@ import random
     Este módulo contiene la clase usuario
 '''
 
-class Usuario:
+class Usuario(Persona):
     __usuariosExistentes = []
 
     def __init__(self,nombre, genFavorito = Genero.NO_ESPECIFICADO):
@@ -21,10 +26,10 @@ class Usuario:
         self.__tiempoEscuchado = 0
         Usuario.__usuariosExistentes.append(self)
     
-    def reproducir(self,cancion):
+    def reproducirCancion(self,cancion):
         cancion.aumentarReproducciones()
         self.__tiempoEscuchado += cancion.getDuracion()
-        return cancion
+        return cancion.__str__()
 
     def agregarMeGusta(self, cancion):
         return self.__favoritos.agregarCancion(cancion)
@@ -32,10 +37,10 @@ class Usuario:
     def eliminarMeGusta(self, cancion):
         return self.__favoritos.eliminarCancion(cancion)
 
-    def reproducir(self, lista):
-        lista.aumentarReproducciones()
+    def reproducirLista(self, lista):
         self.__tiempoEscuchado += lista.duracionLista()
-        return lista
+        lista.aumentarReproducciones()
+        return lista.__str__()
 
     def __str__(self):
         return "¡Hola! Mi nombre es " + self.__nombre
@@ -75,7 +80,7 @@ class Usuario:
     def setColeccion(self, coleccion):
         self.__coleccion = coleccion
 
-    def getColeccion(self) -> Coleccion:
+    def getColeccion(self):
         return self.__coleccion
 
     def getFavoritos(self):
