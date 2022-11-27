@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import ttk
+from gestorAplicacion.gestorMusica.lista import Lista
 from baseDatos.serializador import Serializador
 from interfazGrafica.fieldframe import FieldFrame
 from gestorAplicacion.gestorPersonas.usuario import Usuario
@@ -38,7 +40,8 @@ class Principal2():
         
     
         # Barra de menú
-        menuProceso.add_command(label="Mostrar Listas", command= lambda: cambiarFrame(frameMostrarLista))
+        menuProceso.add_command(label="Crear/Eliminar Listas", command= lambda: cambiarFrame(frameCrearLista))
+        menuProceso.add_command(label="Mostrar/Editar Listas", command= lambda: cambiarFrame(frameMostrarLista))
         menuProceso.add_command(label="Mostrar Favoritos")
         menuProceso.add_command(label="Reproducir")
         menuProceso.add_command(label="Ranking")
@@ -51,6 +54,43 @@ class Principal2():
         menubar.add_cascade(label="Archivo",menu=menuArchivo)
         menubar.add_cascade(label="Procesos y Consultas", menu=menuProceso)
         self.config(menu=menubar)
+
+        #CrearLista
+
+        def crearLista(): 
+
+            nombres = fieldCrearLista.getValue("Canciones").split(",")
+            canciones = [cancion for cancion in Cancion.getCancionesDisponibles() if cancion.getNombre() in nombres]
+    
+            lista = Lista(fieldCrearLista.getValue("Nombre"), usuario, fieldCrearLista.getValue("Descripcion"),canciones)
+
+            return "Se ha creado tu lista con exito"
+        
+        def eliminarLista(): 
+
+            for lista in usuario.getColeccion().getListas():
+
+                if lista.getNombre() == fieldCrearLista.getValue("Nombre"):
+                    usuario.getColeccion().eliminarLista(lista)
+                    return "Se ha eliminado la lista " + fieldCrearLista.getValue("Nombre") + " con exito"
+            
+        frameCrearLista = tk.Frame(self)
+        nombrecrearLista = tk.Label(frameCrearLista, text="Menu para crear/eliminar listas", font=("Verdana", 16), fg = "#31a919")
+        blankCrearLista = tk.Label(frameCrearLista,text="Por favor ingrese los nombres de las canciones separados por coma", font=("Verdana", 12))
+        fieldCrearLista = FieldFrame(frameCrearLista, None, ["Nombre", "Descripcion", "Canciones"], None, None, None)
+          
+        botonCrear: tk.Button = fieldCrearLista.crearBotones(crearLista, texto= "CREAR")
+        botonEliminar: tk.Button = fieldCrearLista.crearBotones(eliminarLista, texto= "ELIMINAR", Column= 1)
+          
+        outputLista = tk.Text(frameCrearLista, height=100, font=("Verdana", 10))
+        Principal2.frames.append(outputLista)
+          
+        nombrecrearLista.pack()
+        blankCrearLista.pack()
+        fieldCrearLista.pack(pady=(10,10))
+          
+        Principal2.frames.append(frameCrearLista)
+
 
         #MostrarLista
 
@@ -112,7 +152,8 @@ Selecciona REPRODUCIR para escuchar tu lista"""
             Lista = [x for x in usuario.getColeccion().getListas() if x.getNombre() == nombreLista]
 
             if len(Lista)>0:
-                Lista[0].aumentarReproducciones()
+
+                usuario.reproducir(lista= Lista[0])
                 output.insert("end", "Se ha reproducido la lista con exito \n")     
 
             else:
