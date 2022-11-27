@@ -191,7 +191,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
               else:
                 messagebox.showinfo("Aviso", usuario.agregarMeGusta(c))
                 # texto=usuario.agregarMeGusta(c)
-                # mostrarSalida(texto,salidaFavoritos)
+                mostrarSalida("", salidaFavoritos)
 
         def Eliminar():
             nCancion = fieldFavoritos.getValue("Nombre Cancion")
