@@ -142,7 +142,15 @@ Selecciona REPRODUCIR para escuchar tu lista"""
             nombreLista = fieldMostrarLista.getValue("Nombre Lista")
             Lista = [x for x in usuario.getColeccion().getListas() if x.getNombre() == nombreLista]
 
-            if len(Lista)>0:
+            if Lista[0].getDescripcion() == "colaborativa":
+                if len(Lista)>0:
+                    messagebox.showinfo("Aviso", Lista[0].infoListaColaborativa())
+                    # output.insert("end", Lista[0].infoLista() + "\n")
+                else:
+                    messagebox.showinfo("Aviso", "¡Esta lista no existe!")
+                    # output.insert("end", "Ingrese un nombre de lista valido \n")
+                
+            elif len(Lista)>0:
                 messagebox.showinfo("Aviso", Lista[0].infoLista())
                 # output.insert("end", Lista[0].infoLista() + "\n")
             else:
@@ -187,7 +195,7 @@ Selecciona REPRODUCIR para escuchar tu lista"""
 
             if len(Lista)>0:
 
-                usuario.reproducir(lista= Lista[0])
+                usuario.reproducirLista(lista= Lista[0])
                 output.insert("end", "Se ha reproducido la lista con exito \n")     
 
             else:
