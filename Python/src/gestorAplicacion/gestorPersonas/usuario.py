@@ -158,12 +158,18 @@ class Usuario(Persona):
         ROCK=0
         POP=0
         SALSA=0
-        Kpop=0 
+        KPOP=0 
         NO_ESPECIFICADO=0
+        Puntos=[]
         total = usuario.getFavoritos().getFavoritos().size()
         
         if len(usuario.getFavoritos().getFavoritos())==0:
-            Puntos={REGGAETON:0.0, ROCK:0.0, POP:0.0,SALSA:0.0,Kpop:0.0,NO_ESPECIFICADO:0.0}
+            Puntos.add(0.0)
+            Puntos.add(0.0)
+            Puntos.add(0.0)
+            Puntos.add(0.0)
+            Puntos.add(0.0)
+            Puntos.add(0.0)
         else:
             for cancion in usuario.getFavoritos().getFavoritos():
                 if cancion.getGenero()==Genero.REGGAETON:
@@ -175,15 +181,15 @@ class Usuario(Persona):
                 elif cancion.getGenero()==Genero.POP:
                     POP+=1
                 elif cancion.getGenero()==Genero.KPOP:
-                    Kpop+=1
+                    KPOP+=1
                 else:
                     NO_ESPECIFICADO+=1
-                Puntos[REGGAETON]=REGGAETON/total*100
-                Puntos[ROCK]=ROCK/total*100
-                Puntos[POP]=POP/total*100
-                Puntos[SALSA]=SALSA/total*100
-                Puntos[Kpop]=Kpop/total*100
-                Puntos[NO_ESPECIFICADO]=NO_ESPECIFICADO/total*100
+                Puntos.append(REGGAETON/total*100)
+                Puntos.append(ROCK/total*100)
+                Puntos.append(SALSA/total*100)
+                Puntos.append(POP/total*100)
+                Puntos.append(KPOP/total*100)
+                Puntos.append(NO_ESPECIFICADO/total*100)
         return Puntos
         
     def tuGenFavorito(self, usuario):
