@@ -12,6 +12,7 @@ from gestorAplicacion.gestorMusica.cancion import Cancion
 from gestorAplicacion.gestorMusica.genero import Genero
 from gestorAplicacion.gestorMusica.lista import Lista
 from gestorAplicacion.gestorMusica.meGusta import meGusta
+import random
 
 class Principal2():
     frames=[]
@@ -59,7 +60,7 @@ class Principal2():
         menuProceso.add_command(label="Reproducir",command=lambda: cambiarFrame(frameReproducir))
         menuProceso.add_command(label="Ranking",command=lambda: cambiarFrame(frameRanking))
         menuProceso.add_command(label="Agrupacion")
-        menuProceso.add_command(label="Colaborativa")
+        menuProceso.add_command(label="Colaborativa", command=lambda:cambiarFrame(frameColaborativa))
         menuProceso.add_command(label="Resumen")
        
         menuArchivo.add_command(label="Regresar a la Ventana Anterior",command=volver)
@@ -349,5 +350,66 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
         ranking.pack()
 
         Principal2.frames.append(frameRanking) 
+        
+        #Colaborativa
+        
+        frameColaborativa = tk.Frame(self)
+        nombreColaborativa = tk.Label(frameColaborativa, text = "Colaborativa")
+        
+        desColaborativa = tk.Label(frameColaborativa, text = "Selecciona crear para generar tu colaborativa", font=("Verdana", 10))
+        
+        def colaborativa():
+            usuarios = Usuario.getUsuariosExistentes()
+            dueños = []
+            cancionesAgregar = []
+            
+            control = True
+            
+            while(control == True):
+                usuario2 = usuarios[random.randint(0,len(usuarios)-1)]
+                if(usuario2 != usuario):
+                    dueños.append(usuario)
+                    dueños.append(usuario2)
+                    control = False
+                    
+            nombre1 = dueños[0].getNombre()
+            nombre2 = dueños[1].getNombre()
+            nombre = nombre1 + " + " + nombre2
+            
+            lista1 = dueños[0].getFavoritos()
+            lista2 = dueños[1].getFavoritos()
+            
+            for i in lista1.getFavoritos():
+                cancionesAgregar.append(i)
+            
+            for j in lista2.getFavoritos():
+                cancionesAgregar.append(j)
+                
+            cancionesColaborativa = []
+            
+            for k in cancionesAgregar:
+                cancionesColaborativa.append(k)
+                
+            cancionesColaborativa = set(cancionesColaborativa)
+            
+            colaborativa = Lista(nombre, dueños[0], "colaborativa", None, None, cancionesColaborativa)
+            usuario.getColeccion().agregarLista(colaborativa)
+            
+            mostrarSalida(f"Colaborativa {colaborativa.getNombre()} creada", salidaColabora)
+            
+        colabora = tk.Button(frameColaborativa, text="Crear", font=("Verdana", 12), fg="white", bg="#2C34FA", command=colaborativa)
+          
+        salidaColabora= tk.Text(frameColaborativa,font=("Verdana", 10), border= False, width= 100)
+        Principal2.frames.append(salidaColabora) 
+
+        nombreColaborativa.pack()
+        desColaborativa.pack()
+        colabora.pack()
+
+        Principal2.frames.append(frameColaborativa) 
+            
+                
+            
+            
         
         self.mainloop()

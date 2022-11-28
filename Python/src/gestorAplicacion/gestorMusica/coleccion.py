@@ -111,17 +111,17 @@ class Coleccion:
 		
         for i in range(len(listas)):
             for j in range(len(listas)-1):
-                if listas[i].getGenero(self)==listas[j+1].getGenero(self):
+                if listas[i].getGenero()==listas[j+1].getGenero():
                     totalGenero+=1
-                    if listas[i].getGenero(self)==Genero.REGGAETON:
+                    if listas[i].getGenero()==Genero.REGGAETON:
                         REGGAETON+=1
-                    elif listas[i].getGenero(self)==Genero.ROCK:
+                    elif listas[i].getGenero()==Genero.ROCK:
                         ROCK+=1
-                    elif listas[i].getGenero(self)==Genero.POP:
+                    elif listas[i].getGenero()==Genero.POP:
                         POP+=1
-                    elif listas[i].getGenero(self)==Genero.SALSA:
+                    elif listas[i].getGenero()==Genero.SALSA:
                         SALSA+=1
-                    elif listas[i].getGenero(self)==Genero.KPOP:
+                    elif listas[i].getGenero()==Genero.KPOP:
                         KPOP+=1
         if len(listas)>0:
             proporcion=(totalGenero/len(listas))*100
