@@ -78,7 +78,7 @@ class FrameIzquierda(tk.Frame):
 
         # Imprimir la primera imagen relacionada a la aplicacion en P4
 
-        self._imagen = Label(self.__p42, image = self._imagenes[0], height = 300, width = 420)
+        self._imagen = Label(self.__p42, image = self._imagenes[0], height = 480, width = 640)
         self._imagen.bind('<Enter>', self.cambiarImagen) # Cambiar de imagen de P4 al pasar el mouse por encima
         self._imagen.pack()
 

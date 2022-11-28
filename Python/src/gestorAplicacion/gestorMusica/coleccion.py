@@ -45,12 +45,12 @@ class Coleccion:
     def eliminarLista(self,lista):
         posicion=self.__listas.index(lista)
         self.__listas.pop(posicion)
-        return "Se ha eliminado la lista "+lista.getNombre(self)+" de la Colección con éxito"
+        return "Se ha eliminado la lista "+lista.getNombre()+" de la Colección con éxito"
     
     def cancionesUsuarios(self):
         cancionesUsuario=[]
         for lista in self.__listas:
-            for cancion in lista.getLista(self):
+            for cancion in lista.getLista():
                 if cancion not in cancionesUsuario:
                     cancionesUsuario.append(cancion)
         
@@ -59,7 +59,7 @@ class Coleccion:
     def __str__(self):
         des=""
         for lista in self.__listas:
-            des+=lista.infoLista(self)+"\n"
+            des+=lista.infoLista()+"\n"
         
         return des
     
@@ -72,16 +72,16 @@ class Coleccion:
         NO_ESPECIFICADO=0
         PuntosExtras=[]
         for filas in listas:
-            for cancion in filas.getLista(self):
-                if cancion.getGenero(self)==Genero.REGGAETON:
+            for cancion in filas.getLista():
+                if cancion.getGenero()==Genero.REGGAETON:
                     REGGAETON+=1
-                elif cancion.getGenero(self)==Genero.ROCK:
+                elif cancion.getGenero()==Genero.ROCK:
                     ROCK+=1
-                elif cancion.getGenero(self)==Genero.SALSA: 
+                elif cancion.getGenero()==Genero.SALSA: 
                     SALSA+=1
-                elif cancion.getGenero(self)==Genero.POP:
+                elif cancion.getGenero()==Genero.POP:
                     POP+=1
-                elif cancion.getGenero(self)==Genero.KPOP:
+                elif cancion.getGenero()==Genero.KPOP:
                     KPOP+=1
                 else:
                     NO_ESPECIFICADO+=1  

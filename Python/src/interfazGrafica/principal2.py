@@ -69,38 +69,44 @@ class Principal2():
         menubar.add_cascade(label="Procesos y Consultas", menu=menuProceso)
         self.config(menu=menubar)
 
-# Frame Inicial
+        # Frame Inicial
         frameInicial= tk.Frame(self)
-        nombreInicial = tk.Label(frameInicial, text="Sigue explorando", font=("Verdana", 20), fg="#2C34FA")
+        nombreInicial = tk.Label(frameInicial, text="Sigue Explorando", font=("Segoe Print", 20), fg="#2C34FA")
         textoInicial = f"¡Bienvenido a tu coleccion! Desde aquí puedes visualizar tus listas y favoritoa\n" \
                          f"Reproducirlas, agregar y eliminar canciones o incluso crear listas nuevas\n" \
                          f"Ademas, contamos con unas funciones bastante novedosas\n" \
                          f"Animate a probar todo lo que tenemos para ofrecerte, ¿qué esperas?" 
         descInicial = tk.Label(frameInicial, text=textoInicial, font=("Verdana", 12))
+
+        Principal2.frames.append(frameInicial)
+
+        nombreInicial.pack()
+        descInicial.pack()
+
+        Principal2.frames.append(frameInicial)
+        frameInicial.place(relx=0.5, rely=0.5, anchor="c")
        
         #CrearLista
 
         def crearLista(): 
-
             nombres = fieldCrearLista.getValue("Canciones").split(",")
             canciones = [cancion for cancion in Cancion.getCancionesDisponibles() if cancion.getNombre() in nombres]
-    
             lista = Lista(fieldCrearLista.getValue("Nombre"), usuario, fieldCrearLista.getValue("Descripcion"),canciones)
             usuario.getColeccion().agregarLista(lista)
-
-            return "Se ha creado tu lista con exito"
-        
+            messagebox.showinfo("Aviso", "¡Se ha creado tu lista con éxito!")
+            # mostrarSalida(f"¡Se ha creado tu lista con éxito!", outputLista)
+                    
         def eliminarLista(): 
-
+            nombre = fieldCrearLista.getValue("Nombre")
             for lista in usuario.getColeccion().getListas():
-
-                if lista.getNombre() == fieldCrearLista.getValue("Nombre"):
+                if lista.getNombre() == nombre:
                     usuario.getColeccion().eliminarLista(lista)
-                    return "Se ha eliminado la lista " + fieldCrearLista.getValue("Nombre") + " con exito"
-            
+                    messagebox.showinfo("Aviso", f"Se ha eliminado la lista {nombre}")
+                    # mostrarSalida(f"Se ha eliminado la lista {nombre}", outputLista)
+                             
         frameCrearLista = tk.Frame(self)
-        nombrecrearLista = tk.Label(frameCrearLista, text="Menu para crear/eliminar listas", font=("Verdana", 16), fg = "#31a919")
-        blankCrearLista = tk.Label(frameCrearLista,text="Por favor ingrese los nombres de las canciones separados por coma", font=("Verdana", 12))
+        nombrecrearLista = tk.Label(frameCrearLista, text="Crear / Eliminar Listas", font=("Segoe Print", 20), fg = "#2C34FA")
+        blankCrearLista = tk.Label(frameCrearLista,text="Por favor ingresa los nombres de las canciones separados por coma", font=("Verdana", 12))
         fieldCrearLista = FieldFrame(frameCrearLista, None, ["Nombre", "Descripcion", "Canciones"], None, None, None)
           
         botonCrear: tk.Button = fieldCrearLista.crearBotones(crearLista, texto= "CREAR")
@@ -113,21 +119,12 @@ class Principal2():
         blankCrearLista.pack()
         fieldCrearLista.pack(pady=(10,10))
           
-        Principal2.frames.append(frameInicial)
-
-        nombreInicial.pack()
-        descInicial.pack()
-
-        Principal2.frames.append(frameInicial)
-
-        cambiarFrame(frameInicial)
         Principal2.frames.append(frameCrearLista)
-
 
         #MostrarLista
 
         frameMostrarLista = tk.Frame(self)
-        nombreMostrarLista = tk.Label(frameMostrarLista, text="Menu para mostrar y editar listas", font=("Verdana", 14), fg = "#2C34FA", pady= 20)
+        nombreMostrarLista = tk.Label(frameMostrarLista, text="Mostrar y Editar Listas", font=("Segoe Print", 20), fg = "#2C34FA", pady= 20)
 
         texto = """Selecciona MOSTRAR para ver las canciones de tu lista
 Selecciona AGREGAR para añadir una cancion a tu lista
@@ -142,19 +139,23 @@ Selecciona REPRODUCIR para escuchar tu lista"""
             nombreLista = fieldMostrarLista.getValue("Nombre Lista")
             Lista = [x for x in usuario.getColeccion().getListas() if x.getNombre() == nombreLista]
 
-            if Lista[0].getDescripcion() == "colaborativa":
-                if len(Lista)>0:
-                    messagebox.showinfo("Aviso", Lista[0].infoListaColaborativa())
+            if len(Lista) > 0 and Lista[0].getDescripcion() == "colaborativa":
+                if len(Lista) > 0:
+                    mostrarSalida(Lista[0].infoListaColaborativa(), output)
+                    # messagebox.showinfo("Aviso", Lista[0].infoListaColaborativa())
                     # output.insert("end", Lista[0].infoLista() + "\n")
                 else:
-                    messagebox.showinfo("Aviso", "¡Esta lista no existe!")
+                    mostrarSalida("¡Esta lista no existe!", output)
+                    # messagebox.showinfo("Aviso", "¡Esta lista no existe!")
                     # output.insert("end", "Ingrese un nombre de lista valido \n")
                 
-            elif len(Lista)>0:
-                messagebox.showinfo("Aviso", Lista[0].infoLista())
+            elif len(Lista) > 0:
+                mostrarSalida(Lista[0].infoLista(), output)
+                # messagebox.showinfo("Aviso", Lista[0].infoLista())
                 # output.insert("end", Lista[0].infoLista() + "\n")
             else:
-                messagebox.showinfo("Aviso", "¡Esta lista no existe!")
+                mostrarSalida("¡Esta lista no existe!", output)
+                # messagebox.showinfo("Aviso", "¡Esta lista no existe!")
                 # output.insert("end", "Ingrese un nombre de lista valido \n") 
         
         def AgregarCancion():
@@ -167,10 +168,11 @@ Selecciona REPRODUCIR para escuchar tu lista"""
 
             if len(cancion) > 0 and len(lista):
                 lista[0].agregarCancion(cancion[0])
-                output.insert("end", "Cancion agregada con exito \n") 
-            
+                # output.insert("end", "Cancion agregada con exito \n") 
+                mostrarSalida("¡Canción agregada con éxito!", output)
             else:
-                output.insert("end", "Ingrese un nombre de cancion y/o lista valido \n")  
+                mostrarSalida("Ingresa un nombre de canción y/o lista válido", output)
+                # output.insert("end", "Ingrese un nombre de cancion y/o lista valido \n")  
         
 
         def EliminarCancion():
@@ -183,38 +185,41 @@ Selecciona REPRODUCIR para escuchar tu lista"""
 
             if len(cancion) > 0 and len(lista):
                 lista[0].eliminarCancion(cancion[0])
-                output.insert("end", "Cancion eliminada con exito \n")   
-            
+                # output.insert("end", "Cancion eliminada con exito \n")   
+                mostrarSalida("¡Canción eliminada con éxito!", output)
             else:
-                output.insert("end", "Ingrese un nombre de cancion y/o lista valido \n")    
+                # output.insert("end", "Ingrese un nombre de cancion y/o lista valido \n")  
+                mostrarSalida("Ingresa un nombre de canción y/o lista válido", output)  
 
         def ReproducirLista():
 
             nombreLista = fieldMostrarLista.getValue("Nombre Lista")
             Lista = [x for x in usuario.getColeccion().getListas() if x.getNombre() == nombreLista]
 
-            if len(Lista)>0:
-
-                usuario.reproducirLista(lista= Lista[0])
-                output.insert("end", "Se ha reproducido la lista con exito \n")     
-
+            if len(Lista) > 0:
+                usuario.reproducirLista(lista = Lista[0])
+                mostrarSalida(Lista[0], output)
+                # output.insert("end", "Se ha reproducido la lista con exito \n")     
             else:
-                output.insert("end","Ingrese un nombre de lista valido \n")
+                mostrarSalida("Esta lista no existe", output)
+                # output.insert("end","Ingrese un nombre de lista valido \n")
        
         botonMostrar: tk.Button = fieldMostrarLista.crearBotones(MostrarLista, texto= "MOSTRAR", Column=0)
         botonAgregar: tk.Button = fieldMostrarLista.crearBotones(AgregarCancion, texto= "AGREGAR", Column=1)
         botonEliminar: tk.Button = fieldMostrarLista.crearBotones(EliminarCancion, texto= "ELIMINAR", Column=2)
         botonReproducir: tk.Button = fieldMostrarLista.crearBotones(ReproducirLista, texto= "REPRODUCIR", Column=3, Padx= 70)
-      
+
+        Principal2.frames.append(output)
+
         nombreMostrarLista.pack()
         blankMostrarLista.pack()
         fieldMostrarLista.pack(pady=(10,10))
-        output.pack()
+        # output.pack()
 
         Principal2.frames.append(frameMostrarLista)    
         
         frameVerCanciones = tk.Frame(self)
-        nombreVC = tk.Label(frameVerCanciones, text="Menu para mostrar y editar favoritos", font=("Verdana", 14), fg="#2C34FA", pady= 20)
+        nombreVC = tk.Label(frameVerCanciones, text="Mostrar y Editar Favoritos", font=("Segoe Print", 20), fg="#2C34FA", pady= 20)
         texto = """Selecciona MOSTRAR para ver las canciones de tus favoritos
 Selecciona AGREGAR para añadir una cancion a tus favoritos
 Selecciona ELIMINAR para remover una cancion de tus favoritos
@@ -226,7 +231,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
         def Mostrar():
             favoritos = usuario.getFavoritos().getFavoritos()
             if len(favoritos)>0:
-               mostrarSalida(usuario.getFavoritos().__str__(),salidaFavoritos)
+               mostrarSalida(usuario.getFavoritos().__str__(), salidaFavoritos)
             else:
                messagebox.showinfo("Aviso", "No tiene canciones en favoritos")
         
@@ -279,7 +284,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
         Principal2.frames.append(frameVerCanciones)    
         
         frameReproducir = tk.Frame(self)
-        nombreR= tk.Label(frameReproducir, text="Reproducir cancion", font=("Verdana", 14), fg = "#2C34FA", pady= 20)
+        nombreR= tk.Label(frameReproducir, text="Reproducir Canción", font=("Segoe Print", 20), fg = "#2C34FA", pady= 20)
 
         texto = "Selecciona REPRODUCIR para escuchar la cancion ingresada"
         desR = tk.Label(frameReproducir, text = texto, font=("Verdana", 10))
@@ -311,7 +316,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
         Principal2.frames.append(frameReproducir) 
 
         frameRanking = tk.Frame(self)
-        nombreRanking = tk.Label(frameRanking, text="Ranking BILLBOARD", font=("Verdana", 14), fg = "#2C34FA", pady= 20)
+        nombreRanking = tk.Label(frameRanking, text="Ranking BILLBOARD", font=("Segoe Print", 20), fg = "#2C34FA", pady= 20)
 
         desRanking = tk.Label(frameRanking, text = "Selecciona Ver para visualizar el ranking", font=("Verdana", 10))
         
@@ -340,7 +345,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             for a in range(len(ListaArtista)):
                 if a==0:
                     artistaUno=ListaArtista[a].getNombre()
-                imprimir=imprimir+"#"+str(a+1)+ListaArtista[a].getNombre()+"\n"
+                imprimir=imprimir+"#"+str(a+1)+" "+ListaArtista[a].getNombre()+"\n"
             if artistaTop!=None:
                 if artistaUno==artistaTop.getNombre():
                     imprimir=imprimir+"\n"+"FELICITACIONES! Tu artista favorito es el numero uno"
@@ -362,7 +367,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
         #Colaborativa
         
         frameColaborativa = tk.Frame(self)
-        nombreColaborativa = tk.Label(frameColaborativa, text = "Colaborativa")
+        nombreColaborativa = tk.Label(frameColaborativa, text = "Colaborativa", font=("Segoe Print", 20), fg = "#2C34FA")
         
         desColaborativa = tk.Label(frameColaborativa, text = "Selecciona crear para generar tu colaborativa", font=("Verdana", 10))
         

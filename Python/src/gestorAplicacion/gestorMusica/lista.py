@@ -76,19 +76,19 @@ class Lista(Musica):
         des = ""
         if len(self.__lista) > 0:
             for i in self.__lista:
-                des += i.descripcion() + "\n"
+                des += i.descripcion() + "\n\n"
             return "Lista: " + self.getNombre() + "\n" + "\n" + "Canciones: " + "\n" + des
         else:  
-            return "La lista: " + self._nombre + " está vacía\n"
+            return "La lista: " + self.getNombre() + " está vacía\n"
         
     def infoListaColaborativa(self):
         des = ""
         if len(self.__listaColaborativa) > 0:
             for i in self.__listaColaborativa:
-                des += i.descripcion() + "\n"
+                des += i.descripcion() + "\n\n"
             return "Lista: " + self.getNombre() + "\n" + "\n" + "Canciones: " + "\n" + des
         else:  
-            return "La lista: " + self._nombre + " está vacía\n"
+            return "La lista: " + self.getNombre() + " está vacía\n"
 
 
     def infoColaborativa(self):

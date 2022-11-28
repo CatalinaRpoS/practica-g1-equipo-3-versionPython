@@ -243,8 +243,8 @@ class Principal():
           
           #FieldFrame para crear Artista
           frameCrearArtista = tk.Frame(self)
-          nombreCrearArtista = tk.Label(frameCrearArtista, text="Menu para crear el artista", font=("Verdana", 16), fg = "#31a919")
-          blankCrearArtista = tk.Label(frameCrearArtista,text="Por favor ingrese el nombre del artista",font=("Verdana", 12))
+          nombreCrearArtista = tk.Label(frameCrearArtista, text="Crea un Artista", font=("Segoe Print", 20), fg = "#2C34FA")
+          blankCrearArtista = tk.Label(frameCrearArtista,text="Por favor ingresa el nombre del artista",font=("Verdana", 12))
           fieldCrearArtista = FieldFrame(frameCrearArtista, None, ["Nombre"], None, None, None)
           
           #image1 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\imagenArtista1.png")
@@ -293,8 +293,8 @@ class Principal():
           
           #FieldFrame para crear Artista
           frameCrearUsuario = tk.Frame(self)
-          nombrecrearUsuario = tk.Label(frameCrearUsuario, text="Menu para crear el usuario", font=("Verdana", 16), fg = "#31a919")
-          blankCrearUsuario = tk.Label(frameCrearUsuario,text="Por favor ingrese el nombre del usuario",font=("Verdana", 12))
+          nombrecrearUsuario = tk.Label(frameCrearUsuario, text="Crea un Usuario", font=("Segoe Print", 20), fg = "#2C34FA")
+          blankCrearUsuario = tk.Label(frameCrearUsuario,text="Por favor ingresa el nombre del usuario",font=("Verdana", 12))
           fieldCrearUsuario = FieldFrame(frameCrearUsuario, None, ["Nombre"], None, None, None)
           
           #image1 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\imagenArtista1.png")
@@ -352,8 +352,8 @@ class Principal():
           
           #FieldFrame para crear Artista
           frameCrearCancion = tk.Frame(self)
-          nombrecrearCancion = tk.Label(frameCrearCancion, text="Menu para crear la cancion", font=("Verdana", 16), fg = "#31a919")
-          blankCrearCancion = tk.Label(frameCrearCancion,text="Por favor ingrese el nombre de la cancion",font=("Verdana", 12))
+          nombrecrearCancion = tk.Label(frameCrearCancion, text="Crea una Canción", font=("Segoe Print", 20), fg = "#2C34FA")
+          blankCrearCancion = tk.Label(frameCrearCancion,text="Por favor ingresa el nombre de la cancion",font=("Verdana", 12))
           fieldCrearCancion = FieldFrame(frameCrearCancion, None, ["Nombre", "Duracion", "Artista", "Año"], None, None, None)
           
           #image1 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\imagenArtista1.png")
@@ -388,8 +388,5 @@ class Principal():
           
           Principal.frames.append(frameCrearCancion)
 
-               
-               
-               
-               
           self.mainloop()
+          
