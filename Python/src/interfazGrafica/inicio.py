@@ -1,7 +1,10 @@
+from tkinter import *
 import tkinter as tk
 import pathlib
 import os
 from interfazGrafica.principal import Principal
+from tkinter import PhotoImage
+from PIL import Image
 
 class Inicio(tk.Tk):
 
@@ -64,12 +67,37 @@ class FrameIzquierda(tk.Frame):
         descripcion = f"Spotifree es un gestor de música del que se puede hacer uso ingresando como usuario. \nCada usuario tiene una colección en la que puede administrar sus listas de reproducción, \nagregando y eliminando canciones."
         self.descripcion = tk.Label(self.__p3, text = descripcion, width = 90, justify = "left", font=("Verdana", 8))
         #self.descripcion.grid(row=1,column=0)
+        
+        self._imagenActual = 0 # Imagen actual
+        self._imagenes = []
+
+        for i in range(5):
+            archivo = os.path.join(pathlib.Path(__file__).parent.parent.parent.absolute(), f"src\\contenidoGrafico\\App{i+1}.png")
+            imagen = PhotoImage(file = archivo)
+            self._imagenes.append(imagen)
+
+        # Imprimir la primera imagen relacionada a la aplicacion en P4
+
+        self._imagen = Label(self.__p42, image = self._imagenes[0], height = 300, width = 420)
+        self._imagen.bind('<Enter>', self.cambiarImagen) # Cambiar de imagen de P4 al pasar el mouse por encima
+        self._imagen.pack()
 
         self._boton = tk.Button(self.__p42, text="Acceder a la aplicación", font=("Verdana", 16), fg="white", bg="#2C34FA", command=self.abrirVentanaPrincipal)
         self._boton.pack()
 
         self.__p3.grid(row=0, column=0)
         self.__p42.grid(row=2, column=0, pady=(10, 10))
+        
+    def cambiarImagen(self, args):
+        if self._imagenActual == 4:
+            self._imagenActual = 0
+        else:
+            self._imagenActual += 1
+
+        self._imagen.configure(image = self._imagenes[self._imagenActual])
+        self._imagen.image = self._imagenes[self._imagenActual]
+        
+        
         
     def abrirVentanaPrincipal(self):
         self.__ventana.withdraw()
@@ -136,3 +164,6 @@ class FrameDerecha(tk.Frame):
 
         with open(path, "r+") as cf_text:
             self.__text.insert(tk.INSERT, cf_text.read())
+
+    
+    
