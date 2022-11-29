@@ -312,7 +312,7 @@ class Principal():
           #lab_img2.place(x = 1000, y = 50)"""
           
           
-          self.combo = ttk.Combobox(frameCrearUsuario, state="readonly", values=["Rock", "Pop"], width=30)
+          self.combo = ttk.Combobox(frameCrearUsuario, state="readonly", values=["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "No Especificado"], width=30)
           self.combo.place(x = 110, y = 190)
           
           comboLabel = tk.Label(frameCrearUsuario,text="Genero",font=("Verdana", 12))
