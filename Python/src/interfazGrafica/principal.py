@@ -29,10 +29,6 @@ class Principal():
           # Aplicamos la siguiente formula para calcular donde debería posicionarse
           self.geometry(str(ancho_total)+"x"+str(alto_total)+"+"+"0"+"+"+"0")
 
-          for cancion in Cancion.getCancionesDisponibles():
-               if cancion.getNombre() == "Reconquistarte":
-                    cancion.setGenero(Genero.NO_ESPECIFICADO)
-
           # Cambiar frame
           def cambiarFrame(frameUtilizado):
                for frame in Principal.frames:

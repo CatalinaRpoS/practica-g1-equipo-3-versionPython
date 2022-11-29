@@ -24,8 +24,7 @@ class Principal2():
         self.title("Colección de {}".format(usuario.getNombre()))
         self.option_add('*tearOff', False)
         self.resizable(False, False)
-        user = usuario
-
+       
         ancho_total = self.winfo_screenwidth()
         alto_total = self.winfo_screenheight()
         # Aplicamos la siguiente formula para calcular donde debería posicionarse
@@ -58,9 +57,9 @@ class Principal2():
         menuProceso.add_command(label="Mostrar Favoritos", command=lambda: cambiarFrame(frameVerCanciones))
         menuProceso.add_command(label="Reproducir",command=lambda: cambiarFrame(frameReproducir))
         menuProceso.add_command(label="Ranking",command=lambda: cambiarFrame(frameRanking))
-        menuProceso.add_command(label="Agrupacion")
+        menuProceso.add_command(label="Agrupación", command=lambda:cambiarFrame(frameAgrupacion))
         menuProceso.add_command(label="Colaborativa", command=lambda:cambiarFrame(frameColaborativa))
-        menuProceso.add_command(label="Recomendar Musica", command=lambda:cambiarFrame(frameRecomendarMusica))
+        menuProceso.add_command(label="Recomendar Música", command=lambda:cambiarFrame(frameRecomendarMusica))
         menuProceso.add_command(label="Resumen",command=lambda:cambiarFrame(frameResumen))
        
         menuArchivo.add_command(label="Regresar a la Ventana Anterior",command=volver)
@@ -369,12 +368,11 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
 
         Principal2.frames.append(frameRanking)
 
-
-        #Resumen 
+        # Resumen 
         frameResumen = tk.Frame(self)
         nombreResumen = tk.Label(frameResumen, text = "Resumen", font=("Segoe Print", 20), fg = "#2C34FA")
         
-        desResumen = tk.Label(frameResumen, text = "Mira tus resumenes de genero", font=("Verdana", 10))
+        desResumen = tk.Label(frameResumen, text = "Mira tus resúmenes de género", font=("Verdana", 10))
 
         def resumen():
             Puntos=usuario.puntosFavoritos(usuario)
@@ -536,9 +534,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             texto=p0+"\n"+p1+"\n"+p2+"\n"+p3+"\n"+p4+"\n"+p5+"\n"+p6+"\n"+p7+"\n"+p8
 
             mostrarSalida(texto, salidaResumen)
-
-
-            
+  
         Resumenbotton = tk.Button(frameResumen, text="Generar", font=("Verdana", 12), fg="white", bg="#2C34FA",command=resumen)
 
         salidaResumen= tk.Text(frameResumen,font=("Verdana", 10), border= False, width= 100)
@@ -609,7 +605,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
 
         Principal2.frames.append(frameColaborativa) 
 
-        #RecomendarMusica
+        # Recomendar Música
 
         def encontrarMusica():
 
@@ -627,53 +623,34 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             recomendadas = []
 
             if genero != None:
-
                 for cancion in Cancion.getCancionesDisponibles():
-
                     if (not(cancion.getNombre() in cancionesUsuario)) and cancion.getGenero() == genero:
-                        
                         print(cancion.getNombre())
                         recomendadas.append(cancion)
                     else:
                         pass
-                
                 if len(recomendadas) > 0:
-
                     mensaje = "Te podemos recomendar estas canciones: \n\n"
-                    
                     for cancion in recomendadas:
-
                         mensaje = mensaje + cancion.getNombre() + "\n"
-                    
                     mostrarSalida(mensaje, outputRecomendarMusica)
-                
                 else:
-
                     canciones = Cancion.getCancionesDisponibles()
                     canciones.sort(key= Cancion.getReproducciones)
-
                 mensaje = "Tienes agregadas todas las canciones correspondientes a tu genero, ¿que tal si escuchas algo nuevo?, aqui estan las canciones mas escuchadas: \n \n"
-
                 for i in range(3):
-
                     mensaje = mensaje + canciones[i].getNombre() + "\n"
-                
                 mostrarSalida(mensaje, outputRecomendarMusica)
   
             else:
-
                 canciones = Cancion.getCancionesDisponibles().sort(key= Cancion.getReproducciones)
-
                 mensaje = "¿No tienes genero favorito? Dale Me Gusta a algunas canciones, por ahora, aqui estan las canciones mas escuchadas: \n \n"
-
                 for i in range(3):
-
                     mensaje = mensaje + canciones[i].getNombre() + "\n"
-                
                 mostrarSalida(mensaje, outputRecomendarMusica)         
 
         frameRecomendarMusica = tk.Frame(self)
-        nombreRecomendarMusica = tk.Label(frameRecomendarMusica, text="Menu para recibir recomendaciones", font=("Segoe Print", 20), fg = "#2C34FA")
+        nombreRecomendarMusica = tk.Label(frameRecomendarMusica, text="Recomendaciones Musicales", font=("Segoe Print", 20), fg="#2C34FA")
 
         outputRecomendarMusica = tk.Text(frameRecomendarMusica, height=20, font=("Verdana", 10))
         fieldRecomendarMusica = FieldFrame(frameRecomendarMusica, None, [], None, None, None)
@@ -687,5 +664,22 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
         outputRecomendarMusica.pack()
 
         Principal2.frames.append(frameRecomendarMusica)
-             
+
+        def agrupacion():
+            print("Hola")
+
+        frameAgrupacion = tk.Frame(self)
+        nombreAgrupacion = tk.Label(frameAgrupacion, text="Conoce tu Agrupación por Colores", font=("Segoe Print", 20), fg="#2C34FA")
+        desAgrupacion = tk.Label(frameAgrupacion, text = "Selecciona Conocer para descubrir los colores que te representan", font=("Verdana", 12))
+        
+        botonAgrupacion = tk.Button(frameAgrupacion, text="Conocer", font=("Verdana", 12), fg="white", bg="#2C34FA", command=agrupacion)
+        salidaAgrupacion = tk.Text(frameAgrupacion, border=False, font=("Verdana", 16))
+
+        Principal2.frames.append(salidaAgrupacion) 
+
+        nombreAgrupacion.pack()
+        desAgrupacion.pack()
+        botonAgrupacion.pack()
+        Principal2.frames.append(frameAgrupacion)  
+
         self.mainloop()

@@ -59,7 +59,7 @@ class Cancion(Musica):
 
     @classmethod
     def topCancion(cls):
-        masEscuchada = ""
+        masEscuchada = None
         mayor = 0
         for cancion in cls.__cancionesDisponibles:
             if cancion.getReproducciones() > mayor:
