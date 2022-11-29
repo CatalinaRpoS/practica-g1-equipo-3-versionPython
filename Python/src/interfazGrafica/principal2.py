@@ -666,8 +666,83 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
         Principal2.frames.append(frameRecomendarMusica)
 
         def agrupacion():
-            print("Hola")
+            totalRe = 0; totalRo = 0; totalP = 0; totalS = 0; totalK = 0; totalN = 0
+            naranja = []; negro = []; rosado = []; rojo = []; morado = []; blanco = []
+            amigo = None
+            textoColores = ""
+            
+            for usuarioComparar in Usuario.getUsuariosExistentes():
+                for lista in usuarioComparar.getColeccion().getListas():
+                    for cancion in lista.getLista():
+                        if cancion.getGenero() == Genero.REGGAETON: totalRe += 1
+                        elif cancion.getGenero() == Genero.ROCK: totalRo += 1
+                        elif cancion.getGenero() == Genero.POP: totalP += 1
+                        elif cancion.getGenero() == Genero.SALSA: totalS += 1
+                        elif cancion.getGenero() == Genero.KPOP: totalK += 1
+                        else: totalN += 1
+                for cancion in usuarioComparar.getFavoritos().getFavoritos():
+                    if cancion.getGenero() == Genero.REGGAETON: totalRe += 1
+                    elif cancion.getGenero() == Genero.ROCK: totalRo += 1
+                    elif cancion.getGenero() == Genero.POP: totalP += 1
+                    elif cancion.getGenero() == Genero.SALSA: totalS += 1
+                    elif cancion.getGenero() == Genero.KPOP: totalK += 1
+                    else: totalN += 1
+            
+            Re = 0; Ro = 0; P = 0; S = 0; K = 0; N = 0
 
+            for usuarioComparar in Usuario.getUsuariosExistentes():
+                for lista in usuarioComparar.getColeccion().getListas():
+                    Re += lista.totalPorGenero(Genero.REGGAETON)
+                    Ro += lista.totalPorGenero(Genero.ROCK)
+                    P += lista.totalPorGenero(Genero.POP)
+                    S += lista.totalPorGenero(Genero.SALSA)
+                    K += lista.totalPorGenero(Genero.KPOP)
+                    N += lista.totalPorGenero(Genero.NO_ESPECIFICADO)
+                
+                favoritos = usuarioComparar.getFavoritos()
+                Re += favoritos.totalPorGenero(Genero.REGGAETON)
+                Ro += favoritos.totalPorGenero(Genero.ROCK)
+                P += favoritos.totalPorGenero(Genero.POP)
+                S += favoritos.totalPorGenero(Genero.SALSA)
+                K += favoritos.totalPorGenero(Genero.KPOP)
+                N += favoritos.totalPorGenero(Genero.NO_ESPECIFICADO)
+
+                if Re*100 / totalRe >= 30: naranja.append(usuarioComparar)
+                if Ro*100 / totalRo >= 30: negro.append(usuarioComparar)
+                if P*100 / totalP >= 30: rosado.append(usuarioComparar)
+                if S*100 / totalS >= 30: rojo.append(usuarioComparar)
+                if K*100 / totalK >= 30: morado.append(usuarioComparar)
+                if N*100 / totalN >= 30: blanco.append(usuarioComparar)
+
+            totales = []
+            if(usuario in naranja):
+                textoColores += "Naranja\n" 
+                totales += [miembro for miembro in naranja if miembro.getNombre() != usuario.getNombre()]
+            if(usuario in negro):
+                textoColores += "Negro\n" 
+                totales += [miembro for miembro in negro if miembro.getNombre() != usuario.getNombre()]
+            if(usuario in rosado):
+                textoColores += "Rosado\n" 
+                totales += [miembro for miembro in rosado if miembro.getNombre() != usuario.getNombre()]
+            if(usuario in rojo):
+                textoColores += "Rojo\n" 
+                totales += [miembro for miembro in rojo if miembro.getNombre() != usuario.getNombre()]
+            if(usuario in morado):
+                textoColores += "Morado\n" 
+                totales += [miembro for miembro in morado if miembro.getNombre() != usuario.getNombre()]
+            if(usuario in blanco):
+                textoColores += "Blanco\n" 
+                totales += [miembro for miembro in blanco if miembro.getNombre() != usuario.getNombre()]
+                
+            amigo = usuario.encontrarAmigo(totales)
+            
+            if amigo == None: 
+                textoColores += "No compartes tu Agrupación por Colores con ningún usuario :c \n"
+            else:
+                textoColores += f"Según tus colores, alguien que podrías conocer es: \n\n {amigo.getNombre()}"
+            
+            mostrarSalida(textoColores, salidaAgrupacion)  
+     
         frameAgrupacion = tk.Frame(self)
         nombreAgrupacion = tk.Label(frameAgrupacion, text="Conoce tu Agrupación por Colores", font=("Segoe Print", 20), fg="#2C34FA")
         desAgrupacion = tk.Label(frameAgrupacion, text = "Selecciona Conocer para descubrir los colores que te representan", font=("Verdana", 12))
