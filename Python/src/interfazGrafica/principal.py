@@ -29,6 +29,10 @@ class Principal():
           # Aplicamos la siguiente formula para calcular donde debería posicionarse
           self.geometry(str(ancho_total)+"x"+str(alto_total)+"+"+"0"+"+"+"0")
 
+          for cancion in Cancion.getCancionesDisponibles():
+               if cancion.getNombre() == "Reconquistarte":
+                    cancion.setGenero(Genero.NO_ESPECIFICADO)
+
           # Cambiar frame
           def cambiarFrame(frameUtilizado):
                for frame in Principal.frames:
@@ -197,7 +201,7 @@ class Principal():
           descMostrarArtistas = tk.Label(frameMostrarArtistas, text="Puede que no observes todos los artistas a la misma vez \nMueve el cursor del mouse para conocer a más artistas", font=("Verdana", 12))
           mostrarArtistas = tk.Button(frameMostrarArtistas, text="Mostrar artistas", font=("Verdana", 12), fg="white", bg="#2C34FA", command=mostrarArtistas)
           
-          salidaVerArtistas= tk.Text(frameMostrarArtistas, width=90, font=("Verdana", 10))
+          salidaVerArtistas= tk.Text(frameMostrarArtistas, width=100, font=("Verdana", 10))
           Principal.frames.append(salidaVerArtistas)
           
           
@@ -239,6 +243,8 @@ class Principal():
                for i in Genero:
                     if genero == i.value:
                          genArtista = i
+               if genArtista == None:
+                    genArtista = Genero.NO_ESPECIFICADO
                Artista(nombre, genArtista)
                messagebox.showinfo("Exito", "El artista fue creado correctamente")
                return
@@ -330,6 +336,8 @@ class Principal():
                     for i in Genero:
                          if genero == i.value:
                               gen = i
+                    if gen == None:
+                         gen = Genero.NO_ESPECIFICADO
                     Cancion(nombre_cancion, art, gen, duracion, año)
                     messagebox.showinfo("Exito", "La cancion fue creado correctamente")
                except:
