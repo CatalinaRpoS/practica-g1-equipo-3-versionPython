@@ -368,17 +368,15 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
 
         Principal2.frames.append(frameRanking)
 
-        # Resumen 
+        #Resumen 
         frameResumen = tk.Frame(self)
         nombreResumen = tk.Label(frameResumen, text = "Resumen", font=("Segoe Print", 20), fg = "#2C34FA")
         
-        desResumen = tk.Label(frameResumen, text = "Mira tus resúmenes de género", font=("Verdana", 10))
+        desResumen = tk.Label(frameResumen, text = "Mira tus resumenes de genero", font=("Verdana", 10))
 
         def resumen():
             Puntos=usuario.puntosFavoritos(usuario)
-            print(Puntos)
             PuntosExtras=usuario.getColeccion().puntosExtras(usuario.getColeccion().getListas())
-            print(PuntosExtras)
             PuntosSumados=[]
             PuntosFinales=[]
             genero=[]
@@ -388,19 +386,16 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             genero.append(Genero.SALSA)
             genero.append(Genero.KPOP)
             genero.append(Genero.NO_ESPECIFICADO)
-            print(genero)
             TotalPuntos=0
 
             for i in range(0,len(Puntos)):
                 suma=Puntos[i]+PuntosExtras[i]
                 TotalPuntos+=suma
                 PuntosSumados.append(suma)
-            print(PuntosSumados)
             
             for i in range(0,len(PuntosSumados)):
                 operacion=PuntosSumados[i]/TotalPuntos*100
                 PuntosFinales.append(operacion)
-            print(PuntosFinales)
 
             mayor=0
             posicion=0
@@ -410,29 +405,19 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                     mayor=PuntosFinales[i]
                     posicion=i
 
-            print(posicion)
-            print(mayor)
             REGGAETON=round(Puntos[0]*10/100)
-            print(REGGAETON)
             ROCK=round(Puntos[1]*10/100)
-            print(ROCK)
             POP=round(Puntos[2]*10/100)
             SALSA=round(Puntos[3]*10/100)
             KPOP=round(Puntos[4]*10/100)
             NO_ESPECIFICADO=round(Puntos[5]*10/100)
 
             cancionesREGGAETON=Lista.listaPorGenero(Genero.REGGAETON)
-            print(len(cancionesREGGAETON))
             cancionesROCK=Lista.listaPorGenero(Genero.ROCK)
-            print(len(cancionesROCK))  
             cancionesPOP=Lista.listaPorGenero(Genero.POP)
-            print(len(cancionesPOP))
             cancionesSALSA=Lista.listaPorGenero(Genero.SALSA)
-            print(len(cancionesSALSA))
             cancionesKPOP=Lista.listaPorGenero(Genero.KPOP)
-            print(len(cancionesKPOP))
             cancionesNO_ESPECIFICADO=Lista.listaPorGenero(Genero.NO_ESPECIFICADO)
-            print(len(cancionesNO_ESPECIFICADO))
             CancionMix=[]
 
             R=0
@@ -512,9 +497,6 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                         parada=False
                 else:
                     parada=False
-
-            for i in CancionMix:
-                print(i.getNombre())
             
             p0=""
             if usuario.getGenFavorito()!=genero[posicion]:
@@ -530,11 +512,13 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             p5="Eres un {} compatible con el genero de SALSA".format(round(PuntosFinales[3],2))
             p6="Eres un {} compatible con el genero de KPOP".format(round(PuntosFinales[4],2))
             p7="Eres un {} compatible con el genero de NO_ESPECIFICADO".format(round(PuntosFinales[5],2))
-            p8="Hemos creado una listaMix. quieres agregarla a tu coleccion?"
-            texto=p0+"\n"+p1+"\n"+p2+"\n"+p3+"\n"+p4+"\n"+p5+"\n"+p6+"\n"+p7+"\n"+p8
+            p8="Hemos creado una listaMix y te se ha agregado a tu coleccion"
+            texto=p0+"\n"+"\n"+p1+"\n"+p2+"\n"+p3+"\n"+p4+"\n"+p5+"\n"+p6+"\n"+p7+"\n"+"\n"+p8
 
             mostrarSalida(texto, salidaResumen)
-  
+
+
+            
         Resumenbotton = tk.Button(frameResumen, text="Generar", font=("Verdana", 12), fg="white", bg="#2C34FA",command=resumen)
 
         salidaResumen= tk.Text(frameResumen,font=("Verdana", 10), border= False, width= 100)
