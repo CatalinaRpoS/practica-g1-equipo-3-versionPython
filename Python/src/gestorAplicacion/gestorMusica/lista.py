@@ -12,7 +12,7 @@ class Lista(Musica):
 
     __listasExistentes = [] #List[Lista]
 
-    def __init__(self, str_nombre, Usuario_usuario = None, str_descripcion = "", list_lista = [], list_usuarios = [], set_listaColaborativa = {}):
+    def __init__(self, str_nombre, Usuario_usuario = None, str_descripcion = "", list_lista: list = [], list_usuarios = [], set_listaColaborativa = {}):
         super().__init__(str_nombre)
         self.__usuario = Usuario_usuario
         self.__descripcion = str_descripcion
