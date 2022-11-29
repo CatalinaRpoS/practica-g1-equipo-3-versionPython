@@ -147,7 +147,7 @@ Selecciona REPRODUCIR para escuchar tu lista"""
                         msg = msg + l.infoListaColaborativa() + "\n"
 
                     else:
-                        msg = msg + l.infoLista() + "\n"
+                        msg = msg + l.getNombre() + "\n"
 
                 mostrarSalida(msg, output)
 
@@ -447,7 +447,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                     if cancion.getNombre() not in cancionesUsuario:
                         
                         cancionesUsuario.append(cancion.getNombre())
-                        
+
             recomendadas = []
 
             if genero != None:
