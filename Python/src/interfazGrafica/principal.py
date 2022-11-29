@@ -2,7 +2,6 @@ from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-# from PIL import ImageTk, Image
 from baseDatos.serializador import Serializador
 from interfazGrafica.fieldframe import FieldFrame
 from gestorAplicacion.gestorPersonas.usuario import Usuario
@@ -10,6 +9,7 @@ from gestorAplicacion.gestorPersonas.artista import Artista
 from gestorAplicacion.gestorMusica.cancion import Cancion
 from gestorAplicacion.gestorMusica.genero import Genero
 from excepciones.datosincorrectos import Numero
+from excepciones.elementoinexistente import UsuarioInexistente, ArtistaInexistente
 
 class Principal():
     
@@ -130,13 +130,15 @@ class Principal():
                for persona in Usuario.getUsuariosExistentes():
                     if persona.getNombre() == nombre:
                          usuario = persona
-               if usuario == None:
-                    messagebox.showinfo("Aviso", "El usuario no existe")
-               else:
+               # Excepción de un usuario que no exista
+               try:
+                    usuario.getNombre()
                     from interfazGrafica.principal2 import Principal2
                     self.withdraw()
                     Principal2(usuario, ventana, self)
-
+               except:
+                    messagebox.showerror("Aviso", UsuarioInexistente(nombre).mostrarMensaje())
+                           
           # Frame para acceder como usuario
           frameUsuario= tk.Frame(self)
           nombreUsuario = tk.Label(frameUsuario, text="Acceder como Usuario", font=("Segoe Print", 20), fg="#2C34FA")
@@ -247,22 +249,7 @@ class Principal():
           nombreCrearArtista = tk.Label(frameCrearArtista, text="Crea un Artista", font=("Segoe Print", 20), fg = "#2C34FA")
           blankCrearArtista = tk.Label(frameCrearArtista,text="Por favor ingresa el nombre del artista",font=("Verdana", 12))
           fieldCrearArtista = FieldFrame(frameCrearArtista, None, ["Nombre"], None, None, None)
-          
-          #image1 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\imagenArtista1.png")
-          #resized1 = image1.resize((200,200), Image.ANTIALIAS)
-          #new_pic1 = ImageTk.PhotoImage(resized1)
-          
-          #lab_img1 = Label(frameCrearArtista, image=new_pic1)
-          #lab_img1.place(x = 100, y = 50)
-          
-          #image2 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\Artista2.jpg")
-          #resized2 = image2.resize((200,200), Image.ANTIALIAS)
-          #new_pic2 = ImageTk.PhotoImage(resized2)
-          
-          #lab_img2 = Label(frameCrearArtista, image=new_pic2)
-          #lab_img2.place(x = 1000, y = 50)
-          
-          
+             
           self.comboArtista = ttk.Combobox(frameCrearArtista, state="readonly", values=["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "No Especificado"], width=30)
           self.comboArtista.place(x = 105, y = 190)
           
@@ -280,7 +267,7 @@ class Principal():
           
           Principal.frames.append(frameCrearArtista)
           
-          #crear Usuario
+          #cCrear Usuario
           def crearUsuario():
                nombre = fieldCrearUsuario.getValue("Nombre")
                genero = self.combo.get()
@@ -289,7 +276,7 @@ class Principal():
                     if genero == i.value:
                          genUsuario = i
                Usuario(nombre, genUsuario)
-               messagebox.showinfo("Exito", "El usuario fue creado correctamente")
+               messagebox.showinfo("Éxito", "El usuario fue creado correctamente")
                return
           
           #FieldFrame para crear Artista
@@ -297,21 +284,6 @@ class Principal():
           nombrecrearUsuario = tk.Label(frameCrearUsuario, text="Crea un Usuario", font=("Segoe Print", 20), fg = "#2C34FA")
           blankCrearUsuario = tk.Label(frameCrearUsuario,text="Por favor ingresa el nombre del usuario",font=("Verdana", 12))
           fieldCrearUsuario = FieldFrame(frameCrearUsuario, None, ["Nombre"], None, None, None)
-          
-          #image1 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\imagenArtista1.png")
-          #resized1 = image1.resize((200,200), Image.ANTIALIAS)
-          #new_pic1 = ImageTk.PhotoImage(resized1)
-          
-          #lab_img1 = Label(frameCrearArtista, image=new_pic1)
-          #lab_img1.place(x = 100, y = 50)
-          
-          #image2 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\Artista2.jpg")
-          #resized2 = image2.resize((200,200), Image.ANTIALIAS)
-          #new_pic2 = ImageTk.PhotoImage(resized2)
-          
-          #lab_img2 = Label(frameCrearArtista, image=new_pic2)
-          #lab_img2.place(x = 1000, y = 50)"""
-          
           
           self.combo = ttk.Combobox(frameCrearUsuario, state="readonly", values=["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "No Especificado"], width=30)
           self.combo.place(x = 110, y = 190)
@@ -330,7 +302,7 @@ class Principal():
           
           Principal.frames.append(frameCrearUsuario)
           
-          #crear Cancion
+          # Crear Cancion
           
           def crearCancion():
                nombre_cancion = fieldCrearCancion.getValue("Nombre")
@@ -347,38 +319,27 @@ class Principal():
                     return
 
                genero = self.comboCancion.get()
+               art = None
                gen = None
                for artista in Artista.getArtistasDisponibles():
                    if  nombre_artista == artista.getNombre():
-                         for i in Genero:
-                              if genero == i.value:
-                                   gen = i
-                         Cancion(nombre_cancion, artista, gen, duracion, año)
-                         messagebox.showinfo("Exito", "La cancion fue creado correctamente")
-                         return
-                         
-               messagebox.showinfo("Aviso", "El artista no existe")
-     
+                         art = artista
+               # Manejando la excepción del artista que no existe
+               try:
+                    art.getNombre()
+                    for i in Genero:
+                         if genero == i.value:
+                              gen = i
+                    Cancion(nombre_cancion, art, gen, duracion, año)
+                    messagebox.showinfo("Exito", "La cancion fue creado correctamente")
+               except:
+                    messagebox.showerror("Aviso", ArtistaInexistente(nombre_artista).mostrarMensaje())
+                    
           # FieldFrame para crear Artista
           frameCrearCancion = tk.Frame(self)
           nombrecrearCancion = tk.Label(frameCrearCancion, text="Crea una Canción", font=("Segoe Print", 20), fg = "#2C34FA")
           blankCrearCancion = tk.Label(frameCrearCancion,text="Por favor ingresa el nombre de la cancion",font=("Verdana", 12))
           fieldCrearCancion = FieldFrame(frameCrearCancion, None, ["Nombre", "Duracion", "Artista", "Año"], None, None, None)
-          
-          #image1 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\imagenArtista1.png")
-          #resized1 = image1.resize((200,200), Image.ANTIALIAS)
-          #new_pic1 = ImageTk.PhotoImage(resized1)
-          
-          #lab_img1 = Label(frameCrearArtista, image=new_pic1)
-          #lab_img1.place(x = 100, y = 50)
-          
-          #image2 = Image.open(r"C:\Users\tomy2\Documents\practica-g1-equipo-3-versionPython\Python\src\contenidoGrafico\Artista2.jpg")
-          #resized2 = image2.resize((200,200), Image.ANTIALIAS)
-          #new_pic2 = ImageTk.PhotoImage(resized2)
-          
-          #lab_img2 = Label(frameCrearArtista, image=new_pic2)
-          #lab_img2.place(x = 1000, y = 50)"""
-          
           
           self.comboCancion = ttk.Combobox(frameCrearCancion, state="readonly", values=["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "No Especificado"], width=30)
           self.comboCancion.place(x = 120, y = 315)

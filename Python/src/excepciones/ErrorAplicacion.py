@@ -5,9 +5,3 @@ class ErrorAplicacion(Exception):
     
     def mostrarMensaje(self):
         return self.__error
-
-class UsuarioNoExiste(ErrorAplicacion):
-
-    def __init__(self, nombre):
-        super().__init__("el usuario {} no exixte".format(nombre))
-

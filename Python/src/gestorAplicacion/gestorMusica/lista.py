@@ -64,11 +64,12 @@ class Lista(Musica):
         return "Se ha agregado la canción " + Cancion_cancion.getNombre() + " a la lista " + self.getNombre() + " con exito"
     
     def eliminarCancion(self, Cancion_cancion):
-
         if Cancion_cancion in self.__lista:
             self.__lista.remove(Cancion_cancion)
-        return "Se ha eliminado la canción " + Cancion_cancion.getNombre() + " de la lista " + self.getNombre() + " con exito"      
-    
+            return "Se ha eliminado la canción " + Cancion_cancion.getNombre() + " de la lista " + self.getNombre() + " con exito"      
+        else:
+            return f"La canción {Cancion_cancion.getNombre()} no está dentro de la lista"
+
     def __str__(self):
         return "Se está reproduciendo la lista: " + self.getNombre()
     
@@ -89,7 +90,6 @@ class Lista(Musica):
             return "Lista: " + self.getNombre() + "\n" + "\n" + "Canciones: " + "\n" + des
         else:  
             return "La lista: " + self.getNombre() + " está vacía\n"
-
 
     def infoColaborativa(self):
         des = ""

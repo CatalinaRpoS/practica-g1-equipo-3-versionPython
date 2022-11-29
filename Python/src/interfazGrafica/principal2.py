@@ -2,7 +2,6 @@ from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-# from PIL import ImageTk, Image
 from gestorAplicacion.gestorMusica.lista import Lista
 from baseDatos.serializador import Serializador
 from interfazGrafica.fieldframe import FieldFrame
@@ -12,6 +11,8 @@ from gestorAplicacion.gestorMusica.cancion import Cancion
 from gestorAplicacion.gestorMusica.genero import Genero
 from gestorAplicacion.gestorMusica.lista import Lista
 from gestorAplicacion.gestorMusica.meGusta import meGusta
+from excepciones.datosincorrectos import ListaIncorrecta, CancionIncorrecta
+from excepciones.elementoinexistente import ListaInexistente
 import random
 
 class Principal2():
@@ -30,7 +31,6 @@ class Principal2():
         # Aplicamos la siguiente formula para calcular donde debería posicionarse
         self.geometry(str(ancho_total)+"x"+str(alto_total)+"+"+"0"+"+"+"0")
 
-    
         # Cambiar frame
         def cambiarFrame(frameUtilizado):
                for frame in Principal2.frames:
@@ -52,7 +52,6 @@ class Principal2():
         menuArchivo = tk.Menu(menubar)
         menuProceso = tk.Menu(menubar)
         
-    
         # Barra de menú
         menuProceso.add_command(label="Crear/Eliminar Listas", command= lambda: cambiarFrame(frameCrearLista))
         menuProceso.add_command(label="Mostrar/Editar Listas", command= lambda: cambiarFrame(frameMostrarLista))
@@ -85,24 +84,39 @@ class Principal2():
         Principal2.frames.append(frameInicial)
         frameInicial.place(relx=0.5, rely=0.5, anchor="c")
        
-        #CrearLista
+        # CrearLista
 
         def crearLista(): 
             nombres = fieldCrearLista.getValue("Canciones").split(",")
             canciones = [cancion for cancion in Cancion.getCancionesDisponibles() if cancion.getNombre() in nombres]
+            nombre_lista = fieldCrearLista.getValue("Nombre")
+
+            # Manejando la excepción de una lista que ya existe
+            for lista in usuario.getColeccion().getListas():
+                if nombre_lista == lista.getNombre():
+                    messagebox.showerror("Error", ListaIncorrecta(nombre_lista).mostrarMensaje())
+                    for entry in fieldCrearLista._elementos:
+                        entry.delete(0, "end")
+                    return
+
             lista = Lista(fieldCrearLista.getValue("Nombre"), usuario, fieldCrearLista.getValue("Descripcion"),canciones)
             usuario.getColeccion().agregarLista(lista)
             messagebox.showinfo("Aviso", "¡Se ha creado tu lista con éxito!")
-            # mostrarSalida(f"¡Se ha creado tu lista con éxito!", outputLista)
-                    
+                           
         def eliminarLista(): 
             nombre = fieldCrearLista.getValue("Nombre")
+            elementolista = None
             for lista in usuario.getColeccion().getListas():
                 if lista.getNombre() == nombre:
-                    usuario.getColeccion().eliminarLista(lista)
-                    messagebox.showinfo("Aviso", f"Se ha eliminado la lista {nombre}")
-                    # mostrarSalida(f"Se ha eliminado la lista {nombre}", outputLista)
-                             
+                    elementolista = lista
+            # Manejando la excepción de una lista que no existe
+            try:
+                elementolista.getNombre()
+                usuario.getColeccion().eliminarLista(lista)
+                messagebox.showinfo("Aviso", f"Se ha eliminado la lista {nombre}")
+            except:
+                messagebox.showerror("Error", ListaInexistente(nombre).mostrarMensaje())
+                                     
         frameCrearLista = tk.Frame(self)
         nombrecrearLista = tk.Label(frameCrearLista, text="Crear / Eliminar Listas", font=("Segoe Print", 20), fg = "#2C34FA")
         blankCrearLista = tk.Label(frameCrearLista,text="Por favor ingresa los nombres de las canciones separados por coma", font=("Verdana", 12))
@@ -139,37 +153,25 @@ Selecciona REPRODUCIR para escuchar tu lista"""
             Lista = [x for x in usuario.getColeccion().getListas() if x.getNombre() == nombreLista]
 
             if nombreLista == "":
-                
                 msg = ""
                 for l in usuario.getColeccion().getListas():
-
                     if l.getDescripcion() == "Colaborativa":     
                         msg = msg + l.infoListaColaborativa() + "\n"
-
                     else:
                         msg = msg + l.getNombre() + "\n"
-
                 mostrarSalida(msg, output)
 
             elif len(Lista) > 0 and Lista[0].getDescripcion() == "colaborativa":
                 if len(Lista) > 0:
                     mostrarSalida(Lista[0].infoListaColaborativa(), output)
-                    # messagebox.showinfo("Aviso", Lista[0].infoListaColaborativa())
-                    # output.insert("end", Lista[0].infoLista() + "\n")
                 else:
                     mostrarSalida("¡Esta lista no existe!", output)
-                    # messagebox.showinfo("Aviso", "¡Esta lista no existe!")
-                    # output.insert("end", "Ingrese un nombre de lista valido \n")
-                
+                        
             elif len(Lista) > 0:
                 mostrarSalida(Lista[0].infoLista(), output)
-                # messagebox.showinfo("Aviso", Lista[0].infoLista())
-                # output.insert("end", Lista[0].infoLista() + "\n")
             else:
                 mostrarSalida("¡Esta lista no existe!", output)
-                # messagebox.showinfo("Aviso", "¡Esta lista no existe!")
-                # output.insert("end", "Ingrese un nombre de lista valido \n") 
-        
+                
         def AgregarCancion():
 
             nombreLista = fieldMostrarLista.getValue("Nombre Lista")
@@ -177,16 +179,13 @@ Selecciona REPRODUCIR para escuchar tu lista"""
             lista = [x for x in usuario.getColeccion().getListas() if x.getNombre() == nombreLista]
             
             cancion = [x for x in Cancion.getCancionesDisponibles() if x.getNombre() == nombreCancion]
-
-            if len(cancion) > 0 and len(lista):
+            # Manejando la excepción para las canciones
+            try:
                 lista[0].agregarCancion(cancion[0])
-                # output.insert("end", "Cancion agregada con exito \n") 
                 mostrarSalida("¡Canción agregada con éxito!", output)
-            else:
-                mostrarSalida("Ingresa un nombre de canción y/o lista válido", output)
-                # output.insert("end", "Ingrese un nombre de cancion y/o lista valido \n")  
-        
-
+            except:
+                messagebox.showerror("Error", CancionIncorrecta(nombreCancion).mostrarMensaje())
+                   
         def EliminarCancion():
 
             nombreLista = fieldMostrarLista.getValue("Nombre Lista")
@@ -194,28 +193,23 @@ Selecciona REPRODUCIR para escuchar tu lista"""
             lista = [x for x in usuario.getColeccion().getListas() if x.getNombre() == nombreLista]
             
             cancion = [x for x in Cancion.getCancionesDisponibles() if x.getNombre() == nombreCancion]
-
-            if len(cancion) > 0 and len(lista):
-                lista[0].eliminarCancion(cancion[0])
-                # output.insert("end", "Cancion eliminada con exito \n")   
-                mostrarSalida("¡Canción eliminada con éxito!", output)
-            else:
-                # output.insert("end", "Ingrese un nombre de cancion y/o lista valido \n")  
-                mostrarSalida("Ingresa un nombre de canción y/o lista válido", output)  
-
+            # Manejando la excepción para las canciones
+            try:
+                messagebox.showinfo("Aviso", lista[0].eliminarCancion(cancion[0]))
+            except: 
+                messagebox.showerror("Error", CancionIncorrecta(nombreCancion).mostrarMensaje())
+                
         def ReproducirLista():
 
             nombreLista = fieldMostrarLista.getValue("Nombre Lista")
             Lista = [x for x in usuario.getColeccion().getListas() if x.getNombre() == nombreLista]
-
-            if len(Lista) > 0:
+            # Manejando la excepción de una lista que no existe
+            try:
                 usuario.reproducirLista(lista = Lista[0])
-                mostrarSalida(Lista[0], output)
-                # output.insert("end", "Se ha reproducido la lista con exito \n")     
-            else:
-                mostrarSalida("Esta lista no existe", output)
-                # output.insert("end","Ingrese un nombre de lista valido \n")
-       
+                mostrarSalida(Lista[0], output)    
+            except:
+                messagebox.showerror("Error", ListaInexistente(nombreLista).mostrarMensaje())
+                                      
         botonMostrar: tk.Button = fieldMostrarLista.crearBotones(MostrarLista, texto= "MOSTRAR", Column=0)
         botonAgregar: tk.Button = fieldMostrarLista.crearBotones(AgregarCancion, texto= "AGREGAR", Column=1)
         botonEliminar: tk.Button = fieldMostrarLista.crearBotones(EliminarCancion, texto= "ELIMINAR", Column=2)
@@ -226,8 +220,7 @@ Selecciona REPRODUCIR para escuchar tu lista"""
         nombreMostrarLista.pack()
         blankMostrarLista.pack()
         fieldMostrarLista.pack(pady=(10,10))
-        # output.pack()
-
+       
         Principal2.frames.append(frameMostrarLista)    
         
         frameVerCanciones = tk.Frame(self)
@@ -276,7 +269,6 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                 texto = usuario.eliminarMeGusta(c)
                 mostrarSalida(texto, salidaFavoritos)
   
-
         def Reproducir():
             favoritos = usuario.getFavoritos()
             if len(favoritos.getFavoritos()) > 0:
@@ -376,7 +368,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
 
         Principal2.frames.append(frameRanking) 
         
-        #Colaborativa
+        # Colaborativa
         
         frameColaborativa = tk.Frame(self)
         nombreColaborativa = tk.Label(frameColaborativa, text = "Colaborativa", font=("Segoe Print", 20), fg = "#2C34FA")
@@ -500,7 +492,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                 mostrarSalida(mensaje, outputRecomendarMusica)         
 
         frameRecomendarMusica = tk.Frame(self)
-        nombreRecomendarMusica = tk.Label(frameRecomendarMusica, text="Menu para recibir recomendaciones", font=("Verdana", 16), fg = "#31a919")
+        nombreRecomendarMusica = tk.Label(frameRecomendarMusica, text="Menu para recibir recomendaciones", font=("Segoe Print", 20), fg = "#2C34FA")
 
         outputRecomendarMusica = tk.Text(frameRecomendarMusica, height=20, font=("Verdana", 10))
         fieldRecomendarMusica = FieldFrame(frameRecomendarMusica, None, [], None, None, None)
