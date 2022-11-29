@@ -586,7 +586,15 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                 
             cancionesColaborativa = set(cancionesColaborativa)
             
-            colaborativa = Lista(nombre, dueños[0], "colaborativa", [], [], cancionesColaborativa)
+            canciones = []
+            cancionesNombre = []
+            
+            for i in cancionesColaborativa:
+                if i.getNombre() not in cancionesNombre:
+                    canciones.append(i)
+                    cancionesNombre.append(i.getNombre())
+            
+            colaborativa = Lista(nombre, dueños[0], "colaborativa", [], [], set(canciones))
             usuario.getColeccion().agregarLista(colaborativa)
             
             mensaje1 = f"Colaborativa {colaborativa.getNombre()} creada"

@@ -24,9 +24,9 @@ class Musica:
     
     def setReproducciones(self, reproducciones):
         self.__reproducciones = reproducciones
-    
-    def aumentarReproducciones(self):
+
+    def aumentarReproducciones():
         pass
 
-    def __str__(self):
+    def __str__():
         pass

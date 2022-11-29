@@ -60,7 +60,7 @@ class Usuario(Persona):
             cont = 0
             for cancion in listaMasRepro:
                 if cancion.getArtista() in reproPorArtista:
-                    newValue=reproPorArtista[cancion.getArtista] + 1
+                    newValue=reproPorArtista[cancion.getArtista()] + 1
                     reproPorArtista[cancion.getArtista()] = newValue
                 else:
                     reproPorArtista[cancion.getArtista()] = 1

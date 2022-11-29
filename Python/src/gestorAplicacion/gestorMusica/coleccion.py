@@ -109,6 +109,10 @@ class Coleccion:
         SALSA=0
         KPOP=0
 		
+        for i in listas:
+            if i==None:
+                listas.remove(i)
+                
         for i in range(len(listas)):
             for j in range(len(listas)-1):
                 if listas[i].getGenero()==listas[j+1].getGenero():
