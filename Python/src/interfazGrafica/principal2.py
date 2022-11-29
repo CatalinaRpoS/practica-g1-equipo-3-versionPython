@@ -420,7 +420,10 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             colaborativa = Lista(nombre, dueños[0], "colaborativa", [], [], cancionesColaborativa)
             usuario.getColeccion().agregarLista(colaborativa)
             
-            mostrarSalida(f"Colaborativa {colaborativa.getNombre()} creada", salidaColabora)
+            mensaje1 = f"Colaborativa {colaborativa.getNombre()} creada"
+            mensaje2 = mensaje1 + "\n" +dueños[0].getColeccion().similitudesGenero(cancionesAgregar)
+            
+            mostrarSalida(mensaje2, salidaColabora)
             
         colabora = tk.Button(frameColaborativa, text="Crear", font=("Verdana", 12), fg="white", bg="#2C34FA", command=colaborativa)
           

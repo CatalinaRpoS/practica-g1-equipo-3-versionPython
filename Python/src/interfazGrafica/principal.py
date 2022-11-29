@@ -263,10 +263,10 @@ class Principal():
           
           
           self.comboArtista = ttk.Combobox(frameCrearArtista, state="readonly", values=["Reggaeton","Rock", "Pop", "Salsa", "Kpop", "No Especificado"], width=30)
-          self.comboArtista.place(x = 110, y = 150)
+          self.comboArtista.place(x = 110, y = 190)
           
           comboLabelArtista = tk.Label(frameCrearArtista,text="Genero",font=("Verdana", 12))
-          comboLabelArtista.place(x = 30, y = 150)
+          comboLabelArtista.place(x = 30, y = 190)
           
           fieldCrearArtista.crearBotones(crearArtista)
           
@@ -313,10 +313,10 @@ class Principal():
           
           
           self.combo = ttk.Combobox(frameCrearUsuario, state="readonly", values=["Rock", "Pop"], width=30)
-          self.combo.place(x = 110, y = 150)
+          self.combo.place(x = 110, y = 190)
           
           comboLabel = tk.Label(frameCrearUsuario,text="Genero",font=("Verdana", 12))
-          comboLabel.place(x = 30, y = 150)
+          comboLabel.place(x = 30, y = 190)
           
           fieldCrearUsuario.crearBotones(crearUsuario)
           
