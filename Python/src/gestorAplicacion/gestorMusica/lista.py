@@ -60,13 +60,16 @@ class Lista(Musica):
         self.usuarios = list_usuarios
     
     def agregarCancion(self, Cancion_cancion):
-        self.__lista.append(Cancion_cancion)
-        return "Se ha agregado la canción " + Cancion_cancion.getNombre() + " a la lista " + self.getNombre() + " con exito"
-    
+        if Cancion_cancion in self.__lista:
+            return f"La canción {Cancion_cancion.getNombre()} ya está dentro de la lista"
+        else:
+            self.__lista.append(Cancion_cancion)
+            return "Se ha agregado la canción " + Cancion_cancion.getNombre() + " a la lista " + self.getNombre() + " con éxito"
+        
     def eliminarCancion(self, Cancion_cancion):
         if Cancion_cancion in self.__lista:
             self.__lista.remove(Cancion_cancion)
-            return "Se ha eliminado la canción " + Cancion_cancion.getNombre() + " de la lista " + self.getNombre() + " con exito"      
+            return "Se ha eliminado la canción " + Cancion_cancion.getNombre() + " de la lista " + self.getNombre() + " con éxito"      
         else:
             return f"La canción {Cancion_cancion.getNombre()} no está dentro de la lista"
 

@@ -165,7 +165,7 @@ Selecciona REPRODUCIR para escuchar tu lista"""
                 if len(Lista) > 0:
                     mostrarSalida(Lista[0].infoListaColaborativa(), output)
                 else:
-                    mostrarSalida("¡Esta lista no existe!", output)
+                    messagebox.showerror("Error", ListaInexistente(nombreLista).mostrarMensaje())
                         
             elif len(Lista) > 0:
                 mostrarSalida(Lista[0].infoLista(), output)
@@ -181,8 +181,7 @@ Selecciona REPRODUCIR para escuchar tu lista"""
             cancion = [x for x in Cancion.getCancionesDisponibles() if x.getNombre() == nombreCancion]
             # Manejando la excepción para las canciones
             try:
-                lista[0].agregarCancion(cancion[0])
-                mostrarSalida("¡Canción agregada con éxito!", output)
+                messagebox.showinfo("Aviso", lista[0].agregarCancion(cancion[0]))
             except:
                 messagebox.showerror("Error", CancionIncorrecta(nombreCancion).mostrarMensaje())
                    
@@ -241,17 +240,19 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                messagebox.showinfo("Aviso", "No tiene canciones en favoritos")
         
         def Agregar():
-              nCancion=fieldFavoritos.getValue("Nombre Cancion")
-              canciones = Cancion.getCancionesDisponibles()
-              c=None
-              for cancion in canciones:
-                  if nCancion==cancion.getNombre():
-                        c=cancion
-              if c==None:
-                    messagebox.showinfo("Aviso", "Esta canción no existe")
-              else:
-                texto=usuario.agregarMeGusta(c)
-                mostrarSalida(texto, salidaFavoritos)
+            nCancion = fieldFavoritos.getValue("Nombre Cancion")
+            canciones = Cancion.getCancionesDisponibles()
+            c = None
+            for cancion in canciones:
+                if nCancion == cancion.getNombre():
+                    c = cancion
+           
+            # Manejando la excepción para las canciones
+            try:
+                messagebox.showinfo("Aviso", usuario.agregarMeGusta(c))
+                mostrarSalida("", salidaFavoritos)
+            except:
+                messagebox.showerror("Error", CancionIncorrecta(nCancion).mostrarMensaje())
 
         def Eliminar():
             nCancion = fieldFavoritos.getValue("Nombre Cancion")
@@ -261,7 +262,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                 if nCancion == cancion.getNombre():
                     c = cancion
             if c == None:
-                messagebox.showinfo("Aviso", "Esa cancion no existe")
+                messagebox.showerror("Error", CancionIncorrecta(nCancion).mostrarMensaje())
             else:
                 for cancion in usuario.getFavoritos().getFavoritos():
                     if nCancion == cancion.getNombre():
