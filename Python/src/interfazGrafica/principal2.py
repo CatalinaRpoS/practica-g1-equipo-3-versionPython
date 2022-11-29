@@ -61,6 +61,7 @@ class Principal2():
         menuProceso.add_command(label="Ranking",command=lambda: cambiarFrame(frameRanking))
         menuProceso.add_command(label="Agrupacion")
         menuProceso.add_command(label="Colaborativa", command=lambda:cambiarFrame(frameColaborativa))
+        menuProceso.add_command(label="Recomendar Musica", command=lambda:cambiarFrame(frameRecomendarMusica))
         menuProceso.add_command(label="Resumen")
        
         menuArchivo.add_command(label="Regresar a la Ventana Anterior",command=volver)
@@ -77,8 +78,6 @@ class Principal2():
                          f"Ademas, contamos con unas funciones bastante novedosas\n" \
                          f"Animate a probar todo lo que tenemos para ofrecerte, ¿qué esperas?" 
         descInicial = tk.Label(frameInicial, text=textoInicial, font=("Verdana", 12))
-
-        Principal2.frames.append(frameInicial)
 
         nombreInicial.pack()
         descInicial.pack()
@@ -420,6 +419,69 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
         colabora.pack()
 
         Principal2.frames.append(frameColaborativa) 
+
+        #RecomendarMusica
+
+        def encontrarMusica():
+
+            listas = usuario.getColeccion().getListas()
+            cancionesUsuario = []
+            genero = usuario.getGenFavorito()
+
+            for l in listas:
+                for cancion in l:
+                    if cancion not in cancionesUsuario:
+                        cancionesUsuario.append(cancion)
+            
+            recomendadas = []
+
+            if genero != None:
+
+                for cancion in Cancion.getCancionesDisponibles():
+
+                    if cancion not in cancionesUsuario and cancion.getGenero() == genero:
+
+                        recomendadas.append(cancion)
+                    else:
+                        pass
+                
+                mensaje = "Te podemos recomendar estas canciones: \n\n"
+                
+                for cancion in recomendadas:
+
+                    mensaje = mensaje + cancion.getNombre() + "\n"
+                
+                mostrarSalida(mensaje, outputRecomendarMusica)
+  
+            else:
+
+                canciones = Cancion.getCancionesDisponibles().sort(key= Cancion.getReproducciones)
+
+                mensaje = "¿No tienes genero favorito? Dale Me Gusta a algunas canciones, por ahora, aqui estan las canciones mas escuchadas: \n \n"
+
+                for i in range(3):
+
+                    mensaje = mensaje + canciones[i].getNombre() + "\n"
+                
+                mostrarSalida(mensaje, outputRecomendarMusica)
+
+                
+
+        frameRecomendarMusica = tk.Frame(self)
+        nombreRecomendarMusica = tk.Label(frameRecomendarMusica, text="Menu para recibir recomendaciones", font=("Verdana", 16), fg = "#31a919")
+
+        outputRecomendarMusica = tk.Text(frameRecomendarMusica, height=20, font=("Verdana", 10))
+        fieldRecomendarMusica = FieldFrame(frameRecomendarMusica, None, [], None, None, None)
+          
+        botonEncontrar: tk.Button = fieldRecomendarMusica.crearBotones(encontrarMusica, texto= "ENCONTRAR MUSICA")
+
+        nombreRecomendarMusica.pack()
+        fieldRecomendarMusica.pack(pady=(10,10))
+
+        nombreRecomendarMusica.pack()
+        outputRecomendarMusica.pack()
+
+        Principal2.frames.append(frameRecomendarMusica)
             
                 
             
