@@ -131,6 +131,10 @@ class Principal():
                     if persona.getNombre() == nombre:
                          usuario = persona
                # Excepción de un usuario que no exista
+               '''usuario.getNombre()
+               from interfazGrafica.principal2 import Principal2
+               self.withdraw()
+               Principal2(usuario, ventana, self)'''
                try:
                     usuario.getNombre()
                     from interfazGrafica.principal2 import Principal2
@@ -146,7 +150,7 @@ class Principal():
           fieldUsuario = FieldFrame(frameUsuario, None, ["Nombre"], None, None, None)
           fieldUsuario.crearBotones(accederUsuario)
 
-          salidaUsuario = tk.Text(frameUsuario, height=50, font=("Verdana", 10))
+          salidaUsuario = tk.Text(frameUsuario, height=50, font=("Verdana", 10), border=False)
           Principal.frames.append(salidaUsuario)
 
           nombreUsuario.pack()
@@ -172,7 +176,7 @@ class Principal():
           descMostrarUsuarios = tk.Label(frameMostrarUsuarios, text="Puede que no observes todos los usuarios a la misma vez \nMueve el cursor del mouse para conocer a más personas", font=("Verdana", 12))
           mostrarUsuarios = tk.Button(frameMostrarUsuarios, text="Mostrar usuarios", font=("Verdana", 12), fg="white", bg="#2C34FA", command=mostrarUsuarios)
           
-          salidaVerUsuarios= tk.Text(frameMostrarUsuarios, font=("Verdana", 10))
+          salidaVerUsuarios= tk.Text(frameMostrarUsuarios, font=("Verdana", 10), border=False)
           Principal.frames.append(salidaVerUsuarios)
           
           nombreMostrarUsuarios.pack()
@@ -197,7 +201,7 @@ class Principal():
           descMostrarArtistas = tk.Label(frameMostrarArtistas, text="Puede que no observes todos los artistas a la misma vez \nMueve el cursor del mouse para conocer a más artistas", font=("Verdana", 12))
           mostrarArtistas = tk.Button(frameMostrarArtistas, text="Mostrar artistas", font=("Verdana", 12), fg="white", bg="#2C34FA", command=mostrarArtistas)
           
-          salidaVerArtistas= tk.Text(frameMostrarArtistas, width=100, font=("Verdana", 10))
+          salidaVerArtistas= tk.Text(frameMostrarArtistas, width=100, font=("Verdana", 10), border=False)
           Principal.frames.append(salidaVerArtistas)
           
           
@@ -223,7 +227,7 @@ class Principal():
           descMostrarCanciones = tk.Label(frameMostrarCanciones, text="Puede que no observes todas las canciones a la misma vez \nMueve el cursor del mouse para conocer más música", font=("Verdana", 12))
           mostrarCanciones = tk.Button(frameMostrarCanciones, text="Mostrar canciones", font=("Verdana", 12), fg="white", bg="#2C34FA", command=mostrarCanciones)
           
-          salidaVerCanciones = tk.Text(frameMostrarCanciones, font=("Verdana", 10))
+          salidaVerCanciones = tk.Text(frameMostrarCanciones, font=("Verdana", 10), border=False)
           Principal.frames.append(salidaVerCanciones)
           
           nombreMostrarCanciones.pack()
@@ -260,7 +264,7 @@ class Principal():
           
           fieldCrearArtista.crearBotones(crearArtista)
           
-          outputArtista = tk.Text(frameCrearArtista, height=100, font=("Verdana", 10))
+          outputArtista = tk.Text(frameCrearArtista, height=100, font=("Verdana", 10), border=False)
           Principal.frames.append(outputArtista)
           
           nombreCrearArtista.pack()
@@ -295,7 +299,7 @@ class Principal():
           
           fieldCrearUsuario.crearBotones(crearUsuario)
           
-          outputUsuario = tk.Text(frameCrearUsuario, height=100, font=("Verdana", 10))
+          outputUsuario = tk.Text(frameCrearUsuario, height=100, font=("Verdana", 10), border=False)
           Principal.frames.append(outputUsuario)
           
           nombrecrearUsuario.pack()
@@ -353,7 +357,7 @@ class Principal():
           
           fieldCrearCancion.crearBotones(crearCancion)
           
-          outputCancion = tk.Text(frameCrearCancion, height=100, font=("Verdana", 10))
+          outputCancion = tk.Text(frameCrearCancion, height=100, font=("Verdana", 10), border=False)
           Principal.frames.append(outputCancion)
           
           nombrecrearCancion.pack()

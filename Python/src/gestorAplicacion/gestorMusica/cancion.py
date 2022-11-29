@@ -66,3 +66,13 @@ class Cancion(Musica):
                 masEscuchada = cancion
                 mayor = cancion.getReproducciones()
         return masEscuchada
+    
+    @classmethod
+    def topCancionGenero(cls, genero):
+        masEscuchada = None
+        mayor = 0
+        for cancion in cls.__cancionesDisponibles:
+            if cancion.getReproducciones() > mayor and cancion.getGenero() == genero:
+                masEscuchada = cancion
+                mayor = cancion.getReproducciones()
+        return masEscuchada

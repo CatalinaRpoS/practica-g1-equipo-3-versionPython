@@ -16,7 +16,7 @@ class meGusta(Lista):
             return f"La canción {cancion.getNombre()} ya está dentro de tus favoritos"
         else:
             self.__favoritos.append(cancion)
-            return "Se ha agregado la canción " + cancion.getNombre() + " a tus favoritos " + self.getNombre() + " con éxito"
+            return "Se ha agregado la canción " + cancion.getNombre() + " a tus favoritos con éxito"
     
     def eliminarCancion(self, cancion):
         self.__favoritos.remove(cancion)

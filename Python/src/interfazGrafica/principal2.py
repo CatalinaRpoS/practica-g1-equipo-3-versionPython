@@ -152,7 +152,7 @@ Selecciona REPRODUCIR para escuchar tu lista"""
             Lista = [x for x in usuario.getColeccion().getListas() if x.getNombre() == nombreLista]
 
             if nombreLista == "":
-                msg = ""
+                msg = "Tus listas de reproducción son:\n"
                 for l in usuario.getColeccion().getListas():
                     if l.getDescripcion() == "Colaborativa":     
                         msg = msg + l.infoListaColaborativa() + "\n"
@@ -500,11 +500,10 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             
             p0=""
             if usuario.getGenFavorito()!=genero[posicion]:
-                p0="Tus gustos cambian constantemente. El género que mas escuchas es {}. ¿Quieres cambiar tu genero favorito a este?".format(genero[posicion].value)
+                p0="Tus gustos cambian constantemente. El género que mas escuchas es {}".format(genero[posicion].value)
             else:
                 p0="Tu género Favorito sigue siendo el mismo"
             
-
             p1="Has utilizado la aplicacion {} segundos".format(usuario.getTiempoEscuchado())
             p2="Eres un {} compatible con el genero de REGGAETON".format(round(PuntosFinales[0],2))
             p3="Eres un {} compatible con el genero de ROCK".format(round(PuntosFinales[1],2))
@@ -512,13 +511,15 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             p5="Eres un {} compatible con el genero de SALSA".format(round(PuntosFinales[3],2))
             p6="Eres un {} compatible con el genero de KPOP".format(round(PuntosFinales[4],2))
             p7="Eres un {} compatible con el genero de NO_ESPECIFICADO".format(round(PuntosFinales[5],2))
-            p8="Hemos creado una listaMix y te se ha agregado a tu coleccion"
+            p8="Hemos creado una listaMix y se ha agregado a tu coleccion"
+
+            listaMix = Lista("Lista Mix", usuario, "Tu Lista Mix", CancionMix)
+            usuario.getColeccion().agregarLista(listaMix)
+
             texto=p0+"\n"+"\n"+p1+"\n"+p2+"\n"+p3+"\n"+p4+"\n"+p5+"\n"+p6+"\n"+p7+"\n"+"\n"+p8
 
             mostrarSalida(texto, salidaResumen)
 
-
-            
         Resumenbotton = tk.Button(frameResumen, text="Generar", font=("Verdana", 12), fg="white", bg="#2C34FA",command=resumen)
 
         salidaResumen= tk.Text(frameResumen,font=("Verdana", 10), border= False, width= 100)
@@ -661,6 +662,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             totalRe = 0; totalRo = 0; totalP = 0; totalS = 0; totalK = 0; totalN = 0
             naranja = []; negro = []; rosado = []; rojo = []; morado = []; blanco = []
             amigo = None
+            colores = []
             textoColores = ""
             
             for usuarioComparar in Usuario.getUsuariosExistentes():
@@ -699,31 +701,49 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                 K += favoritos.totalPorGenero(Genero.KPOP)
                 N += favoritos.totalPorGenero(Genero.NO_ESPECIFICADO)
 
-                if Re*100 / totalRe >= 30: naranja.append(usuarioComparar)
-                if Ro*100 / totalRo >= 30: negro.append(usuarioComparar)
-                if P*100 / totalP >= 30: rosado.append(usuarioComparar)
-                if S*100 / totalS >= 30: rojo.append(usuarioComparar)
-                if K*100 / totalK >= 30: morado.append(usuarioComparar)
-                if N*100 / totalN >= 30: blanco.append(usuarioComparar)
+                if Re*100 / totalRe >= 50: naranja.append(usuarioComparar)
+                if Ro*100 / totalRo >= 50: negro.append(usuarioComparar)
+                if P*100 / totalP >= 50: rosado.append(usuarioComparar)
+                if S*100 / totalS >= 50: rojo.append(usuarioComparar)
+                if K*100 / totalK >= 50: morado.append(usuarioComparar)
+                if N*100 / totalN >= 50: blanco.append(usuarioComparar)
 
             totales = []
             if(usuario in naranja):
                 textoColores += "Naranja\n" 
+                cancion_color = Cancion.topCancionGenero(Genero.REGGAETON)
+                if cancion_color != None:
+                    colores.append(cancion_color)
                 totales += [miembro for miembro in naranja if miembro.getNombre() != usuario.getNombre()]
             if(usuario in negro):
                 textoColores += "Negro\n" 
+                cancion_color = Cancion.topCancionGenero(Genero.ROCK)
+                if cancion_color != None:
+                    colores.append(cancion_color)
                 totales += [miembro for miembro in negro if miembro.getNombre() != usuario.getNombre()]
             if(usuario in rosado):
                 textoColores += "Rosado\n" 
+                cancion_color = Cancion.topCancionGenero(Genero.POP)
+                if cancion_color != None:
+                    colores.append(cancion_color)
                 totales += [miembro for miembro in rosado if miembro.getNombre() != usuario.getNombre()]
             if(usuario in rojo):
                 textoColores += "Rojo\n" 
+                cancion_color = Cancion.topCancionGenero(Genero.SALSA)
+                if cancion_color != None:
+                    colores.append(cancion_color)
                 totales += [miembro for miembro in rojo if miembro.getNombre() != usuario.getNombre()]
             if(usuario in morado):
                 textoColores += "Morado\n" 
+                cancion_color = Cancion.topCancionGenero(Genero.KPOP)
+                if cancion_color != None:
+                    colores.append(cancion_color)
                 totales += [miembro for miembro in morado if miembro.getNombre() != usuario.getNombre()]
             if(usuario in blanco):
                 textoColores += "Blanco\n" 
+                cancion_color = Cancion.topCancionGenero(Genero.NO_ESPECIFICADO)
+                if cancion_color != None:
+                    colores.append(cancion_color)
                 totales += [miembro for miembro in blanco if miembro.getNombre() != usuario.getNombre()]
                 
             amigo = usuario.encontrarAmigo(totales)
@@ -731,16 +751,20 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             if amigo == None: 
                 textoColores += "No compartes tu Agrupación por Colores con ningún usuario :c \n"
             else:
-                textoColores += f"Según tus colores, alguien que podrías conocer es: \n\n {amigo.getNombre()}"
-            
+                textoColores += f"Según tus colores, alguien que podrías conocer es: \n\n{amigo.getNombre()}\n"
+
+            listaColores = Lista("Tus Colores", usuario, "Esta lista combina a la perfección con tu estado de ánimo", colores)
+            usuario.getColeccion().agregarLista(listaColores)
+
+            textoColores += "¡En tu colección encontrarás una lista que hemos creado para tu estado de ánimo!"
             mostrarSalida(textoColores, salidaAgrupacion)  
      
         frameAgrupacion = tk.Frame(self)
         nombreAgrupacion = tk.Label(frameAgrupacion, text="Conoce tu Agrupación por Colores", font=("Segoe Print", 20), fg="#2C34FA")
         desAgrupacion = tk.Label(frameAgrupacion, text = "Selecciona Conocer para descubrir los colores que te representan", font=("Verdana", 12))
         
-        botonAgrupacion = tk.Button(frameAgrupacion, text="Conocer", font=("Verdana", 12), fg="white", bg="#2C34FA", command=agrupacion)
-        salidaAgrupacion = tk.Text(frameAgrupacion, border=False, font=("Verdana", 16))
+        botonAgrupacion = tk.Button(frameAgrupacion, text="Conocer", font=("Verdana", 10), fg="white", bg="#2C34FA", command=agrupacion)
+        salidaAgrupacion = tk.Text(frameAgrupacion, border=False, font=("Verdana", 12))
 
         Principal2.frames.append(salidaAgrupacion) 
 
