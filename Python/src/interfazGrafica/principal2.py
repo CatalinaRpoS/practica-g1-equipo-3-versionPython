@@ -618,7 +618,6 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             if genero != None:
                 for cancion in Cancion.getCancionesDisponibles():
                     if (not(cancion.getNombre() in cancionesUsuario)) and cancion.getGenero() == genero:
-                        print(cancion.getNombre())
                         recomendadas.append(cancion)
                     else:
                         pass
@@ -630,13 +629,16 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                 else:
                     canciones = Cancion.getCancionesDisponibles()
                     canciones.sort(key= Cancion.getReproducciones)
-                mensaje = "Tienes agregadas todas las canciones correspondientes a tu genero, ¿que tal si escuchas algo nuevo?, aqui estan las canciones mas escuchadas: \n \n"
-                for i in range(3):
-                    mensaje = mensaje + canciones[i].getNombre() + "\n"
-                mostrarSalida(mensaje, outputRecomendarMusica)
+                    mensaje = "Tienes agregadas todas las canciones correspondientes a tu genero, ¿que tal si escuchas algo nuevo?, aqui estan las canciones mas escuchadas: \n \n"
+                    
+                    for i in range(3):
+                        mensaje = mensaje + canciones[i].getNombre() + "\n"
+                    mostrarSalida(mensaje, outputRecomendarMusica)
   
             else:
-                canciones = Cancion.getCancionesDisponibles().sort(key= Cancion.getReproducciones)
+                canciones = Cancion.getCancionesDisponibles()
+                canciones.sort(key= Cancion.getReproducciones)
+
                 mensaje = "¿No tienes genero favorito? Dale Me Gusta a algunas canciones, por ahora, aqui estan las canciones mas escuchadas: \n \n"
                 for i in range(3):
                     mensaje = mensaje + canciones[i].getNombre() + "\n"
