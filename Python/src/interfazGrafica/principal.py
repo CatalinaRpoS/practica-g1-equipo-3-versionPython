@@ -9,6 +9,7 @@ from gestorAplicacion.gestorPersonas.usuario import Usuario
 from gestorAplicacion.gestorPersonas.artista import Artista
 from gestorAplicacion.gestorMusica.cancion import Cancion
 from gestorAplicacion.gestorMusica.genero import Genero
+from excepciones.datosincorrectos import Numero
 
 class Principal():
     
@@ -334,8 +335,17 @@ class Principal():
           def crearCancion():
                nombre_cancion = fieldCrearCancion.getValue("Nombre")
                nombre_artista = fieldCrearCancion.getValue("Artista")
-               duracion = int(fieldCrearCancion.getValue("Duracion"))
-               año = int(fieldCrearCancion.getValue("Año"))
+
+               # Manejando la excepción de los datos incorrectos
+               try:
+                    duracion = int(fieldCrearCancion.getValue("Duracion"))
+                    año = int(fieldCrearCancion.getValue("Año"))
+               except:
+                    messagebox.showerror("Aviso", Numero().mostrarMensaje())
+                    for entry in fieldCrearCancion._elementos:
+                         entry.delete(0, "end")
+                    return
+
                genero = self.comboCancion.get()
                gen = None
                for artista in Artista.getArtistasDisponibles():
@@ -349,8 +359,7 @@ class Principal():
                          
                messagebox.showinfo("Aviso", "El artista no existe")
      
-          
-          #FieldFrame para crear Artista
+          # FieldFrame para crear Artista
           frameCrearCancion = tk.Frame(self)
           nombrecrearCancion = tk.Label(frameCrearCancion, text="Crea una Canción", font=("Segoe Print", 20), fg = "#2C34FA")
           blankCrearCancion = tk.Label(frameCrearCancion,text="Por favor ingresa el nombre de la cancion",font=("Verdana", 12))
