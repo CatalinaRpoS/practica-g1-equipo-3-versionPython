@@ -22,4 +22,5 @@ if __name__=="__main__":
     c1=Cancion("Dynamite",a2,Genero.KPOP,300,2020)
     c2=Cancion("Camisa negra",a1,Genero.ROCK,200,2015)
     c3=Cancion("Ferxxo 100",a3,Genero.REGGAETON,360,2019) '''
+
     main()

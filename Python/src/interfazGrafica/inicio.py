@@ -88,7 +88,7 @@ class FrameIzquierda(tk.Frame):
         self.__p3.grid(row=0, column=0)
         self.__p42.grid(row=2, column=0, pady=(10, 10))
         
-    def cambiarImagen(self, args):
+    def cambiarImagen(self, _):
         if self._imagenActual == 4:
             self._imagenActual = 0
         else:
@@ -96,8 +96,6 @@ class FrameIzquierda(tk.Frame):
 
         self._imagen.configure(image = self._imagenes[self._imagenActual])
         self._imagen.image = self._imagenes[self._imagenActual]
-        
-        
         
     def abrirVentanaPrincipal(self):
         self.__ventana.withdraw()
@@ -164,6 +162,3 @@ class FrameDerecha(tk.Frame):
 
         with open(path, "r+") as cf_text:
             self.__text.insert(tk.INSERT, cf_text.read())
-
-    
-    
