@@ -138,7 +138,20 @@ Selecciona REPRODUCIR para escuchar tu lista"""
             nombreLista = fieldMostrarLista.getValue("Nombre Lista")
             Lista = [x for x in usuario.getColeccion().getListas() if x.getNombre() == nombreLista]
 
-            if len(Lista) > 0 and Lista[0].getDescripcion() == "colaborativa":
+            if nombreLista == "":
+                
+                msg = ""
+                for l in usuario.getColeccion().getListas():
+
+                    if l.getDescripcion() == "Colaborativa":     
+                        msg = msg + l.infoListaColaborativa() + "\n"
+
+                    else:
+                        msg = msg + l.infoLista() + "\n"
+
+                mostrarSalida(msg, output)
+
+            elif len(Lista) > 0 and Lista[0].getDescripcion() == "colaborativa":
                 if len(Lista) > 0:
                     mostrarSalida(Lista[0].infoListaColaborativa(), output)
                     # messagebox.showinfo("Aviso", Lista[0].infoListaColaborativa())
@@ -404,7 +417,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                 
             cancionesColaborativa = set(cancionesColaborativa)
             
-            colaborativa = Lista(nombre, dueños[0], "colaborativa", None, None, cancionesColaborativa)
+            colaborativa = Lista(nombre, dueños[0], "colaborativa", [], [], cancionesColaborativa)
             usuario.getColeccion().agregarLista(colaborativa)
             
             mostrarSalida(f"Colaborativa {colaborativa.getNombre()} creada", salidaColabora)
@@ -429,27 +442,45 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
             genero = usuario.getGenFavorito()
 
             for l in listas:
-                for cancion in l:
-                    if cancion not in cancionesUsuario:
-                        cancionesUsuario.append(cancion)
-            
+
+                for cancion in l.getLista():
+                    if cancion.getNombre() not in cancionesUsuario:
+                        
+                        cancionesUsuario.append(cancion.getNombre())
+                        
             recomendadas = []
 
             if genero != None:
 
                 for cancion in Cancion.getCancionesDisponibles():
 
-                    if cancion not in cancionesUsuario and cancion.getGenero() == genero:
-
+                    if (not(cancion.getNombre() in cancionesUsuario)) and cancion.getGenero() == genero:
+                        
+                        print(cancion.getNombre())
                         recomendadas.append(cancion)
                     else:
                         pass
                 
-                mensaje = "Te podemos recomendar estas canciones: \n\n"
-                
-                for cancion in recomendadas:
+                if len(recomendadas) > 0:
 
-                    mensaje = mensaje + cancion.getNombre() + "\n"
+                    mensaje = "Te podemos recomendar estas canciones: \n\n"
+                    
+                    for cancion in recomendadas:
+
+                        mensaje = mensaje + cancion.getNombre() + "\n"
+                    
+                    mostrarSalida(mensaje, outputRecomendarMusica)
+                
+                else:
+
+                    canciones = Cancion.getCancionesDisponibles()
+                    canciones.sort(key= Cancion.getReproducciones)
+
+                mensaje = "Tienes agregadas todas las canciones correspondientes a tu genero, ¿que tal si escuchas algo nuevo?, aqui estan las canciones mas escuchadas: \n \n"
+
+                for i in range(3):
+
+                    mensaje = mensaje + canciones[i].getNombre() + "\n"
                 
                 mostrarSalida(mensaje, outputRecomendarMusica)
   
@@ -463,9 +494,7 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
 
                     mensaje = mensaje + canciones[i].getNombre() + "\n"
                 
-                mostrarSalida(mensaje, outputRecomendarMusica)
-
-                
+                mostrarSalida(mensaje, outputRecomendarMusica)         
 
         frameRecomendarMusica = tk.Frame(self)
         nombreRecomendarMusica = tk.Label(frameRecomendarMusica, text="Menu para recibir recomendaciones", font=("Verdana", 16), fg = "#31a919")
@@ -482,9 +511,5 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
         outputRecomendarMusica.pack()
 
         Principal2.frames.append(frameRecomendarMusica)
-            
-                
-            
-            
-        
+             
         self.mainloop()
