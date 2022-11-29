@@ -1,4 +1,4 @@
-from excepciones.ErrorAplicacion import ErrorAplicacion
+from excepciones.erroraplicacion import ErrorAplicacion
 
 class ElementoInexistente(ErrorAplicacion):
     def __init__(self, error):
