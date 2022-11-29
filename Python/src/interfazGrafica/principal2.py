@@ -580,8 +580,22 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
                     cancionesNombre.append(i.getNombre())
             
             colaborativa = Lista(nombre, dueños[0], "colaborativa", [], [], set(canciones))
-            usuario.getColeccion().agregarLista(colaborativa)
             
+            listasUsuario1 = [x for x in usuario.getColeccion().getListas()]
+            listasUsuario1Nombres = []
+            
+            for l in listasUsuario1:
+                listasUsuario1Nombres.append(l.getNombre())
+            
+            if colaborativa.getNombre() in listasUsuario1Nombres:
+
+                for l in usuario.getColeccion().getListas():
+
+                    if l.getNombre() == colaborativa.getNombre():
+
+                        usuario.getColeccion().getListas().remove(l)
+            
+            usuario.getColeccion().agregarLista(colaborativa)
             mensaje1 = f"Colaborativa {colaborativa.getNombre()} creada"
             mensaje2 = mensaje1 + "\n" +dueños[0].getColeccion().similitudesGenero(cancionesAgregar)
             
