@@ -1,4 +1,4 @@
-from excepciones.ErrorAplicacion import ErrorAplicacion
+from excepciones.erroraplicacion import ErrorAplicacion
 
 class DatosIncorrectos(ErrorAplicacion):
     def __init__(self, error):
