@@ -61,7 +61,7 @@ class Principal2():
         menuProceso.add_command(label="Agrupacion")
         menuProceso.add_command(label="Colaborativa", command=lambda:cambiarFrame(frameColaborativa))
         menuProceso.add_command(label="Recomendar Musica", command=lambda:cambiarFrame(frameRecomendarMusica))
-        menuProceso.add_command(label="Resumen")
+        menuProceso.add_command(label="Resumen",command=lambda:cambiarFrame(frameResumen))
        
         menuArchivo.add_command(label="Regresar a la Ventana Anterior",command=volver)
 
@@ -367,7 +367,187 @@ Selecciona REPRODUCIR para escuchar tus favoritos"""
         desRanking.pack()
         ranking.pack()
 
-        Principal2.frames.append(frameRanking) 
+        Principal2.frames.append(frameRanking)
+
+
+        #Resumen 
+        frameResumen = tk.Frame(self)
+        nombreResumen = tk.Label(frameResumen, text = "Resumen", font=("Segoe Print", 20), fg = "#2C34FA")
+        
+        desResumen = tk.Label(frameResumen, text = "Mira tus resumenes de genero", font=("Verdana", 10))
+
+        def resumen():
+            Puntos=usuario.puntosFavoritos(usuario)
+            print(Puntos)
+            PuntosExtras=usuario.getColeccion().puntosExtras(usuario.getColeccion().getListas())
+            print(PuntosExtras)
+            PuntosSumados=[]
+            PuntosFinales=[]
+            genero=[]
+            genero.append(Genero.REGGAETON)
+            genero.append(Genero.ROCK)
+            genero.append(Genero.POP)
+            genero.append(Genero.SALSA)
+            genero.append(Genero.KPOP)
+            genero.append(Genero.NO_ESPECIFICADO)
+            print(genero)
+            TotalPuntos=0
+
+            for i in range(0,len(Puntos)):
+                suma=Puntos[i]+PuntosExtras[i]
+                TotalPuntos+=suma
+                PuntosSumados.append(suma)
+            print(PuntosSumados)
+            
+            for i in range(0,len(PuntosSumados)):
+                operacion=PuntosSumados[i]/TotalPuntos*100
+                PuntosFinales.append(operacion)
+            print(PuntosFinales)
+
+            mayor=0
+            posicion=0
+
+            for i in range(0,len(PuntosFinales)):
+                if mayor<PuntosFinales[i]:
+                    mayor=PuntosFinales[i]
+                    posicion=i
+
+            print(posicion)
+            print(mayor)
+            REGGAETON=round(Puntos[0]*10/100)
+            print(REGGAETON)
+            ROCK=round(Puntos[1]*10/100)
+            print(ROCK)
+            POP=round(Puntos[2]*10/100)
+            SALSA=round(Puntos[3]*10/100)
+            KPOP=round(Puntos[4]*10/100)
+            NO_ESPECIFICADO=round(Puntos[5]*10/100)
+
+            cancionesREGGAETON=Lista.listaPorGenero(Genero.REGGAETON)
+            print(len(cancionesREGGAETON))
+            cancionesROCK=Lista.listaPorGenero(Genero.ROCK)
+            print(len(cancionesROCK))  
+            cancionesPOP=Lista.listaPorGenero(Genero.POP)
+            print(len(cancionesPOP))
+            cancionesSALSA=Lista.listaPorGenero(Genero.SALSA)
+            print(len(cancionesSALSA))
+            cancionesKPOP=Lista.listaPorGenero(Genero.KPOP)
+            print(len(cancionesKPOP))
+            cancionesNO_ESPECIFICADO=Lista.listaPorGenero(Genero.NO_ESPECIFICADO)
+            print(len(cancionesNO_ESPECIFICADO))
+            CancionMix=[]
+
+            R=0
+            parada=True
+            while parada==True:
+                if REGGAETON!=0:
+                    Cancion=cancionesREGGAETON[random.randint(0,len(cancionesREGGAETON)-1)]
+                    if Cancion not in CancionMix:
+                           CancionMix.append(Cancion)
+                           R+=1
+                    if  R>=REGGAETON:
+                        parada=False
+                else:
+                    parada=False
+
+            R=0
+            parada=True
+            while parada==True:
+                if ROCK!=0:
+                    Cancion=cancionesROCK[random.randint(0,len(cancionesROCK)-1)]
+                    if Cancion not in CancionMix:
+                           CancionMix.append(Cancion)
+                           R+=1
+                    if  R>=ROCK:
+                        parada=False
+                else:
+                    parada=False
+            
+            R=0
+            parada=True
+            while parada==True:
+                if POP!=0:
+                    Cancion=cancionesPOP[random.randint(0,len(cancionesPOP)-1)]
+                    if Cancion not in CancionMix:
+                           CancionMix.append(Cancion)
+                           R+=1
+                    if  R>=POP:
+                        parada=False
+                else:
+                    parada=False
+
+            R=0
+            parada=True
+            while parada==True:
+                if SALSA!=0:
+                    Cancion=cancionesSALSA[random.randint(0,len(cancionesSALSA)-1)]
+                    if Cancion not in CancionMix:
+                           CancionMix.append(Cancion)
+                           R+=1
+                    if  R>=SALSA:
+                        parada=False
+                else:
+                    parada=False
+
+            R=0
+            parada=True
+            while parada==True:
+                if KPOP!=0:
+                    Cancion=cancionesKPOP[random.randint(0,len(cancionesKPOP)-1)]
+                    if Cancion not in CancionMix:
+                           CancionMix.append(Cancion)
+                           R+=1
+                    if  R>=KPOP:
+                        parada=False
+                else:
+                    parada=False
+            
+            R=0
+            parada=True
+            while parada==True:
+                if NO_ESPECIFICADO!=0:
+                    Cancion=cancionesNO_ESPECIFICADO[random.randint(0,len(cancionesNO_ESPECIFICADO)-1)]
+                    if Cancion not in CancionMix:
+                           CancionMix.append(Cancion)
+                           R+=1
+                    if  R>=NO_ESPECIFICADO:
+                        parada=False
+                else:
+                    parada=False
+
+            for i in CancionMix:
+                print(i.getNombre())
+            
+            p0=""
+            if usuario.getGenFavorito()!=genero[posicion]:
+                p0="Tus gustos cambian constantemente. El género que mas escuchas es {}. ¿Quieres cambiar tu genero favorito a este?".format(genero[posicion].value)
+            else:
+                p0="Tu género Favorito sigue siendo el mismo"
+            
+
+            p1="Has utilizado la aplicacion {} segundos".format(usuario.getTiempoEscuchado())
+            p2="Eres un {} compatible con el genero de REGGAETON".format(round(PuntosFinales[0],2))
+            p3="Eres un {} compatible con el genero de ROCK".format(round(PuntosFinales[1],2))
+            p4="Eres un {} compatible con el genero de POP".format(round(PuntosFinales[2],2))
+            p5="Eres un {} compatible con el genero de SALSA".format(round(PuntosFinales[3],2))
+            p6="Eres un {} compatible con el genero de KPOP".format(round(PuntosFinales[4],2))
+            p7="Eres un {} compatible con el genero de NO_ESPECIFICADO".format(round(PuntosFinales[5],2))
+            p8="Hemos creado una listaMix. quieres agregarla a tu coleccion?"
+            texto=p0+"\n"+p1+"\n"+p2+"\n"+p3+"\n"+p4+"\n"+p5+"\n"+p6+"\n"+p7+"\n"+p8
+
+            mostrarSalida(texto, salidaResumen)
+
+
+            
+        Resumenbotton = tk.Button(frameResumen, text="Generar", font=("Verdana", 12), fg="white", bg="#2C34FA",command=resumen)
+
+        salidaResumen= tk.Text(frameResumen,font=("Verdana", 10), border= False, width= 100)
+        Principal2.frames.append(salidaResumen) 
+
+        nombreResumen.pack()
+        desResumen.pack()
+        Resumenbotton.pack()
+        Principal2.frames.append(frameResumen)  
         
         # Colaborativa
         

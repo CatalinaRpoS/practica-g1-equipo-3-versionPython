@@ -1,5 +1,6 @@
 from gestorAplicacion.gestorMusica.musica import Musica
 from gestorAplicacion.gestorMusica.cancion import Cancion
+from gestorAplicacion.gestorMusica.genero import Genero
 
 ''' Módulo lista.py
     Autores: Carolina Álvarez Murillo, Miller Johan Chica Acero,
@@ -119,13 +120,14 @@ class Lista(Musica):
     def setDescripcion(self, str_descripcion):
         self.__descripcion = str_descripcion
     
-    def listaPorGenero(self, Genero_genero):
+    @classmethod
+    def listaPorGenero(cls, Genero):
         lista = []
-        for cancion in Cancion.getCancionDisponibles():
-            if cancion.getGenero() == Genero_genero:
+        for cancion in Cancion.getCancionesDisponibles():
+            if cancion.getGenero() == Genero:
                 lista.append(cancion)
         return lista
-    
+
     def totalPorGenero(self, Genero_genero):
         total = 0
         for cancion in self.getLista():

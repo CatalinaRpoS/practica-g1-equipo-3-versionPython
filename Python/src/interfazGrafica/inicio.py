@@ -4,7 +4,7 @@ import pathlib
 import os
 from interfazGrafica.principal import Principal
 from tkinter import PhotoImage
-from PIL import Image
+
 
 class Inicio(tk.Tk):
 
